@@ -2,7 +2,6 @@ package com.study.xuan.emvp.adapter;
 
 import android.view.View;
 
-import com.study.xuan.emvp.model.Floor;
 import com.study.xuan.emvp.vh.EViewHolder;
 import com.study.xuan.emvp.widget.IWidget;
 
@@ -21,7 +20,7 @@ public class ViewHolderAdapter extends EViewHolder{
     }
 
     @Override
-    public void onBind(int pos, Floor item) {
+    public void onBind(int pos, Object item) {
         root.bind(item);
     }
 

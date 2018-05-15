@@ -5,7 +5,8 @@ import android.view.ViewGroup;
 
 import com.study.xuan.emvp.factory.EVHFactory;
 import com.study.xuan.emvp.factory.IVHFactory;
-import com.study.xuan.emvp.model.Floor;
+import com.study.xuan.emvp.manager.IModerBinder;
+import com.study.xuan.emvp.manager.ModelManager;
 import com.study.xuan.emvp.vh.EViewHolder;
 
 import java.util.List;
@@ -16,8 +17,16 @@ import java.util.List;
  * Description :the description of this file
  */
 
-public class EAdapter<T extends Floor> extends RecyclerView.Adapter<EViewHolder> {
-    private List<T> mData;
+public class EAdapter extends RecyclerView.Adapter<EViewHolder> {
+    private IModerBinder moderBinder;
+
+    public EAdapter(List<Object> data) {
+        this(new ModelManager(data));
+    }
+
+    public EAdapter(IModerBinder moderBinder) {
+        this.moderBinder = moderBinder;
+    }
 
     @Override
     public EViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -27,16 +36,16 @@ public class EAdapter<T extends Floor> extends RecyclerView.Adapter<EViewHolder>
 
     @Override
     public void onBindViewHolder(EViewHolder holder, int position) {
-        holder.onBind(position, mData.get(position));
+        holder.onBind(position, moderBinder.getItem(position));
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return moderBinder.getCount();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return mData.get(position).type;
+        return moderBinder.getItemType(position);
     }
 }

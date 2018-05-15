@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EMvp.iml" filepath="$PROJECT_DIR$/EMvp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/annotations/annotation.iml" filepath="$PROJECT_DIR$/annotations/annotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/complier/complier.iml" filepath="$PROJECT_DIR$/complier/complier.iml" />
     </modules>
   </component>
 </project>

@@ -6,7 +6,6 @@ package com.study.xuan.emvp.model;
  * Description :the description of this file
  */
 
-public class Floor {
-    public int type;
-    Object obj;
+public interface HandlerType {
+    int handlerType();
 }

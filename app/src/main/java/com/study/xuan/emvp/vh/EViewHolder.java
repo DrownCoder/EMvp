@@ -6,8 +6,6 @@ import android.arch.lifecycle.OnLifecycleEvent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.study.xuan.emvp.model.Floor;
-
 /**
  * Author : xuan.
  * Date : 2018/5/14.
@@ -20,7 +18,7 @@ public class EViewHolder extends RecyclerView.ViewHolder implements IBaseVH, Lif
     }
 
     @Override
-    public void onBind(int pos, Floor item) {
+    public void onBind(int pos, Object item) {
 
     }
 
@@ -30,7 +28,7 @@ public class EViewHolder extends RecyclerView.ViewHolder implements IBaseVH, Lif
     }
 
     @Override
-    public void onCreate(Floor item) {
+    public void onCreate(Object item) {
 
     }
 
