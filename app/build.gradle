@@ -9,6 +9,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        defaultConfig {
+            //添加如下配置就OK了
+            javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+        }
     }
     buildTypes {
         release {
@@ -25,4 +29,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     annotationProcessor 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    implementation project(path: ':annotations')
 }

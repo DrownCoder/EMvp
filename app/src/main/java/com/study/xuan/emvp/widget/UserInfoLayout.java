@@ -7,16 +7,17 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
+import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.R;
-import com.study.xuan.emvp.annotation.ComponentType;
 import com.study.xuan.emvp.model.HandlerType;
+import com.xuan.annotation.ComponentType;
 
 /**
  * Author : xuan.
  * Date : 2018/5/14.
  * Description :the description of this file
  */
-@ComponentType(type = 10)
+@ComponentType(type = ComponentId.USER_INFO_LAYOUT)
 public class UserInfoLayout extends FrameLayout implements IWidget<HandlerType> {
     public UserInfoLayout(@NonNull Context context) {
         this(context, null);
