@@ -1,5 +1,6 @@
 package com.study.xuan.emvp.manager;
 
+import com.study.xuan.emvp.ComponentRule;
 import com.study.xuan.emvp.Const;
 import com.study.xuan.emvp.model.HandlerType;
 
@@ -15,7 +16,6 @@ import java.util.Map;
 
 public class ModelManager implements IModerBinder{
     private List<Object> mData;
-    private Map<Class, Integer> singleTypeModels;
 
     public ModelManager(List<Object> data) {
         if (data == null) {
@@ -37,7 +37,8 @@ public class ModelManager implements IModerBinder{
             //多样式
             return ((HandlerType) item).handlerType();
         }else{
-            Integer type = singleTypeModels.get(item.getClass());
+            //一对一
+            Integer type = ComponentRule.MODEL_TYPE.get(item.getClass());
             if (type != null) {
                 return type;
             }else {

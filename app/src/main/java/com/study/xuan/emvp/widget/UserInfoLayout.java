@@ -17,7 +17,9 @@ import com.xuan.annotation.ComponentType;
  * Date : 2018/5/14.
  * Description :the description of this file
  */
-@ComponentType(type = ComponentId.USER_INFO_LAYOUT)
+@ComponentType(
+        value = ComponentId.USER_INFO_LAYOUT,
+        type = ComponentType.Support.View)
 public class UserInfoLayout extends FrameLayout implements IWidget<HandlerType> {
     public UserInfoLayout(@NonNull Context context) {
         this(context, null);

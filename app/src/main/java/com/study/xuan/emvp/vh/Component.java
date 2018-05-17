@@ -12,8 +12,8 @@ import android.view.View;
  * Description :the description of this file
  */
 
-public class EViewHolder extends RecyclerView.ViewHolder implements IBaseVH, LifecycleObserver {
-    public EViewHolder(View itemView) {
+public class Component extends RecyclerView.ViewHolder implements IBaseVH, LifecycleObserver {
+    public Component(View itemView) {
         super(itemView);
     }
 

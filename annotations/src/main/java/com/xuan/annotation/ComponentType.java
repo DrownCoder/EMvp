@@ -17,5 +17,10 @@ import java.lang.annotation.Target;
 // 表示可以作用于成员变量，类、接口
 @Target(ElementType.TYPE)
 public @interface ComponentType {
-    int type() default 0;
+    enum Support{
+        ViewHolder,View
+    }
+    int value() default 0;
+
+    Support type() default Support.ViewHolder;
 }

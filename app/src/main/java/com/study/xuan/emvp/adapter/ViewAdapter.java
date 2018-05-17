@@ -2,7 +2,7 @@ package com.study.xuan.emvp.adapter;
 
 import android.view.View;
 
-import com.study.xuan.emvp.vh.EViewHolder;
+import com.study.xuan.emvp.vh.Component;
 import com.study.xuan.emvp.widget.IWidget;
 
 /**
@@ -11,10 +11,10 @@ import com.study.xuan.emvp.widget.IWidget;
  * Description :自定义View转ViewHolder
  */
 
-public class ViewHolderAdapter extends EViewHolder{
+public class ViewAdapter extends Component {
     private IWidget root;
 
-    public ViewHolderAdapter(View itemView) {
+    public ViewAdapter(View itemView) {
         super(itemView);
         root = (IWidget) itemView;
     }

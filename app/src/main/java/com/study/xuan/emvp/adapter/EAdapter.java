@@ -3,11 +3,11 @@ package com.study.xuan.emvp.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.study.xuan.emvp.factory.EVHFactory;
-import com.study.xuan.emvp.factory.IVHFactory;
+import com.study.xuan.emvp.factory.ComponentFactory;
+import com.study.xuan.emvp.factory.IComponentFactory;
 import com.study.xuan.emvp.manager.IModerBinder;
 import com.study.xuan.emvp.manager.ModelManager;
-import com.study.xuan.emvp.vh.EViewHolder;
+import com.study.xuan.emvp.vh.Component;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * Description :the description of this file
  */
 
-public class EAdapter extends RecyclerView.Adapter<EViewHolder> {
+public class EAdapter extends RecyclerView.Adapter<Component> {
     private IModerBinder moderBinder;
 
     public EAdapter(List<Object> data) {
@@ -29,13 +29,13 @@ public class EAdapter extends RecyclerView.Adapter<EViewHolder> {
     }
 
     @Override
-    public EViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        IVHFactory factory = new EVHFactory();
+    public Component onCreateViewHolder(ViewGroup parent, int viewType) {
+        IComponentFactory factory = new ComponentFactory();
         return factory.createViewHolder(viewType);
     }
 
     @Override
-    public void onBindViewHolder(EViewHolder holder, int position) {
+    public void onBindViewHolder(Component holder, int position) {
         holder.onBind(position, moderBinder.getItem(position));
     }
 
