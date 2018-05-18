@@ -1,4 +1,4 @@
-package com.study.xuan.emvp.vh;
+package com.study.xuan.emvp.component;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
@@ -13,6 +13,7 @@ import android.view.View;
  */
 
 public class Component extends RecyclerView.ViewHolder implements IBaseVH, LifecycleObserver {
+    private View viewRoot;
     public Component(View itemView) {
         super(itemView);
     }

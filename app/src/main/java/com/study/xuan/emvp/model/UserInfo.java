@@ -11,6 +11,6 @@ import com.xuan.annotation.BindType;
  */
 @BindType(ComponentId.USER_INFO_LAYOUT)
 public class UserInfo {
-    private int imgUrl = R.drawable.ic_launcher_foreground;
-    private String name = "名字";
+    public int imgUrl = R.drawable.ic_launcher_foreground;
+    public String name = "名字";
 }

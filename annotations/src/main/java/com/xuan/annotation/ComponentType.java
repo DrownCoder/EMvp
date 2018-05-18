@@ -23,4 +23,6 @@ public @interface ComponentType {
     int value() default 0;
 
     Support type() default Support.ViewHolder;
+
+    int layout() default -1;
 }

@@ -23,7 +23,7 @@ public class ComponentRule {
     static {
         WIDGET_TYPE = new SparseArray<>();
         MODEL_TYPE = new HashMap<>();
-        putWidget(ComponentId.USER_INFO_LAYOUT, new ViewInfo(UserInfoLayout.class, View.class));
+        putWidget(ComponentId.USER_INFO_LAYOUT, new ViewInfo(ComponentId.USER_INFO_LAYOUT, UserInfoLayout.class, View.class));
         putModel(UserInfo.class, ComponentId.USER_INFO_LAYOUT);
     }
 

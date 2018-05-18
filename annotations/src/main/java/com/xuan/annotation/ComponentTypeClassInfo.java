@@ -18,7 +18,7 @@ public class ComponentTypeClassInfo {
     public ComponentTypeClassInfo(TypeElement classElement) {
         this.typeElement = classElement;
         ComponentType annotation = classElement.getAnnotation(ComponentType.class);
-        componentType = annotation.type();
+        componentType = annotation.value();
         if (componentType < 0) {
             throw new IllegalArgumentException(
                     String.format("ComponentType() in @%s for class %s is negative num! that's not allowed",

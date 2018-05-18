@@ -6,7 +6,7 @@ import android.view.View;
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.ViewInfo;
 import com.study.xuan.emvp.adapter.ViewAdapter;
-import com.study.xuan.emvp.vh.Component;
+import com.study.xuan.emvp.component.Component;
 import com.study.xuan.emvp.widget.IWidget;
 import com.study.xuan.emvp.widget.UserInfoLayout;
 
@@ -39,11 +39,14 @@ public class ViewComponentFactory implements IViewComponentFactory {
         return new ViewAdapter((View) view);
     }
 
+    /**
+     * 反射调构造函数
+     */
     @Override
     public IWidget reflectCreate(Class<?> clazz) {
         IWidget view = null;
         try {
-            Constructor c = clazz.getConstructor(clazz, Context.class);
+            Constructor c = clazz.getConstructor(Context.class);
              view = (IWidget) c.newInstance(mContext);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();

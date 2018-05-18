@@ -1,5 +1,6 @@
 package com.study.xuan.emvp.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -7,7 +8,7 @@ import com.study.xuan.emvp.factory.ComponentFactory;
 import com.study.xuan.emvp.factory.IComponentFactory;
 import com.study.xuan.emvp.manager.IModerBinder;
 import com.study.xuan.emvp.manager.ModelManager;
-import com.study.xuan.emvp.vh.Component;
+import com.study.xuan.emvp.component.Component;
 
 import java.util.List;
 
@@ -19,18 +20,20 @@ import java.util.List;
 
 public class EAdapter extends RecyclerView.Adapter<Component> {
     private IModerBinder moderBinder;
+    private Context mContext;
 
-    public EAdapter(List<Object> data) {
-        this(new ModelManager(data));
+    public EAdapter(Context context, List<Object> data) {
+        this(context, new ModelManager(data));
     }
 
-    public EAdapter(IModerBinder moderBinder) {
+    public EAdapter(Context context, IModerBinder moderBinder) {
+        this.mContext = context;
         this.moderBinder = moderBinder;
     }
 
     @Override
     public Component onCreateViewHolder(ViewGroup parent, int viewType) {
-        IComponentFactory factory = new ComponentFactory();
+        IComponentFactory factory = new ComponentFactory(mContext);
         return factory.createViewHolder(viewType);
     }
 

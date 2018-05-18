@@ -1,21 +1,30 @@
 package com.study.xuan.emvp;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
-public class MainActivity extends BaseActivity {
+import com.study.xuan.emvp.adapter.EAdapter;
+import com.study.xuan.emvp.model.UserInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends FragmentActivity {
+    protected IBasePresenter mPresenter;
+    RecyclerView mRcy;
+    private List<Object> mData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        mRcy = findViewById(R.id.rcy);
+        mRcy.setLayoutManager(new LinearLayoutManager(this));
+        mData = new ArrayList<>();
+        mData.add(new UserInfo());
+        mData.add(new UserInfo());
+        mData.add(new UserInfo());
+        mRcy.setAdapter(new EAdapter(this, mData));
     }
 }

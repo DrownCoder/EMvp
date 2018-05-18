@@ -1,7 +1,7 @@
 package com.study.xuan.emvp.factory;
 
 import com.study.xuan.emvp.ViewInfo;
-import com.study.xuan.emvp.vh.Component;
+import com.study.xuan.emvp.component.Component;
 import com.study.xuan.emvp.widget.IWidget;
 
 /**
@@ -10,7 +10,7 @@ import com.study.xuan.emvp.widget.IWidget;
  * Description :the description of this file
  */
 
-public interface IViewComponentFactory {
+public interface IViewComponentFactory extends ReflectCreate<IWidget>{
     Component createViewComponent(ViewInfo type);
 
     IWidget reflectCreate(Class<?> clazz);

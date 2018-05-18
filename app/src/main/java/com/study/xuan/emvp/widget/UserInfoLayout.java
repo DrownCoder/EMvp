@@ -5,11 +5,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.R;
 import com.study.xuan.emvp.model.HandlerType;
+import com.study.xuan.emvp.model.UserInfo;
 import com.xuan.annotation.ComponentType;
 
 /**
@@ -20,7 +24,11 @@ import com.xuan.annotation.ComponentType;
 @ComponentType(
         value = ComponentId.USER_INFO_LAYOUT,
         type = ComponentType.Support.View)
-public class UserInfoLayout extends FrameLayout implements IWidget<HandlerType> {
+public class UserInfoLayout extends FrameLayout implements IWidget<UserInfo> {
+    private ImageView ivImg;
+    private TextView tvText;
+    private View root;
+
     public UserInfoLayout(@NonNull Context context) {
         this(context, null);
     }
@@ -31,11 +39,18 @@ public class UserInfoLayout extends FrameLayout implements IWidget<HandlerType> 
 
     public UserInfoLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        LayoutInflater.from(context).inflate(R.layout.user_info_layout, this, false);
+        root = LayoutInflater.from(context).inflate(R.layout.user_info_layout, this);
+        initView();
+    }
+
+    private void initView() {
+        ivImg = root.findViewById(R.id.iv_img);
+        tvText = root.findViewById(R.id.tv_text);
     }
 
     @Override
-    public void bind(HandlerType item) {
-
+    public void bind(UserInfo item) {
+        ivImg.setImageResource(item.imgUrl);
+        tvText.setText(item.name);
     }
 }
