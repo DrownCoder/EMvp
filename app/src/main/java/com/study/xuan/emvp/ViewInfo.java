@@ -1,5 +1,7 @@
 package com.study.xuan.emvp;
 
+import android.support.v7.widget.RecyclerView;
+
 /**
  * Author : xuan.
  * Date : 2018/5/17.
@@ -9,14 +11,24 @@ package com.study.xuan.emvp;
 public class ViewInfo {
     //View类
     private Class<?> viewClass;
-    private int id;
     //View类型
     private Class<?> viewType;
+    //componentId
+    private int id;
+    //layoutId
+    private int layoutId;
 
     public ViewInfo(int id, Class<?> viewclass, Class<?> viewtype) {
         this.id = id;
         this.viewClass = viewclass;
         this.viewType = viewtype;
+    }
+
+    public ViewInfo(int id, Class<?> viewclass, int layoutId) {
+        this.id = id;
+        this.viewClass = viewclass;
+        this.layoutId = layoutId;
+        this.viewType = RecyclerView.ViewHolder.class;
     }
 
     public Class<?> getView() {
@@ -29,5 +41,9 @@ public class ViewInfo {
 
     public int getId() {
         return id;
+    }
+
+    public int getLayoutId() {
+        return layoutId;
     }
 }

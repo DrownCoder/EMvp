@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.study.xuan.emvp.adapter.EAdapter;
+import com.study.xuan.emvp.model.SingleImg;
 import com.study.xuan.emvp.model.UserInfo;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class MainActivity extends FragmentActivity {
         mData.add(new UserInfo());
         mData.add(new UserInfo());
         mData.add(new UserInfo());
+        mData.add(new SingleImg());
         mRcy.setAdapter(new EAdapter(this, mData));
     }
 }

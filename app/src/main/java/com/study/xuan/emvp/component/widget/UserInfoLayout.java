@@ -1,4 +1,4 @@
-package com.study.xuan.emvp.widget;
+package com.study.xuan.emvp.component.widget;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.R;
-import com.study.xuan.emvp.model.HandlerType;
 import com.study.xuan.emvp.model.UserInfo;
 import com.xuan.annotation.ComponentType;
 
@@ -24,7 +23,7 @@ import com.xuan.annotation.ComponentType;
 @ComponentType(
         value = ComponentId.USER_INFO_LAYOUT,
         type = ComponentType.Support.View)
-public class UserInfoLayout extends FrameLayout implements IWidget<UserInfo> {
+public class UserInfoLayout extends FrameLayout implements IComponentBind<UserInfo> {
     private ImageView ivImg;
     private TextView tvText;
     private View root;
@@ -50,7 +49,12 @@ public class UserInfoLayout extends FrameLayout implements IWidget<UserInfo> {
 
     @Override
     public void bind(UserInfo item) {
-        ivImg.setImageResource(item.imgUrl);
+        //ivImg.setImageResource(R.drawable.ic_launcher_foreground);
         tvText.setText(item.name);
+    }
+
+    @Override
+    public void unBind() {
+
     }
 }

@@ -1,11 +1,13 @@
-package com.study.xuan.emvp.vh;
+package com.study.xuan.emvp.component.vh;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.R;
+import com.study.xuan.emvp.component.widget.IComponentBind;
 import com.study.xuan.emvp.model.SingleImg;
 import com.xuan.annotation.ComponentType;
 
@@ -18,7 +20,7 @@ import com.xuan.annotation.ComponentType;
         value = ComponentId.IMAGE_VH,
         layout = R.layout.single_img
 )
-public class ImageViewHolder extends RecyclerView.ViewHolder implements IComponentBind<SingleImg>{
+public class ImageViewHolder extends RecyclerView.ViewHolder implements IComponentBind<SingleImg> {
     private ImageView iv;
     public ImageViewHolder(View itemView) {
         super(itemView);
@@ -26,12 +28,13 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements ICompone
     }
 
     @Override
-    public void onBind(int pos, SingleImg singleImg) {
-        iv.setImageResource(singleImg.imgUrl);
+    public void bind(SingleImg item) {
+        //iv.setImageResource(item.imgUrl);
+        iv.setBackgroundColor(Color.BLUE);
     }
 
     @Override
-    public void onUnBind() {
+    public void unBind() {
 
     }
 }

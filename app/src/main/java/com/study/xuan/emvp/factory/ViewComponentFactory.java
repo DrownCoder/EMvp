@@ -5,10 +5,10 @@ import android.view.View;
 
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.ViewInfo;
-import com.study.xuan.emvp.adapter.ViewAdapter;
+import com.study.xuan.emvp.adapter.ComponentViewAdapter;
 import com.study.xuan.emvp.component.Component;
-import com.study.xuan.emvp.widget.IWidget;
-import com.study.xuan.emvp.widget.UserInfoLayout;
+import com.study.xuan.emvp.component.widget.IComponentBind;
+import com.study.xuan.emvp.component.widget.UserInfoLayout;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -28,7 +28,7 @@ public class ViewComponentFactory implements IViewComponentFactory {
 
     @Override
     public Component createViewComponent(ViewInfo viewInfo) {
-        IWidget view = null;
+        IComponentBind view = null;
         switch (viewInfo.getId()) {
             case ComponentId.USER_INFO_LAYOUT:
                 view = new UserInfoLayout(mContext);
@@ -36,18 +36,18 @@ public class ViewComponentFactory implements IViewComponentFactory {
             default:
                 view = reflectCreate(viewInfo.getView());
         }
-        return new ViewAdapter((View) view);
+        return new ComponentViewAdapter((View) view);
     }
 
     /**
      * 反射调构造函数
      */
     @Override
-    public IWidget reflectCreate(Class<?> clazz) {
-        IWidget view = null;
+    public IComponentBind reflectCreate(Class<?> clazz) {
+        IComponentBind view = null;
         try {
             Constructor c = clazz.getConstructor(Context.class);
-             view = (IWidget) c.newInstance(mContext);
+             view = (IComponentBind) c.newInstance(mContext);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

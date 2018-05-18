@@ -35,6 +35,7 @@ public class ComponentFactory implements IComponentFactory {
             return viewFactory.createViewComponent(viewInfo);
         } else if (viewType == RecyclerView.ViewHolder.class) {
             createViewHolderFactory(Context);
+            return viewHolderFactory.createViewHolderComponent(viewInfo);
         }
         return defaultViewHolder();
     }

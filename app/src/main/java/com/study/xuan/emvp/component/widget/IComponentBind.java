@@ -1,4 +1,4 @@
-package com.study.xuan.emvp.widget;
+package com.study.xuan.emvp.component.widget;
 
 /**
  * Author : xuan.
@@ -6,6 +6,8 @@ package com.study.xuan.emvp.widget;
  * Description :the description of this file
  */
 
-public interface IWidget<T> {
+public interface IComponentBind<T> {
     void bind(T item);
+
+    void unBind();
 }

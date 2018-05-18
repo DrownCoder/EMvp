@@ -2,7 +2,7 @@ package com.study.xuan.emvp.factory;
 
 import com.study.xuan.emvp.ViewInfo;
 import com.study.xuan.emvp.component.Component;
-import com.study.xuan.emvp.widget.IWidget;
+import com.study.xuan.emvp.component.widget.IComponentBind;
 
 /**
  * Author : xuan.
@@ -10,8 +10,8 @@ import com.study.xuan.emvp.widget.IWidget;
  * Description :the description of this file
  */
 
-public interface IViewComponentFactory extends ReflectCreate<IWidget>{
+public interface IViewComponentFactory extends ReflectCreate<IComponentBind>{
     Component createViewComponent(ViewInfo type);
 
-    IWidget reflectCreate(Class<?> clazz);
+    IComponentBind reflectCreate(Class<?> clazz);
 }
