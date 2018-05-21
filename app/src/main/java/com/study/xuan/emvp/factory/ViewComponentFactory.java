@@ -2,6 +2,7 @@ package com.study.xuan.emvp.factory;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.ViewInfo;
@@ -21,9 +22,11 @@ import java.lang.reflect.InvocationTargetException;
 
 public class ViewComponentFactory implements IViewComponentFactory {
     private Context mContext;
+    private ViewGroup mParentRoot;
 
-    public ViewComponentFactory(Context context) {
+    public ViewComponentFactory(Context context, ViewGroup parentRoot) {
         this.mContext = context;
+        this.mParentRoot = parentRoot;
     }
 
     @Override

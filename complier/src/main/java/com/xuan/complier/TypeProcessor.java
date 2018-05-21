@@ -1,5 +1,6 @@
 package com.xuan.complier;
 
+import com.google.auto.service.AutoService;
 import com.xuan.annotation.ComponentType;
 import com.xuan.annotation.ComponentTypeClassInfo;
 
@@ -14,6 +15,7 @@ import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
@@ -30,8 +32,9 @@ import javax.tools.JavaFileObject;
  * Date : 2018/5/15.
  * Description :type类型的注解解析器
  */
+@AutoService(Processor.class)
 public class TypeProcessor extends AbstractProcessor {
-    private static final String CREATE_FILE_NAME = "ComponentRule";
+    private static final String CREATE_FILE_NAME = "Component1Rule";
     private static final String CREATE_FILE_PATH = "com.study.xuan.emvp";
     private Types typeUtils;
     private Elements elementUtils;
@@ -42,6 +45,7 @@ public class TypeProcessor extends AbstractProcessor {
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
+        System.out.println("------ init -----");
         super.init(processingEnvironment);
     }
 
@@ -60,6 +64,7 @@ public class TypeProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
+        System.out.println("------ process -----");
         for (Element annotatedElement : roundEnvironment.getElementsAnnotatedWith(ComponentType.class)) {
             // 检查被注解为@Factory的元素是否是一个类
             if (annotatedElement.getKind() != ElementKind.CLASS) {
@@ -70,9 +75,9 @@ public class TypeProcessor extends AbstractProcessor {
             try {
                 TypeElement typeElement = (TypeElement) annotatedElement;
                 ComponentTypeClassInfo componentInfo = new ComponentTypeClassInfo(typeElement);
-                if (!isValidClass(componentInfo)) {
+                /*if (!isValidClass(componentInfo)) {
                     return true;
-                }
+                }*/
                 typeWidget.put(componentInfo.getComponentType(), typeElement.getClass());
             } catch (Exception e) {
                 error(annotatedElement, e.getMessage());

@@ -33,7 +33,7 @@ public class EAdapter extends RecyclerView.Adapter<Component> {
 
     @Override
     public Component onCreateViewHolder(ViewGroup parent, int viewType) {
-        IComponentFactory factory = new ComponentFactory(mContext);
+        IComponentFactory factory = new ComponentFactory(mContext, parent);
         return factory.createViewHolder(viewType);
     }
 

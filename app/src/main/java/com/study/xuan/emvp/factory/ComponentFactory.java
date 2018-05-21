@@ -3,6 +3,7 @@ package com.study.xuan.emvp.factory;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.study.xuan.emvp.ComponentRule;
 import com.study.xuan.emvp.ViewInfo;
@@ -15,14 +16,17 @@ import com.study.xuan.emvp.component.Component;
  */
 
 public class ComponentFactory implements IComponentFactory {
-    private Context Context;
+    private Context mContext;
+    private ViewGroup mParentRoot;
 
-    public ComponentFactory(Context context) {
-        this.Context = context;
+    public ComponentFactory(Context context, ViewGroup parent) {
+        this.mContext = context;
+        this.mParentRoot = parent;
     }
 
     private IViewComponentFactory viewFactory;
     private IViewHolderComponentFactory viewHolderFactory;
+
     @Override
     public Component createViewHolder(int type) {
         ViewInfo viewInfo = ComponentRule.WIDGET_TYPE.get(type);
@@ -31,10 +35,10 @@ public class ComponentFactory implements IComponentFactory {
         }
         Class viewType = viewInfo.getViewType();
         if (viewType == View.class) {
-            createViewFactory(Context);
+            createViewFactory(mContext);
             return viewFactory.createViewComponent(viewInfo);
         } else if (viewType == RecyclerView.ViewHolder.class) {
-            createViewHolderFactory(Context);
+            createViewHolderFactory(mContext);
             return viewHolderFactory.createViewHolderComponent(viewInfo);
         }
         return defaultViewHolder();
@@ -43,14 +47,14 @@ public class ComponentFactory implements IComponentFactory {
     @Override
     public void createViewFactory(Context context) {
         if (viewFactory == null) {
-            viewFactory = new ViewComponentFactory(context);
+            viewFactory = new ViewComponentFactory(context, mParentRoot);
         }
     }
 
     @Override
     public void createViewHolderFactory(Context context) {
         if (viewHolderFactory == null) {
-            viewHolderFactory = new ViewHolderComponentFactory(context);
+            viewHolderFactory = new ViewHolderComponentFactory(context, mParentRoot);
         }
 
     }
