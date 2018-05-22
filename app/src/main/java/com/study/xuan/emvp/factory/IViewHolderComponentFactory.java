@@ -2,7 +2,7 @@ package com.study.xuan.emvp.factory;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.study.xuan.emvp.ViewInfo;
+import com.xuan.annotation.ViewInfo;
 import com.study.xuan.emvp.component.Component;
 
 /**

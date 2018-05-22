@@ -1,12 +1,10 @@
 package com.study.xuan.emvp.factory;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.study.xuan.emvp.ComponentRule;
-import com.study.xuan.emvp.ViewInfo;
+import com.xuan.annotation.ViewInfo;
 import com.study.xuan.emvp.component.Component;
 
 /**
@@ -33,13 +31,14 @@ public class ComponentFactory implements IComponentFactory {
         if (viewInfo == null) {
             return defaultViewHolder();
         }
-        Class viewType = viewInfo.getViewType();
-        if (viewType == View.class) {
-            createViewFactory(mContext);
-            return viewFactory.createViewComponent(viewInfo);
-        } else if (viewType == RecyclerView.ViewHolder.class) {
-            createViewHolderFactory(mContext);
-            return viewHolderFactory.createViewHolderComponent(viewInfo);
+        int viewType = viewInfo.getViewType();
+        switch (viewType) {
+            case 0:
+                createViewFactory(mContext);
+                return viewFactory.createViewComponent(viewInfo);
+            case 1:
+                createViewHolderFactory(mContext);
+                return viewHolderFactory.createViewHolderComponent(viewInfo);
         }
         return defaultViewHolder();
     }

@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.study.xuan.emvp.ComponentId;
-import com.study.xuan.emvp.ViewInfo;
+import com.xuan.annotation.ViewInfo;
 import com.study.xuan.emvp.adapter.ComponentViewAdapter;
 import com.study.xuan.emvp.component.Component;
 import com.study.xuan.emvp.component.widget.IComponentBind;

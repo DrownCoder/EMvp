@@ -1,6 +1,5 @@
-package com.study.xuan.emvp;
+package com.xuan.annotation;
 
-import android.support.v7.widget.RecyclerView;
 
 /**
  * Author : xuan.
@@ -9,33 +8,35 @@ import android.support.v7.widget.RecyclerView;
  */
 
 public class ViewInfo {
+    public static final int TYPE_VIEW = 0;
+    public static final int TYPE_VIEWHOLDER = 1;
     //View类
     private Class<?> viewClass;
     //View类型
-    private Class<?> viewType;
+    private int viewType;
     //componentId
     private int id;
     //layoutId
     private int layoutId;
 
-    public ViewInfo(int id, Class<?> viewclass, Class<?> viewtype) {
+    public ViewInfo(int id, Class<?> viewclass, int viewtype) {
         this.id = id;
         this.viewClass = viewclass;
         this.viewType = viewtype;
     }
 
-    public ViewInfo(int id, Class<?> viewclass, int layoutId) {
+    public ViewInfo(int id, Class<?> viewclass, int layoutId, int viewtype) {
         this.id = id;
         this.viewClass = viewclass;
         this.layoutId = layoutId;
-        this.viewType = RecyclerView.ViewHolder.class;
+        this.viewType = viewtype;
     }
 
     public Class<?> getView() {
         return viewClass;
     }
 
-    public Class<?> getViewType() {
+    public int getViewType() {
         return viewType;
     }
 

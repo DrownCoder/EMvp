@@ -11,40 +11,50 @@ import javax.lang.model.element.TypeElement;
 public class ComponentTypeClassInfo {
     private TypeElement typeElement;
     //组件id全局唯一
-    private int componentType;
-    //父类，Object下的一级父类，只允许继承ViewHolder和View的类使用注解
-    private Class superClass;
+    private int componentId;
+    //被注解类的全类名
+    private String className;
+    //View类型 ViewHolder或者自定义View
+    private ComponentType.Support componentType;
+    private int layoutId;
 
     public ComponentTypeClassInfo(TypeElement classElement) {
         this.typeElement = classElement;
         ComponentType annotation = classElement.getAnnotation(ComponentType.class);
-        componentType = annotation.value();
-        if (componentType < 0) {
+        componentId = annotation.value();
+        layoutId = annotation.layout();
+        componentType = annotation.type();
+        if (componentId < 0) {
             throw new IllegalArgumentException(
                     String.format("ComponentType() in @%s for class %s is negative num! that's not allowed",
                             ComponentType.class.getSimpleName(), classElement.getQualifiedName().toString()));
         }
-        superClass = classElement.getClass();
-        while (superClass.getSuperclass() != null) {
-            if (superClass.getSuperclass() != Object.class) {
-                superClass = superClass.getSuperclass();
-            }
-        }
-        if (!(superClass.getName().contains("RecyclerView.ViewHolder") || superClass.getName().contains("android.View"))){
-            throw new IllegalArgumentException("ComponentType() can only be used in ViewHolder or View");
-        }
+        System.out.println("getQualifiedName = " + classElement.getQualifiedName());
+        System.out.println("getSimpleName = " + classElement.getSimpleName());
+        System.out.println("getSuperClass = " + classElement.getSuperclass());
+        System.out.println("getClass = " + classElement.getClass());
+
+        className = classElement.getQualifiedName().toString();
     }
 
-    public int getComponentType() {
-        return componentType;
+    public int getComponentId() {
+        return componentId;
     }
 
-    public Class getSuperClass() {
-        return superClass;
+    public String getClassName() {
+        return className;
     }
 
     public TypeElement getTypeElement() {
         return typeElement;
+    }
+
+    public ComponentType.Support getComponentType() {
+        return componentType;
+    }
+
+    public int getLayoutId() {
+        return layoutId;
     }
 }
 

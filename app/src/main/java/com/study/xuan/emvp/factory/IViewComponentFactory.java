@@ -1,6 +1,6 @@
 package com.study.xuan.emvp.factory;
 
-import com.study.xuan.emvp.ViewInfo;
+import com.xuan.annotation.ViewInfo;
 import com.study.xuan.emvp.component.Component;
 import com.study.xuan.emvp.component.widget.IComponentBind;
 
