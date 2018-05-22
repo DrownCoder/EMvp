@@ -24,7 +24,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements ICompone
     private ImageView iv;
     public ImageViewHolder(View itemView) {
         super(itemView);
-        iv = itemView.findViewById(R.id.iv_img);
+        iv = (ImageView) itemView;
     }
 
     @Override

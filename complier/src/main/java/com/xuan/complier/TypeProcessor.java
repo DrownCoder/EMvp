@@ -37,7 +37,7 @@ import javax.tools.JavaFileObject;
  */
 @AutoService(Processor.class)
 public class TypeProcessor extends AbstractProcessor {
-    private static final String CREATE_FILE_NAME = "Component1Rule";
+    private static final String CREATE_FILE_NAME = "ComponentRule";
     private static final String CREATE_FILE_PATH = "com.study.xuan.emvp";
     private Types typeUtils;
     private Elements elementUtils;
@@ -105,7 +105,15 @@ public class TypeProcessor extends AbstractProcessor {
         if (typeWidget.size() > 0) {
             writeFile();
         }
-        return true;
+        clear();
+        return false;
+    }
+
+    private void clear() {
+        typeModel.clear();
+        typeWidget.clear();
+        componentIds.clear();
+        strBuilder.setLength(0);
     }
 
     // 检查被注解为的元素是否是一个类
@@ -157,18 +165,19 @@ public class TypeProcessor extends AbstractProcessor {
     private void writePutModelLine(BufferedWriter writer) throws IOException {
         strBuilder.setLength(0);
         for (ModelTypeClassInfo model : typeModel) {
-            strBuilder.append("putModel(").append(model.getClassName()).append(".class").append(",")
+            strBuilder.append("        putModel(").append(model.getClassName()).append(".class").append(",")
                     .append(model.getComponentIds()[0])
                     .append(");\n");
             writer.write(strBuilder.toString());
+            strBuilder.setLength(0);
         }
     }
 
     private void writePutWidgetLine(BufferedWriter writer) throws IOException {
         strBuilder.setLength(0);
         for (ComponentTypeClassInfo info : typeWidget) {
-            strBuilder.append("putWidget(").append(info.getComponentId()).append(",")
-                    .append("new ViewInfo(").append(info.getComponentId()).append(",\n")
+            strBuilder.append("        putWidget(").append(info.getComponentId()).append(",")
+                    .append("new ViewInfo(").append(info.getComponentId()).append(",\n                ")
                     .append(info.getClassName()).append(".class").append(",");
             if (info.getComponentType() == ComponentType.Support.View) {
                 strBuilder.append(ViewInfo.TYPE_VIEW);
@@ -178,6 +187,7 @@ public class TypeProcessor extends AbstractProcessor {
             }
             strBuilder.append("));\n");
             writer.write(strBuilder.toString());
+            strBuilder.setLength(0);
         }
     }
 

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.study.xuan.emvp.adapter.EAdapter;
 import com.study.xuan.emvp.model.SingleImg;
+import com.study.xuan.emvp.model.TwoImg;
 import com.study.xuan.emvp.model.UserInfo;
 
 import java.util.ArrayList;
@@ -25,8 +26,10 @@ public class MainActivity extends FragmentActivity {
         mData = new ArrayList<>();
         mData.add(new UserInfo());
         mData.add(new UserInfo());
-        mData.add(new UserInfo());
         mData.add(new SingleImg());
+        mData.add(new TwoImg());
+        mData.add(new UserInfo());
+
         mRcy.setAdapter(new EAdapter(this, mData));
     }
 }
