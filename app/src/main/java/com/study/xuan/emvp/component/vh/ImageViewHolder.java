@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.R;
-import com.study.xuan.emvp.component.widget.IComponentBind;
+import com.study.xuan.emvp.component.IComponentBind;
 import com.study.xuan.emvp.model.SingleImg;
 import com.xuan.annotation.ComponentType;
 

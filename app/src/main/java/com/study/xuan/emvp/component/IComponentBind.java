@@ -1,4 +1,4 @@
-package com.study.xuan.emvp.component.widget;
+package com.study.xuan.emvp.component;
 
 /**
  * Author : xuan.

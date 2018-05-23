@@ -96,7 +96,9 @@ public class TypeProcessor extends AbstractProcessor {
                 /*if (!isValidClass(componentInfo)) {
                     return true;
                 }*/
-                typeModel.add(componentInfo);
+                if (componentInfo.getComponentIds().length == 1) {
+                    typeModel.add(componentInfo);
+                }
             } catch (Exception e) {
                 error(annotatedElement, e.getMessage());
                 return true;
@@ -131,7 +133,7 @@ public class TypeProcessor extends AbstractProcessor {
             writer.write("package " + CREATE_FILE_PATH + ";\n\n");
             writer.write("import android.util.SparseArray;\n");
             writer.write("import java.util.HashMap;\n");
-            writer.write("import java.util.Map;");
+            writer.write("import java.util.Map;\n");
             writer.write("import com.xuan.annotation.ViewInfo;\n");
             writer.write("public class " + CREATE_FILE_NAME + " {\n");
             writer.write("    public static final SparseArray<ViewInfo> WIDGET_TYPE;\n\n");

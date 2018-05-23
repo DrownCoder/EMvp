@@ -8,7 +8,7 @@ import com.study.xuan.emvp.ComponentId;
 import com.xuan.annotation.ViewInfo;
 import com.study.xuan.emvp.adapter.ComponentViewAdapter;
 import com.study.xuan.emvp.component.Component;
-import com.study.xuan.emvp.component.widget.IComponentBind;
+import com.study.xuan.emvp.component.IComponentBind;
 import com.study.xuan.emvp.component.widget.UserInfoLayout;
 
 import java.lang.reflect.Constructor;

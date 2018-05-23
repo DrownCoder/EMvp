@@ -10,7 +10,12 @@ import com.xuan.annotation.BindType;
  * Description :the description of this file
  */
 @BindType(ComponentId.USER_INFO_LAYOUT)
-public class UserInfo {
+public class UserInfo implements PostEvent{
     public int imgUrl = R.drawable.ic_launcher_foreground;
     public String name = "名字";
+
+    @Override
+    public boolean postEvent() {
+        return false;
+    }
 }

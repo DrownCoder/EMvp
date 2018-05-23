@@ -2,7 +2,7 @@ package com.study.xuan.emvp.factory;
 
 import com.xuan.annotation.ViewInfo;
 import com.study.xuan.emvp.component.Component;
-import com.study.xuan.emvp.component.widget.IComponentBind;
+import com.study.xuan.emvp.component.IComponentBind;
 
 /**
  * Author : xuan.

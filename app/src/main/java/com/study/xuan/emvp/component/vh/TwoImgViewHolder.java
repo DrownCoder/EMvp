@@ -5,8 +5,8 @@ import android.view.View;
 
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.R;
-import com.study.xuan.emvp.component.widget.IComponentBind;
-import com.study.xuan.emvp.model.TwoImg;
+import com.study.xuan.emvp.component.IComponentBind;
+import com.study.xuan.emvp.model.ImageInfo;
 import com.xuan.annotation.ComponentType;
 
 /**
@@ -18,13 +18,13 @@ import com.xuan.annotation.ComponentType;
         value = ComponentId.IMAGE_TWO_VH,
         layout = R.layout.two_img
 )
-public class TwoImgViewHolder extends RecyclerView.ViewHolder implements IComponentBind<TwoImg> {
+public class TwoImgViewHolder extends RecyclerView.ViewHolder implements IComponentBind<ImageInfo> {
     public TwoImgViewHolder(View itemView) {
         super(itemView);
     }
 
     @Override
-    public void bind(TwoImg item) {
+    public void bind(ImageInfo item) {
 
     }
 

@@ -1,10 +1,9 @@
 package com.study.xuan.emvp.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.study.xuan.emvp.component.Component;
-import com.study.xuan.emvp.component.widget.IComponentBind;
+import com.study.xuan.emvp.component.IComponentBind;
 
 /**
  * Author : xuan.
