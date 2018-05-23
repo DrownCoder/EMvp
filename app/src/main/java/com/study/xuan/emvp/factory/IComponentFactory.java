@@ -2,6 +2,7 @@ package com.study.xuan.emvp.factory;
 
 import android.content.Context;
 
+import com.study.xuan.emvp.BasePresenter;
 import com.study.xuan.emvp.component.Component;
 
 /**
@@ -13,7 +14,7 @@ import com.study.xuan.emvp.component.Component;
 public interface IComponentFactory {
     Component createViewHolder(int type);
 
-    void createViewFactory(Context context);
+    void createViewFactory(Context context, BasePresenter mPresenter);
 
-    void createViewHolderFactory(Context context);
+    void createViewHolderFactory(Context context, BasePresenter mPresenter);
 }

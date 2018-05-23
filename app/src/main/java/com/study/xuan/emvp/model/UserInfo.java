@@ -1,5 +1,6 @@
 package com.study.xuan.emvp.model;
 
+import com.study.xuan.emvp.BasePresenter;
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.R;
 import com.xuan.annotation.BindType;
@@ -17,5 +18,10 @@ public class UserInfo implements PostEvent{
     @Override
     public boolean postEvent() {
         return false;
+    }
+
+    @Override
+    public BasePresenter postPresenter() {
+        return null;
     }
 }

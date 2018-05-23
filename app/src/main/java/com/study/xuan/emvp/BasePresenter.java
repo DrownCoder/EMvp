@@ -1,5 +1,7 @@
 package com.study.xuan.emvp;
 
+import android.content.Context;
+
 /**
  * Author : xuan.
  * Date : 2018/5/9.
@@ -7,9 +9,15 @@ package com.study.xuan.emvp;
  */
 
 public abstract class BasePresenter implements IBasePresenter {
+    protected Context mContext;
+
+    public BasePresenter(Context context) {
+        this.mContext = context;
+    }
+
     @Override
     public void onDestroy() {
-
+        mContext = null;
     }
 
     @Override

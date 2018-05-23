@@ -1,5 +1,7 @@
 package com.study.xuan.emvp.model;
 
+import com.study.xuan.emvp.BasePresenter;
+
 /**
  * Author : xuan.
  * Date : 2018/5/23.
@@ -8,4 +10,6 @@ package com.study.xuan.emvp.model;
 
 public interface PostEvent {
     boolean postEvent();
+
+    BasePresenter postPresenter();
 }

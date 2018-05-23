@@ -3,6 +3,7 @@ package com.study.xuan.emvp.factory;
 import android.content.Context;
 import android.view.ViewGroup;
 
+import com.study.xuan.emvp.BasePresenter;
 import com.study.xuan.emvp.ComponentRule;
 import com.xuan.annotation.ViewInfo;
 import com.study.xuan.emvp.component.Component;
@@ -16,9 +17,11 @@ import com.study.xuan.emvp.component.Component;
 public class ComponentFactory implements IComponentFactory {
     private Context mContext;
     private ViewGroup mParentRoot;
+    private BasePresenter mPresenter;
 
-    public ComponentFactory(Context context, ViewGroup parent) {
+    public ComponentFactory(Context context, BasePresenter presenter, ViewGroup parent) {
         this.mContext = context;
+        this.mPresenter = presenter;
         this.mParentRoot = parent;
     }
 
@@ -34,24 +37,24 @@ public class ComponentFactory implements IComponentFactory {
         int viewType = viewInfo.getViewType();
         switch (viewType) {
             case 0:
-                createViewFactory(mContext);
+                createViewFactory(mContext, mPresenter);
                 return viewFactory.createViewComponent(viewInfo);
             case 1:
-                createViewHolderFactory(mContext);
+                createViewHolderFactory(mContext, mPresenter);
                 return viewHolderFactory.createViewHolderComponent(viewInfo);
         }
         return defaultViewHolder();
     }
 
     @Override
-    public void createViewFactory(Context context) {
+    public void createViewFactory(Context context, BasePresenter presenter) {
         if (viewFactory == null) {
             viewFactory = new ViewComponentFactory(context, mParentRoot);
         }
     }
 
     @Override
-    public void createViewHolderFactory(Context context) {
+    public void createViewHolderFactory(Context context, BasePresenter presenter) {
         if (viewHolderFactory == null) {
             viewHolderFactory = new ViewHolderComponentFactory(context, mParentRoot);
         }

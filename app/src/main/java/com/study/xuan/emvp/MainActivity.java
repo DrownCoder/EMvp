@@ -9,18 +9,21 @@ import com.study.xuan.emvp.adapter.EAdapter;
 import com.study.xuan.emvp.model.ImageInfo;
 import com.study.xuan.emvp.model.SingleImg;
 import com.study.xuan.emvp.model.UserInfo;
+import com.study.xuan.emvp.presenter.MainPreseneter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity {
-    protected IBasePresenter mPresenter;
+    protected BasePresenter mPresenter;
     RecyclerView mRcy;
     private List<Object> mData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mPresenter = new MainPreseneter(this);
         mRcy = findViewById(R.id.rcy);
         mRcy.setLayoutManager(new LinearLayoutManager(this));
         mData = new ArrayList<>();
@@ -31,6 +34,6 @@ public class MainActivity extends FragmentActivity {
         mData.add(new UserInfo());
         mData.add(new ImageInfo(ComponentId.TEXT_IMG));
 
-        mRcy.setAdapter(new EAdapter(this, mData));
+        mRcy.setAdapter(new EAdapter(this, mData, mPresenter));
     }
 }

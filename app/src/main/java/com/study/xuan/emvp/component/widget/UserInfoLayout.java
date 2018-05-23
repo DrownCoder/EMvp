@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -11,9 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.study.xuan.emvp.ComponentId;
+import com.study.xuan.emvp.LogUtil;
 import com.study.xuan.emvp.R;
 import com.study.xuan.emvp.component.IComponentBind;
 import com.study.xuan.emvp.component.IPresenterBind;
+import com.study.xuan.emvp.model.PostEvent;
 import com.study.xuan.emvp.model.UserInfo;
 import com.study.xuan.emvp.presenter.IUserInfoPresenter;
 import com.xuan.annotation.ComponentType;
@@ -52,6 +55,15 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<UserIn
         tvText.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (info.postEvent()) {
+                    if (info.postPresenter().getClass().isAssignableFrom(IUserInfoPresenter.class)) {
+                        IUserInfoPresenter presenter = (IUserInfoPresenter) info.postPresenter();
+                        presenter.onTextClick(info);
+                    }else{
+                        LogUtil.Error("the presenter must implement the IUserInfoPresenter");
+                    }
+                    return;
+                }
                 presenter.onTextClick(info);
             }
         });

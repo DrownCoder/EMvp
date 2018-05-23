@@ -10,4 +10,5 @@ public interface IComponentBind<T> {
     void bind(T item);
 
     void unBind();
+
 }
