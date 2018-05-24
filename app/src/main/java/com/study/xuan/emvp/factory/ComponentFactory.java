@@ -49,7 +49,7 @@ public class ComponentFactory implements IComponentFactory {
     @Override
     public void createViewFactory(Context context, BasePresenter presenter) {
         if (viewFactory == null) {
-            viewFactory = new ViewComponentFactory(context, mParentRoot);
+            viewFactory = new ViewComponentFactory(context, mPresenter, mParentRoot);
         }
     }
 

@@ -16,6 +16,7 @@ import com.study.xuan.emvp.LogUtil;
 import com.study.xuan.emvp.R;
 import com.study.xuan.emvp.component.IComponentBind;
 import com.study.xuan.emvp.component.IPresenterBind;
+import com.study.xuan.emvp.model.IUserInfo;
 import com.study.xuan.emvp.model.PostEvent;
 import com.study.xuan.emvp.model.UserInfo;
 import com.study.xuan.emvp.presenter.IUserInfoPresenter;
@@ -29,19 +30,19 @@ import com.xuan.annotation.ComponentType;
 @ComponentType(
         value = ComponentId.USER_INFO_LAYOUT,
         type = ComponentType.Support.View)
-public class UserInfoLayout extends FrameLayout implements IComponentBind<UserInfo>,IPresenterBind<IUserInfoPresenter<UserInfo>> {
+public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserInfo>,IPresenterBind<IUserInfoPresenter<IUserInfo>> {
     private ImageView ivImg;
     private TextView tvText;
     private View root;
-    private UserInfo info;
-    private IUserInfoPresenter<UserInfo> presenter;
+    private IUserInfo info;
+    private IUserInfoPresenter<IUserInfo> presenter;
 
     public UserInfoLayout(@NonNull Context context) {
         this(context, null);
     }
 
     public UserInfoLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, null, 0);
+        this(context, attrs, 0);
     }
 
     public UserInfoLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -55,15 +56,19 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<UserIn
         tvText.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (info.postEvent()) {
-                    if (info.postPresenter().getClass().isAssignableFrom(IUserInfoPresenter.class)) {
-                        IUserInfoPresenter presenter = (IUserInfoPresenter) info.postPresenter();
-                        presenter.onTextClick(info);
-                    }else{
-                        LogUtil.Error("the presenter must implement the IUserInfoPresenter");
+                if (PostEvent.class.isAssignableFrom(info.getClass())) {
+                    PostEvent post = (PostEvent) info;
+                    if (post.postEvent()) {
+                        if (IUserInfoPresenter.class.isAssignableFrom(post.postPresenter().getClass())) {
+                            IUserInfoPresenter presenter = (IUserInfoPresenter) post.postPresenter();
+                            presenter.onTextClick(post);
+                        }else{
+                            LogUtil.Error("the presenter must implement the IUserInfoPresenter");
+                        }
+                        return;
                     }
-                    return;
                 }
+
                 presenter.onTextClick(info);
             }
         });
@@ -75,10 +80,10 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<UserIn
     }
 
     @Override
-    public void bind(UserInfo item) {
+    public void bind(IUserInfo item) {
         info = item;
         //ivImg.setImageResource(R.drawable.ic_launcher_foreground);
-        tvText.setText(item.name);
+        tvText.setText(item.getText());
     }
 
     @Override
@@ -87,7 +92,7 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<UserIn
     }
 
     @Override
-    public void setPresenter(IUserInfoPresenter<UserInfo> userInfoIUserInfoPresenter) {
+    public void setPresenter(IUserInfoPresenter<IUserInfo> userInfoIUserInfoPresenter) {
         presenter = userInfoIUserInfoPresenter;
     }
 }

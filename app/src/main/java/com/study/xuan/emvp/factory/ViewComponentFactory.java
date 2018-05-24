@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.study.xuan.emvp.BasePresenter;
 import com.study.xuan.emvp.ComponentId;
+import com.study.xuan.emvp.component.IPresenterBind;
 import com.xuan.annotation.ViewInfo;
 import com.study.xuan.emvp.adapter.ComponentViewAdapter;
 import com.study.xuan.emvp.component.Component;
@@ -23,10 +25,12 @@ import java.lang.reflect.InvocationTargetException;
 public class ViewComponentFactory implements IViewComponentFactory {
     private Context mContext;
     private ViewGroup mParentRoot;
+    private BasePresenter mPresenter;
 
-    public ViewComponentFactory(Context context, ViewGroup parentRoot) {
+    public ViewComponentFactory(Context context, BasePresenter presenter, ViewGroup parentRoot) {
         this.mContext = context;
         this.mParentRoot = parentRoot;
+        this.mPresenter = presenter;
     }
 
     @Override
@@ -39,6 +43,11 @@ public class ViewComponentFactory implements IViewComponentFactory {
             default:
                 view = reflectCreate(viewInfo.getView());
         }
+        //组件mvp,则需要实现IPresenterBind接口
+        if (IPresenterBind.class.isAssignableFrom(view.getClass())) {
+            IPresenterBind presenterBind = (IPresenterBind) view;
+            presenterBind.setPresenter(mPresenter);
+        }
         return new ComponentViewAdapter((View) view);
     }
 
@@ -50,7 +59,7 @@ public class ViewComponentFactory implements IViewComponentFactory {
         IComponentBind view = null;
         try {
             Constructor c = clazz.getConstructor(Context.class);
-             view = (IComponentBind) c.newInstance(mContext);
+            view = (IComponentBind) c.newInstance(mContext);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
