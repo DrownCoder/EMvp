@@ -36,19 +36,27 @@ public class ViewComponentFactory implements IViewComponentFactory {
     @Override
     public Component createViewComponent(ViewInfo viewInfo) {
         IComponentBind view = null;
-        switch (viewInfo.getId()) {
-            case ComponentId.USER_INFO_LAYOUT:
-                view = new UserInfoLayout(mContext);
-                break;
-            default:
-                view = reflectCreate(viewInfo.getView());
+        if (viewInfo.isAutoCreate()) {
+            view = reflectCreate(viewInfo.getView());
+        }else{
+            view = selfCreateView(viewInfo);
         }
+
         //组件mvp,则需要实现IPresenterBind接口
         if (IPresenterBind.class.isAssignableFrom(view.getClass())) {
             IPresenterBind presenterBind = (IPresenterBind) view;
             presenterBind.setPresenter(mPresenter);
         }
         return new ComponentViewAdapter((View) view);
+    }
+
+    private IComponentBind selfCreateView(ViewInfo viewInfo) {
+        switch (viewInfo.getId()) {
+            case ComponentId.USER_INFO_LAYOUT:
+                return new UserInfoLayout(mContext, null);
+            default:
+                return null;
+        }
     }
 
     /**

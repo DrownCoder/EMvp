@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -18,7 +17,6 @@ import com.study.xuan.emvp.component.IComponentBind;
 import com.study.xuan.emvp.component.IPresenterBind;
 import com.study.xuan.emvp.model.IUserInfo;
 import com.study.xuan.emvp.model.PostEvent;
-import com.study.xuan.emvp.model.UserInfo;
 import com.study.xuan.emvp.presenter.IUserInfoPresenter;
 import com.xuan.annotation.ComponentType;
 
@@ -27,19 +25,17 @@ import com.xuan.annotation.ComponentType;
  * Date : 2018/5/14.
  * Description :the description of this file
  */
-@ComponentType(
-        value = ComponentId.USER_INFO_LAYOUT,
-        type = ComponentType.Support.View)
-public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserInfo>,IPresenterBind<IUserInfoPresenter<IUserInfo>> {
+@ComponentType(value = ComponentId.USER_INFO_LAYOUT, autoCreate = false)
+public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserInfo>, IPresenterBind<IUserInfoPresenter<IUserInfo>> {
     private ImageView ivImg;
     private TextView tvText;
     private View root;
     private IUserInfo info;
     private IUserInfoPresenter<IUserInfo> presenter;
 
-    public UserInfoLayout(@NonNull Context context) {
+    /*public UserInfoLayout(@NonNull Context context) {
         this(context, null);
-    }
+    }*/
 
     public UserInfoLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
@@ -62,7 +58,7 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserI
                         if (IUserInfoPresenter.class.isAssignableFrom(post.postPresenter().getClass())) {
                             IUserInfoPresenter presenter = (IUserInfoPresenter) post.postPresenter();
                             presenter.onTextClick(post);
-                        }else{
+                        } else {
                             LogUtil.Error("the presenter must implement the IUserInfoPresenter");
                         }
                         return;

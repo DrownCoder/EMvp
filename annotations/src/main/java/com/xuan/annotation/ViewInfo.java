@@ -8,6 +8,7 @@ package com.xuan.annotation;
  */
 
 public class ViewInfo {
+    public static final int LAYOUT_NONE = -1;
     public static final int TYPE_VIEW = 0;
     public static final int TYPE_VIEWHOLDER = 1;
     //View类
@@ -18,18 +19,27 @@ public class ViewInfo {
     private int id;
     //layoutId
     private int layoutId;
+    //是否自动创建
+    private boolean autoCreate;
 
-    public ViewInfo(int id, Class<?> viewclass, int viewtype) {
-        this.id = id;
-        this.viewClass = viewclass;
-        this.viewType = viewtype;
+    public ViewInfo(int id, Class<?> viewClass, int viewType) {
+        this(id, viewClass, viewType, true);
     }
 
-    public ViewInfo(int id, Class<?> viewclass, int layoutId, int viewtype) {
+    public ViewInfo(int id, Class<?> viewClazz, int layoutId, int viewType) {
+        this(id, viewClazz, layoutId, viewType, true);
+    }
+
+    public ViewInfo(int id, Class<?> viewClazz, int viewType, boolean autoCreate) {
+        this(id, viewClazz, LAYOUT_NONE, viewType, autoCreate);
+    }
+
+    public ViewInfo(int id, Class<?> viewClazz, int layoutId, int viewType, boolean autoCreate) {
         this.id = id;
-        this.viewClass = viewclass;
+        this.viewClass = viewClazz;
         this.layoutId = layoutId;
-        this.viewType = viewtype;
+        this.viewType = viewType;
+        this.autoCreate = autoCreate;
     }
 
     public Class<?> getView() {
@@ -46,5 +56,9 @@ public class ViewInfo {
 
     public int getLayoutId() {
         return layoutId;
+    }
+
+    public boolean isAutoCreate() {
+        return autoCreate;
     }
 }

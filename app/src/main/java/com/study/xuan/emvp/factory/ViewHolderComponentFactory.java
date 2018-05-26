@@ -21,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
  * Description :the RecyclerView.ViewHolder Factory
  */
 
-public class ViewHolderComponentFactory implements IViewHolderComponentFactory,ReflectCreate<RecyclerView.ViewHolder> {
+public class ViewHolderComponentFactory implements IViewHolderComponentFactory, ReflectCreate<RecyclerView.ViewHolder> {
     private Context mContext;
     private LayoutInflater mInflater;
     private View rootView;
@@ -34,21 +34,26 @@ public class ViewHolderComponentFactory implements IViewHolderComponentFactory,R
 
     @Override
     public Component createViewHolderComponent(ViewInfo viewInfo) {
-        RecyclerView.ViewHolder viewholder;
+        RecyclerView.ViewHolder viewHolder;
         if (mInflater == null) {
             mInflater = LayoutInflater.from(mContext);
         }
         rootView = mInflater.inflate(viewInfo.getLayoutId(), mParentRoot, false);
+        if (viewInfo.isAutoCreate()) {
+            viewHolder = reflectCreate(viewInfo.getView());
+        } else {
+            viewHolder = selfCreateViewHolder(viewInfo);
+        }
+        return new ComponentViewHolderAdapter(viewHolder);
+    }
+
+    private RecyclerView.ViewHolder selfCreateViewHolder(ViewInfo viewInfo) {
         switch (viewInfo.getId()) {
             case ComponentId.IMAGE_VH:
-                viewholder = new ImageViewHolder(rootView);
-                break;
+                return new ImageViewHolder(rootView);
             default:
-                viewholder = reflectCreate(viewInfo.getView());
-                break;
-
+                return null;
         }
-        return new ComponentViewHolderAdapter(viewholder);
     }
 
     @Override

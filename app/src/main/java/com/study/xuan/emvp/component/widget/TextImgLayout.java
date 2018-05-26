@@ -20,13 +20,11 @@ import com.xuan.annotation.ComponentType;
  * Date : 2018/5/23.
  * Description :the description of this file
  */
-@ComponentType(
-        value = ComponentId.TEXT_IMG,
-        type = ComponentType.Support.View
-)
+@ComponentType(value = ComponentId.TEXT_IMG)
 public class TextImgLayout extends LinearLayout implements IComponentBind<ImageInfo> {
     private View root;
     private TextView tvInfo;
+
     public TextImgLayout(Context context) {
         this(context, null);
     }

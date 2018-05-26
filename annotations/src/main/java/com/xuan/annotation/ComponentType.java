@@ -17,12 +17,10 @@ import java.lang.annotation.Target;
 // 表示可以作用于成员变量，类、接口
 @Target(ElementType.TYPE)
 public @interface ComponentType {
-    enum Support{
-        ViewHolder,View
-    }
-    int value() default 0;
-
-    Support type() default Support.ViewHolder;
-
+    //ComponentId
+    int value() default -1;
+    //LayoutId，当为ViewHolder类型需要
     int layout() default -1;
+    //是否利用反射创建，默认打开的(复杂的，性能相关的，数量大的当然建议关闭咯)
+    boolean autoCreate() default true;
 }
