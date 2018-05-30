@@ -1,6 +1,7 @@
 package com.study.xuan.emvp.model;
 
-import com.study.xuan.emvp.BasePresenter;
+
+import com.xuan.eapi.BasePresenter;
 
 /**
  * Author : xuan.

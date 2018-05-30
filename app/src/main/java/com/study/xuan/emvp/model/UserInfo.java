@@ -1,9 +1,8 @@
 package com.study.xuan.emvp.model;
 
-import com.study.xuan.emvp.BasePresenter;
 import com.study.xuan.emvp.ComponentId;
-import com.study.xuan.emvp.R;
 import com.xuan.annotation.BindType;
+import com.xuan.eapi.BasePresenter;
 
 /**
  * Author : xuan.
@@ -14,7 +13,7 @@ import com.xuan.annotation.BindType;
 public class UserInfo implements PostEvent,IUserInfo{
     public boolean isPostEvent = false;
     public BasePresenter presenter;
-    public int imgUrl = R.drawable.ic_launcher_foreground;
+    public int imgUrl;
     public String name = "用户名字";
 
     public UserInfo() {

@@ -40,6 +40,7 @@ import javax.tools.JavaFileObject;
  */
 @AutoService(Processor.class)
 public class TypeProcessor extends AbstractProcessor {
+    private static final String DIRECTORY_PATH = "com.xuan.eapi.rule";
     private static final String CREATE_FILE_NAME = "ComponentRule";
     private static final String CREATE_FILE_PATH = "com.study.xuan.emvp";
     private static final String[] SUPPORT_CLASS = new String[]{
@@ -143,9 +144,9 @@ public class TypeProcessor extends AbstractProcessor {
     private void writeFile() {
         BufferedWriter writer = null;
         try {
-            JavaFileObject sourceFile = processingEnv.getFiler().createSourceFile(CREATE_FILE_NAME);
+            JavaFileObject sourceFile = processingEnv.getFiler().createSourceFile(DIRECTORY_PATH+"."+CREATE_FILE_NAME);
             writer = new BufferedWriter(sourceFile.openWriter());
-            writer.write("package " + CREATE_FILE_PATH + ";\n\n");
+            writer.write("package " + DIRECTORY_PATH + ";\n\n");
             writer.write("import android.util.SparseArray;\n");
             writer.write("import java.util.HashMap;\n");
             writer.write("import java.util.Map;\n");

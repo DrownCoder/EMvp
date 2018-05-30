@@ -1,5 +1,7 @@
 package com.study.xuan.emvp.model;
 
+import com.xuan.eapi.imodel.HandlerType;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,7 @@ import java.util.List;
  * Description :多样式需要实现HandlerType接口
  */
 
-public class ImageInfo implements HandlerType{
+public class ImageInfo implements HandlerType {
     public int type;
     public List<String> imgs;
     public PromInfo promInfo;

@@ -1,1 +1,1 @@
-include ':app', ':complier', ':annotations'
+include ':app', ':complier', ':annotations', ':slots', ':component'

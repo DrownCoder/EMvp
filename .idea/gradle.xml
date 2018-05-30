@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$/annotations" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/complier" />
+            <option value="$PROJECT_DIR$/component" />
+            <option value="$PROJECT_DIR$/slots" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

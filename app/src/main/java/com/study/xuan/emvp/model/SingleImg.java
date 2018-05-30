@@ -1,7 +1,6 @@
 package com.study.xuan.emvp.model;
 
 import com.study.xuan.emvp.ComponentId;
-import com.study.xuan.emvp.R;
 import com.xuan.annotation.BindType;
 
 /**
@@ -11,5 +10,5 @@ import com.xuan.annotation.BindType;
  */
 @BindType(ComponentId.IMAGE_VH)
 public class SingleImg {
-    public int imgUrl = R.drawable.ic_launcher_background;
+    public int imgUrl;
 }
