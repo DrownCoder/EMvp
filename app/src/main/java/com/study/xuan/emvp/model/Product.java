@@ -3,6 +3,7 @@ package com.study.xuan.emvp.model;
 import com.study.xuan.emvp.ComponentId;
 import com.xuan.annotation.BindType;
 import com.xuan.eapi.BasePresenter;
+import com.xuan.eapi.imodel.PostEvent;
 
 /**
  * Author : xuan.
@@ -26,13 +27,18 @@ public class Product implements PostEvent,IUserInfo{
     }
 
     @Override
-    public boolean postEvent() {
+    public boolean interceptEvent() {
         return isPostEvent;
     }
 
     @Override
     public BasePresenter postPresenter() {
         return presenter;
+    }
+
+    @Override
+    public boolean singlePresenter() {
+        return false;
     }
 
     @Override

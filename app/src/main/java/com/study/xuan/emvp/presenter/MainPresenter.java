@@ -21,6 +21,6 @@ public class MainPresenter extends BasePresenter implements IUserInfoPresenter<U
 
     @Override
     public void onTextClick(UserInfo userInfo) {
-        Toast.makeText(mContext, "用户逻辑", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "这是Activity的默认逻辑", Toast.LENGTH_SHORT).show();
     }
 }

@@ -3,7 +3,7 @@ package com.xuan.annotation;
 /**
  * Author : xuan.
  * Date : 2018/5/17.
- * Description :the description of this file
+ * Description :用于model的注解
  */
 
 import java.lang.annotation.Documented;
@@ -18,5 +18,5 @@ import java.lang.annotation.Target;
 // 表示可以作用于成员变量，类、接口
 @Target(ElementType.TYPE)
 public @interface BindType {
-    int[] value();
+    int value();
 }

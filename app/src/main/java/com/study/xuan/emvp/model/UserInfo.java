@@ -3,6 +3,7 @@ package com.study.xuan.emvp.model;
 import com.study.xuan.emvp.ComponentId;
 import com.xuan.annotation.BindType;
 import com.xuan.eapi.BasePresenter;
+import com.xuan.eapi.imodel.PostEvent;
 
 /**
  * Author : xuan.
@@ -11,7 +12,7 @@ import com.xuan.eapi.BasePresenter;
  */
 @BindType(ComponentId.USER_INFO_LAYOUT)
 public class UserInfo implements PostEvent,IUserInfo{
-    public boolean isPostEvent = false;
+    public boolean isIntercept = false;
     public BasePresenter presenter;
     public int imgUrl;
     public String name = "用户名字";
@@ -20,19 +21,24 @@ public class UserInfo implements PostEvent,IUserInfo{
         this(false, null);
     }
 
-    public UserInfo(boolean isPostEvent, BasePresenter presenter) {
-        this.isPostEvent = isPostEvent;
+    public UserInfo(boolean isIntercept, BasePresenter presenter) {
+        this.isIntercept = isIntercept;
         this.presenter = presenter;
     }
 
     @Override
-    public boolean postEvent() {
-        return isPostEvent;
+    public boolean interceptEvent() {
+        return isIntercept;
     }
 
     @Override
     public BasePresenter postPresenter() {
         return presenter;
+    }
+
+    @Override
+    public boolean singlePresenter() {
+        return true;
     }
 
     @Override

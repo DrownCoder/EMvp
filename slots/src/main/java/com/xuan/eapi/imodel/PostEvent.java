@@ -1,4 +1,4 @@
-package com.study.xuan.emvp.model;
+package com.xuan.eapi.imodel;
 
 
 import com.xuan.eapi.BasePresenter;
@@ -10,7 +10,10 @@ import com.xuan.eapi.BasePresenter;
  */
 
 public interface PostEvent {
-    boolean postEvent();
-
+    //是否拦截逻辑
+    boolean interceptEvent();
+    //处理该model的presenter
     BasePresenter postPresenter();
+    //model和presenter的关系一对一
+    boolean singlePresenter();
 }

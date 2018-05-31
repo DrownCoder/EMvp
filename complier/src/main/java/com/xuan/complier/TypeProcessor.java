@@ -112,7 +112,7 @@ public class TypeProcessor extends AbstractProcessor {
                 /*if (!isValidComponent(componentInfo)) {
                     return true;
                 }*/
-                if (componentInfo.getComponentIds().length == 1) {
+                if (componentInfo.getComponentId() > 0) {
                     typeModel.add(componentInfo);
                 }
             } catch (Exception e) {
@@ -192,7 +192,7 @@ public class TypeProcessor extends AbstractProcessor {
         strBuilder.setLength(0);
         for (ModelTypeClassInfo model : typeModel) {
             strBuilder.append("        putModel(").append(model.getClassName()).append(".class").append(",")
-                    .append(model.getComponentIds()[0])
+                    .append(model.getComponentId())
                     .append(");\n");
             writer.write(strBuilder.toString());
             strBuilder.setLength(0);

@@ -42,6 +42,10 @@ public class ToolKitContext {
         this.modelManager = new DefaultModelManager(data);
     }
 
+    public void putPresenterEngine(Object obj) {
+
+    }
+
     public Context getContext() {
         return context;
     }

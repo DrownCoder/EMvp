@@ -19,6 +19,6 @@ public class OtherPresenter extends BasePresenter implements IUserInfoPresenter<
 
     @Override
     public void onTextClick(Product product) {
-        Toast.makeText(mContext, "这是商品逻辑", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "这是配的商品逻辑（属于Activity）", Toast.LENGTH_SHORT).show();
     }
 }

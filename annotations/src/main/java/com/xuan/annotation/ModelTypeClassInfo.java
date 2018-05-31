@@ -1,8 +1,5 @@
 package com.xuan.annotation;
 
-import java.util.Arrays;
-import java.util.List;
-
 import javax.lang.model.element.TypeElement;
 
 /**
@@ -14,15 +11,15 @@ import javax.lang.model.element.TypeElement;
 public class ModelTypeClassInfo {
     private TypeElement typeElement;
     //组件id全局唯一
-    private int[] componentIds;
+    private int componentId;
     //被注解类的全类名
     private String className;
 
     public ModelTypeClassInfo(TypeElement classElement) {
         this.typeElement = classElement;
         BindType annotation = classElement.getAnnotation(BindType.class);
-        componentIds = annotation.value();
-        if (componentIds.length <= 0) {
+        componentId = annotation.value();
+        if (componentId < 0) {
             throw new IllegalArgumentException(
                     String.format("value() in @%s for class %s is empty! that's not allowed",
                             BindType.class.getSimpleName(), classElement.getQualifiedName().toString()));
@@ -35,8 +32,8 @@ public class ModelTypeClassInfo {
         className = classElement.getQualifiedName().toString();
     }
 
-    public int[] getComponentIds() {
-        return componentIds;
+    public int getComponentId() {
+        return componentId;
     }
 
     public String getClassName() {
