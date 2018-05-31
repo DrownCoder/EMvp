@@ -3,6 +3,8 @@ package com.xuan.eapi.manager;
 
 import android.content.Context;
 
+import com.xuan.annotation.ViewInfo;
+import com.xuan.eapi.Slots;
 import com.xuan.eapi.rule.Const;
 import com.xuan.eapi.IComponentBind;
 import com.xuan.eapi.imodel.HandlerType;
@@ -37,22 +39,16 @@ public class ModelManager implements IModerBinder {
             return ((HandlerType) item).handlerType();
         } else {
             //一对一
-            /*Integer type = ComponentRule.MODEL_TYPE.get(item.getClass());
-            if (type != null) {
-                return type;
-            } else {
-                return Const.UNFIND_TYPE;
-            }*/
-            return Const.UNFIND_TYPE;
+            return Slots.getInstance().obtainRule().obtainComponentId(item.getClass());
         }
     }
 
     @Override
     public IComponentBind createView(int type) {
-        /*ViewInfo viewInfo = ComponentRule.WIDGET_TYPE.get(type);
+        ViewInfo viewInfo = Slots.getInstance().obtainRule().obtainViewInfo(type);
         if (!viewInfo.isAutoCreate()) {
             createComponent(mContext, viewInfo.getId());
-        }*/
+        }
         return null;
     }
 

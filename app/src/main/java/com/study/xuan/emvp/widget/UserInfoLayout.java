@@ -25,7 +25,7 @@ import com.xuan.eapi.LogUtil;
  * Date : 2018/5/14.
  * Description :the description of this file
  */
-@ComponentType(value = ComponentId.USER_INFO_LAYOUT, autoCreate = false)
+@ComponentType(value = ComponentId.USER_INFO_LAYOUT)
 public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserInfo>, IPresenterBind<IUserInfoPresenter<IUserInfo>> {
     private ImageView ivImg;
     private TextView tvText;
@@ -33,9 +33,9 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserI
     private IUserInfo info;
     private IUserInfoPresenter<IUserInfo> presenter;
 
-    /*public UserInfoLayout(@NonNull Context context) {
+    public UserInfoLayout(@NonNull Context context) {
         this(context, null);
-    }*/
+    }
 
     public UserInfoLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);

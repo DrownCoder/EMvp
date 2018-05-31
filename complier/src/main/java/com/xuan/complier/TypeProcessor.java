@@ -151,7 +151,7 @@ public class TypeProcessor extends AbstractProcessor {
             writer.write("import java.util.HashMap;\n");
             writer.write("import java.util.Map;\n");
             writer.write("import com.xuan.annotation.ViewInfo;\n\n");
-            writer.write("public class " + CREATE_FILE_NAME + " {\n");
+            writer.write("public class " + CREATE_FILE_NAME +" implements IComponentRule " +" {\n");
             writer.write("    public static final SparseArray<ViewInfo> WIDGET_TYPE;\n\n");
             writer.write("    public static final Map<Class<?>, Integer> MODEL_TYPE;\n\n");
             writer.write("    static {\n");
@@ -165,6 +165,14 @@ public class TypeProcessor extends AbstractProcessor {
             writer.write("    }\n\n");
             writer.write("    private static void putModel(Class<?> clazz, int id) {\n");
             writer.write("        MODEL_TYPE.put(clazz, id);;\n");
+            writer.write("    }\n\n");
+            writer.write("    @Override\n");
+            writer.write("    public ViewInfo obtainViewInfo(int id) {\n");
+            writer.write("        return WIDGET_TYPE.get(id);\n");
+            writer.write("    }\n\n");
+            writer.write("    @Override\n");
+            writer.write("    public int obtainComponentId(Class<?> clazz) {\n");
+            writer.write("        return MODEL_TYPE.get(clazz);\n");
             writer.write("    }\n\n");
             writer.write("}\n");
         } catch (IOException e) {

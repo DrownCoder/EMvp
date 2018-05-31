@@ -1,6 +1,7 @@
 package com.xuan.eapi.factory;
 
 import com.xuan.annotation.ViewInfo;
+import com.xuan.eapi.Slots;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.helper.ToolKitContext;
 
@@ -12,10 +13,10 @@ import com.xuan.eapi.helper.ToolKitContext;
  */
 
 public class ComponentFactory implements IComponentFactory {
-    private ToolKitContext toolKitContext;
+    private ToolKitContext tookContext;
 
     public ComponentFactory(ToolKitContext toolKitContext) {
-        this.toolKitContext = toolKitContext;
+        this.tookContext = toolKitContext;
     }
 
     private IViewComponentFactory viewFactory;
@@ -23,19 +24,19 @@ public class ComponentFactory implements IComponentFactory {
 
     @Override
     public Component createViewHolder(int type) {
-        /*ViewInfo viewInfo = ComponentRule.WIDGET_TYPE.get(type);
+        ViewInfo viewInfo = Slots.getInstance().obtainRule().obtainViewInfo(type);
         if (viewInfo == null) {
             return defaultViewHolder();
         }
         int viewType = viewInfo.getViewType();
         switch (viewType) {
             case 0:
-                createViewFactory(toolKitContext);
+                createViewFactory(tookContext);
                 return viewFactory.createViewComponent(viewInfo);
             case 1:
-                createViewHolderFactory(toolKitContext);
+                createViewHolderFactory(tookContext);
                 return viewHolderFactory.createViewHolderComponent(viewInfo);
-        }*/
+        }
         return defaultViewHolder();
     }
 
