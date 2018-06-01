@@ -1,6 +1,7 @@
 package com.xuan.eapi;
 
 import com.xuan.eapi.rule.IComponentRule;
+import com.xuan.eapi.rule.IPresenterRule;
 
 /**
  * Author : xuan.
@@ -11,6 +12,7 @@ import com.xuan.eapi.rule.IComponentRule;
 public class Slots {
     public static volatile Slots instance;
     private IComponentRule componentRule;
+    private IPresenterRule presenterRule;
 
     public static Slots getInstance() {
         if (instance == null) {
@@ -42,5 +44,9 @@ public class Slots {
 
     public IComponentRule obtainRule() {
         return componentRule;
+    }
+
+    public IPresenterRule obtainPresenterRule() {
+        return presenterRule;
     }
 }

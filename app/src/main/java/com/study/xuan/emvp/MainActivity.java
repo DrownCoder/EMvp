@@ -38,6 +38,7 @@ public class MainActivity extends FragmentActivity {
         mData.add(new UserInfo());
         mData.add(new ImageInfo(ComponentId.TEXT_IMG));
         ToolKitContext toolKitContext = new ToolKitContext(this, mData);
+        toolKitContext.startPresenterEngine();
         mRcy.setAdapter(new EAdapter(toolKitContext));
     }
 }

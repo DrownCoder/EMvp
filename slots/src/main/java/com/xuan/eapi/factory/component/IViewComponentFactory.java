@@ -1,4 +1,4 @@
-package com.xuan.eapi.factory;
+package com.xuan.eapi.factory.component;
 
 import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.IComponentBind;
@@ -10,8 +10,6 @@ import com.xuan.eapi.component.Component;
  * Description :the description of this file
  */
 
-public interface IViewComponentFactory extends ReflectCreate<IComponentBind>{
+public interface IViewComponentFactory{
     Component createViewComponent(ViewInfo type);
-
-    IComponentBind reflectCreate(Class<?> clazz);
 }

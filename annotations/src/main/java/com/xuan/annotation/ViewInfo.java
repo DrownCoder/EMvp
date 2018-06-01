@@ -13,7 +13,7 @@ public class ViewInfo {
     public static final int TYPE_VIEWHOLDER = 1;
     //View类
     private Class<?> viewClass;
-    //View类型
+    //View类型 0代表自定义View，1代表ViewHolder
     private int viewType;
     //componentId
     private int id;
@@ -21,6 +21,8 @@ public class ViewInfo {
     private int layoutId;
     //是否自动创建
     private boolean autoCreate;
+    //view的Presenter接口
+    private Class<?> presenterClass;
 
     public ViewInfo(int id, Class<?> viewClass, int viewType) {
         this(id, viewClass, viewType, true);
@@ -60,5 +62,9 @@ public class ViewInfo {
 
     public boolean isAutoCreate() {
         return autoCreate;
+    }
+
+    public Class<?> getPresenter() {
+        return presenterClass;
     }
 }

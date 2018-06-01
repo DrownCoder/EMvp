@@ -1,4 +1,4 @@
-package com.xuan.eapi.factory;
+package com.xuan.eapi.factory.component;
 
 import android.content.Context;
 import android.view.View;
@@ -20,7 +20,7 @@ import java.lang.reflect.InvocationTargetException;
  * Description :View转ViewHolder
  */
 
-public class ViewComponentFactory implements IViewComponentFactory {
+public class ViewComponentFactory implements IViewComponentFactory, ReflectCreate<IComponentBind> {
     private ToolKitContext tContext;
     private Context mContext;
 
@@ -34,14 +34,14 @@ public class ViewComponentFactory implements IViewComponentFactory {
         IComponentBind view = null;
         if (viewInfo.isAutoCreate()) {
             view = reflectCreate(viewInfo.getView());
-        }else{
+        } else {
             view = selfCreateView(viewInfo);
         }
 
         //组件mvp,则需要实现IPresenterBind接口
         if (IPresenterBind.class.isAssignableFrom(view.getClass())) {
             IPresenterBind presenterBind = (IPresenterBind) view;
-            presenterBind.setPresenter(tContext.getPresenter());
+            presenterBind.setPresenter(tContext.getPresenter(viewInfo.getPresenter()));
         }
         return new ComponentViewAdapter((View) view);
     }
