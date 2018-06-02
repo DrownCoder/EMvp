@@ -3,9 +3,9 @@ package com.xuan.eapi;
 /**
  * Author : xuan.
  * Date : 2018/5/23.
- * Description :the description of this file
+ * Description :注入Presenter
  */
 
 public interface IPresenterBind<T> {
-    void setPresenter(T t);
+    void injectPresenter(T t);
 }

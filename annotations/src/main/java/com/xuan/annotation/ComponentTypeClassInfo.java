@@ -1,6 +1,8 @@
 package com.xuan.annotation;
 
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.MirroredTypeException;
 
 /**
  * Author : xuan.
@@ -18,6 +20,7 @@ public class ComponentTypeClassInfo {
     private int componentType;
     private int layoutId;
     private boolean autoCreate;
+    private String presenterName;
 
     public ComponentTypeClassInfo(TypeElement classElement) {
         this.typeElement = classElement;
@@ -31,6 +34,19 @@ public class ComponentTypeClassInfo {
         System.out.println("getClass = " + classElement.getClass());
 
         className = classElement.getQualifiedName().toString();
+        if (typeElement.getAnnotation(ILogic.class) != null) {
+            ILogic presenter = classElement.getAnnotation(ILogic.class);
+            Class<?> presenterClass = null;
+            try {
+                presenterClass = presenter.value();
+                presenterName = presenterClass.getName();
+            } catch (MirroredTypeException mte) {
+                DeclaredType classTypeMirror = (DeclaredType) mte.getTypeMirror();
+                TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
+                presenterName = classTypeElement.getQualifiedName().toString();
+            }
+            //System.out.println("xxxxx:"+presenterClass.getSimpleName());
+        }
     }
 
     public void setComponentType(int componentType) {
@@ -59,6 +75,10 @@ public class ComponentTypeClassInfo {
 
     public boolean isAutoCreate() {
         return autoCreate;
+    }
+
+    public String getPresenterClass(){
+        return presenterName;
     }
 }
 

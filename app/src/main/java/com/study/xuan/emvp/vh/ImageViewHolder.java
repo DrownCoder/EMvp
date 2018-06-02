@@ -7,9 +7,12 @@ import android.widget.ImageView;
 
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.model.SingleImg;
+import com.study.xuan.emvp.presenter.Contract;
 import com.xuan.annotation.ComponentType;
+import com.xuan.annotation.ILogic;
 import com.xuan.component.R;
 import com.xuan.eapi.IComponentBind;
+import com.xuan.eapi.IPresenterBind;
 
 /**
  * Author : xuan.
@@ -20,11 +23,19 @@ import com.xuan.eapi.IComponentBind;
         value = ComponentId.IMAGE_VH,
         layout = R.layout.single_img
 )
-public class ImageViewHolder extends RecyclerView.ViewHolder implements IComponentBind<SingleImg> {
+@ILogic(Contract.ImagePresenter.class)
+public class ImageViewHolder extends RecyclerView.ViewHolder implements IComponentBind<SingleImg>,IPresenterBind<Contract.ImagePresenter> {
     private ImageView iv;
+    private Contract.ImagePresenter presenter;
     public ImageViewHolder(View itemView) {
         super(itemView);
         iv = (ImageView) itemView;
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onImgClick();
+            }
+        });
     }
 
     @Override
@@ -36,5 +47,10 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements ICompone
     @Override
     public void unBind() {
 
+    }
+
+    @Override
+    public void injectPresenter(Contract.ImagePresenter imagePresenter) {
+        this.presenter = imagePresenter;
     }
 }

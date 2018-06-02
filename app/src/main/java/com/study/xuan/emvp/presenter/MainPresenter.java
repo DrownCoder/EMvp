@@ -13,14 +13,25 @@ import com.xuan.eapi.BasePresenter;
  * Description :the description of this file
  */
 
-public class MainPresenter extends BasePresenter implements IUserInfoPresenter<UserInfo> {
+public class MainPresenter extends BasePresenter
+        implements Contract.ImagePresenter, Contract.TwoImgPresenter {
 
     public MainPresenter(Context context) {
         super(context);
     }
 
     @Override
-    public void onTextClick(UserInfo userInfo) {
-        Toast.makeText(mContext, "这是Activity的默认逻辑", Toast.LENGTH_SHORT).show();
+    public void onImgClick() {
+        Toast.makeText(mContext, "一行一图，一张图片的点击逻辑，这是Activity的默认逻辑1", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLeftClick() {
+        Toast.makeText(mContext, "一行两图，左边图片点击，这是Activity的默认逻辑1", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRightClick() {
+        Toast.makeText(mContext, "一行两图，右图片点击，这是Activity的默认逻辑1", Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,11 +1,10 @@
-package com.xuan.eapi.manager;
+package com.xuan.eapi.manager.binder;
 
 
 import android.content.Context;
 
 import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.Slots;
-import com.xuan.eapi.rule.Const;
 import com.xuan.eapi.IComponentBind;
 import com.xuan.eapi.imodel.HandlerType;
 
@@ -18,11 +17,11 @@ import java.util.List;
  * Description :处理Model和Type、size的关系
  */
 
-public class ModelManager implements IModerBinder {
+public class ModelBinderManager implements IModerBinder {
     private List<Object> mData;
     private Context mContext;
 
-    public ModelManager(Context context, List<Object> data) {
+    public ModelBinderManager(Context context, List<Object> data) {
         this.mContext = context;
         if (data == null) {
             this.mData = new ArrayList<>();

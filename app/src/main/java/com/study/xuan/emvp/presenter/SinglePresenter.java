@@ -3,6 +3,7 @@ package com.study.xuan.emvp.presenter;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.study.xuan.emvp.model.Product;
 import com.xuan.eapi.BasePresenter;
 
 /**
@@ -11,13 +12,13 @@ import com.xuan.eapi.BasePresenter;
  * Description :the description of this file
  */
 
-public class SinglePresenter extends BasePresenter implements IUserInfoPresenter {
+public class SinglePresenter extends BasePresenter implements IUserInfoPresenter<Product> {
     public SinglePresenter(Context context) {
         super(context);
     }
 
     @Override
-    public void onTextClick(Object o) {
-        Toast.makeText(mContext, "这是配的另类逻辑（属于Model）", Toast.LENGTH_SHORT).show();
+    public void onTextClick(Product o) {
+        Toast.makeText(mContext, "这是配的商品逻辑（属于Model）", Toast.LENGTH_SHORT).show();
     }
 }

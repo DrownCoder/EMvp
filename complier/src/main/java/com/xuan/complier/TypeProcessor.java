@@ -4,6 +4,7 @@ import com.google.auto.service.AutoService;
 import com.xuan.annotation.BindType;
 import com.xuan.annotation.ComponentType;
 import com.xuan.annotation.ComponentTypeClassInfo;
+import com.xuan.annotation.ILogic;
 import com.xuan.annotation.ModelTypeClassInfo;
 import com.xuan.annotation.ViewInfo;
 
@@ -79,6 +80,7 @@ public class TypeProcessor extends AbstractProcessor {
         LinkedHashSet<String> annotations = new LinkedHashSet<>();
         annotations.add(ComponentType.class.getCanonicalName());
         annotations.add(BindType.class.getCanonicalName());
+        annotations.add(ILogic.class.getCanonicalName());
         return annotations;
     }
 
@@ -120,6 +122,7 @@ public class TypeProcessor extends AbstractProcessor {
                 return true;
             }
         }
+
         if (typeWidget.size() > 0) {
             writeFile();
         }
@@ -144,14 +147,14 @@ public class TypeProcessor extends AbstractProcessor {
     private void writeFile() {
         BufferedWriter writer = null;
         try {
-            JavaFileObject sourceFile = processingEnv.getFiler().createSourceFile(DIRECTORY_PATH+"."+CREATE_FILE_NAME);
+            JavaFileObject sourceFile = processingEnv.getFiler().createSourceFile(DIRECTORY_PATH + "." + CREATE_FILE_NAME);
             writer = new BufferedWriter(sourceFile.openWriter());
             writer.write("package " + DIRECTORY_PATH + ";\n\n");
             writer.write("import android.util.SparseArray;\n");
             writer.write("import java.util.HashMap;\n");
             writer.write("import java.util.Map;\n");
             writer.write("import com.xuan.annotation.ViewInfo;\n\n");
-            writer.write("public class " + CREATE_FILE_NAME +" implements IComponentRule " +" {\n");
+            writer.write("public class " + CREATE_FILE_NAME + " implements IComponentRule " + " {\n");
             writer.write("    public static final SparseArray<ViewInfo> WIDGET_TYPE;\n\n");
             writer.write("    public static final Map<Class<?>, Integer> MODEL_TYPE;\n\n");
             writer.write("    static {\n");
@@ -214,6 +217,11 @@ public class TypeProcessor extends AbstractProcessor {
             if (!info.isAutoCreate()) {
                 strBuilder.append(", false");
             }
+            if (info.getPresenterClass() != null) {
+                strBuilder.append(", ").append(info.getPresenterClass()).append(".class");
+            } else {
+                strBuilder.append(", null");
+            }
             strBuilder.append("));\n");
             writer.write(strBuilder.toString());
             strBuilder.setLength(0);
@@ -226,7 +234,7 @@ public class TypeProcessor extends AbstractProcessor {
      * 2.类不能是抽象的
      * 3.组件id需要唯一，不能重复定义
      * 4.类需要继承View.class(自定义View)或者ViewHolder(RecyclerView.ViewHolder)
-     * 5.其中自定义类需要提供默认构造函数View(Context context)
+     * 5.其中注解了AutoCreate为true的自定义类需要提供默认构造函数View(Context context)
      * 6.类需要实现IComponentBind接口
      */
     private boolean isValidComponent(ComponentTypeClassInfo componentInfo) {
@@ -297,7 +305,7 @@ public class TypeProcessor extends AbstractProcessor {
             }
             if (i < interfaces.size()) {
                 currentInterface = interfaces.get(i++);
-            }else{
+            } else {
                 error(typeElement, "The class %s must implement IComponentBind" +
                                 "\n被注解的组件必须实现IComponentBind接口",
                         typeElement.getQualifiedName().toString());

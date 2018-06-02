@@ -24,24 +24,25 @@ public class ViewInfo {
     //view的Presenter接口
     private Class<?> presenterClass;
 
-    public ViewInfo(int id, Class<?> viewClass, int viewType) {
-        this(id, viewClass, viewType, true);
+    public ViewInfo(int id, Class<?> viewClass, int viewType, Class<?> presenterClass) {
+        this(id, viewClass, viewType, true, presenterClass);
     }
 
-    public ViewInfo(int id, Class<?> viewClazz, int layoutId, int viewType) {
-        this(id, viewClazz, layoutId, viewType, true);
+    public ViewInfo(int id, Class<?> viewClazz, int layoutId, int viewType, Class<?> presenterClass) {
+        this(id, viewClazz, layoutId, viewType, true, presenterClass);
     }
 
-    public ViewInfo(int id, Class<?> viewClazz, int viewType, boolean autoCreate) {
-        this(id, viewClazz, LAYOUT_NONE, viewType, autoCreate);
+    public ViewInfo(int id, Class<?> viewClazz, int viewType, boolean autoCreate, Class<?> presenterClass) {
+        this(id, viewClazz, LAYOUT_NONE, viewType, autoCreate, presenterClass);
     }
 
-    public ViewInfo(int id, Class<?> viewClazz, int layoutId, int viewType, boolean autoCreate) {
+    public ViewInfo(int id, Class<?> viewClazz, int layoutId, int viewType, boolean autoCreate, Class<?> presenterClass) {
         this.id = id;
         this.viewClass = viewClazz;
         this.layoutId = layoutId;
         this.viewType = viewType;
         this.autoCreate = autoCreate;
+        this.presenterClass = presenterClass;
     }
 
     public Class<?> getView() {

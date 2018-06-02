@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xuan.eapi.IComponentBind;
-import com.xuan.eapi.helper.ToolKitContext;
+import com.xuan.eapi.context.ToolKitContext;
 import com.xuan.eapi.component.Component;
 import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.adapter.ComponentViewHolderAdapter;
@@ -21,36 +21,29 @@ import java.lang.reflect.InvocationTargetException;
  * Description :the RecyclerView.ViewHolder Factory
  */
 
-public class ViewHolderComponentFactory implements IViewHolderComponentFactory, ReflectCreate<RecyclerView.ViewHolder> {
-    private ToolKitContext tookContext;
+public class ViewHolderComponentFactory implements IViewHolderComponentFactory, ReflectCreate<RecyclerView.ViewHolder>, AdapterComponent {
     private Context mContext;
     private LayoutInflater mInflater;
     private View rootView;
     private ViewGroup mParentRoot;
 
     public ViewHolderComponentFactory(ToolKitContext toolKitContext) {
-        this.tookContext = toolKitContext;
         this.mContext = toolKitContext.getContext();
         this.mParentRoot = toolKitContext.getParentRoot();
     }
 
     @Override
-    public Component createViewHolderComponent(ViewInfo viewInfo) {
-        RecyclerView.ViewHolder viewHolder;
+    public Component adapterComponent(IComponentBind componentBind) {
+        return new ComponentViewHolderAdapter((RecyclerView.ViewHolder) componentBind);
+    }
+
+    @Override
+    public IComponentBind createViewHolderComponent(ViewInfo viewInfo) {
         if (mInflater == null) {
             mInflater = LayoutInflater.from(mContext);
         }
         rootView = mInflater.inflate(viewInfo.getLayoutId(), mParentRoot, false);
-        if (viewInfo.isAutoCreate()) {
-            viewHolder = reflectCreate(viewInfo.getView());
-        } else {
-            viewHolder = (RecyclerView.ViewHolder) selfCreateViewHolder(viewInfo);
-        }
-        return new ComponentViewHolderAdapter(viewHolder);
-    }
-
-    private IComponentBind selfCreateViewHolder(ViewInfo viewInfo) {
-        return tookContext.createView(viewInfo.getId());
+        return (IComponentBind) reflectCreate(viewInfo.getView());
     }
 
     @Override

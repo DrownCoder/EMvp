@@ -11,7 +11,7 @@ import com.xuan.eapi.imodel.PostEvent;
  * Description :the description of this file
  */
 @BindType(ComponentId.USER_INFO_LAYOUT)
-public class Product implements PostEvent,IUserInfo{
+public class Product implements PostEvent, IUserInfo {
     public boolean isPostEvent = false;
     public BasePresenter presenter;
     public int imgUrl;

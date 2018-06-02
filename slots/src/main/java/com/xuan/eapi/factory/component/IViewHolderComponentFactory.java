@@ -3,6 +3,7 @@ package com.xuan.eapi.factory.component;
 import android.support.v7.widget.RecyclerView;
 
 import com.xuan.annotation.ViewInfo;
+import com.xuan.eapi.IComponentBind;
 import com.xuan.eapi.component.Component;
 
 /**
@@ -11,8 +12,8 @@ import com.xuan.eapi.component.Component;
  * Description :the description of this file
  */
 
-public interface IViewHolderComponentFactory extends ReflectCreate<RecyclerView.ViewHolder>{
-    Component createViewHolderComponent(ViewInfo type);
+public interface IViewHolderComponentFactory {
+    IComponentBind createViewHolderComponent(ViewInfo type);
 
     RecyclerView.ViewHolder reflectCreate(Class<?> clazz);
 }

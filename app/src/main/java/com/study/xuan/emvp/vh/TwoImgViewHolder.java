@@ -5,22 +5,40 @@ import android.view.View;
 
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.model.ImageInfo;
+import com.study.xuan.emvp.presenter.Contract;
 import com.xuan.annotation.ComponentType;
+import com.xuan.annotation.ILogic;
 import com.xuan.component.R;
 import com.xuan.eapi.IComponentBind;
+import com.xuan.eapi.IPresenterBind;
 
 /**
  * Author : xuan.
  * Date : 2018/5/22.
- * Description :the description of this file
+ * Description :一行两图组件
  */
 @ComponentType(
         value = ComponentId.IMAGE_TWO_VH,
         layout = R.layout.two_img
 )
-public class TwoImgViewHolder extends RecyclerView.ViewHolder implements IComponentBind<ImageInfo> {
+@ILogic(Contract.TwoImgPresenter.class)
+public class TwoImgViewHolder extends RecyclerView.ViewHolder implements IComponentBind<ImageInfo>,IPresenterBind<Contract.TwoImgPresenter> {
+    private Contract.TwoImgPresenter presenter;
     public TwoImgViewHolder(View itemView) {
         super(itemView);
+        itemView.findViewById(R.id.iv_left).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onLeftClick();
+            }
+        });
+
+        itemView.findViewById(R.id.iv_right).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onRightClick();
+            }
+        });
     }
 
     @Override
@@ -31,5 +49,10 @@ public class TwoImgViewHolder extends RecyclerView.ViewHolder implements ICompon
     @Override
     public void unBind() {
 
+    }
+
+    @Override
+    public void injectPresenter(Contract.TwoImgPresenter twoImgPresenter) {
+        presenter = twoImgPresenter;
     }
 }

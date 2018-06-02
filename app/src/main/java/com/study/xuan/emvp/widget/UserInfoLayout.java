@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.model.IUserInfo;
+import com.xuan.annotation.ILogic;
 import com.xuan.eapi.imodel.PostEvent;
 import com.study.xuan.emvp.presenter.IUserInfoPresenter;
 import com.xuan.annotation.ComponentType;
@@ -26,6 +27,7 @@ import com.xuan.eapi.LogUtil;
  * Description :the description of this file
  */
 @ComponentType(value = ComponentId.USER_INFO_LAYOUT)
+@ILogic(IUserInfoPresenter.class)
 public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserInfo>, IPresenterBind<IUserInfoPresenter<IUserInfo>> {
     private ImageView ivImg;
     private TextView tvText;
@@ -88,7 +90,7 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserI
     }
 
     @Override
-    public void setPresenter(IUserInfoPresenter<IUserInfo> userInfoIUserInfoPresenter) {
+    public void injectPresenter(IUserInfoPresenter<IUserInfo> userInfoIUserInfoPresenter) {
         presenter = userInfoIUserInfoPresenter;
     }
 }

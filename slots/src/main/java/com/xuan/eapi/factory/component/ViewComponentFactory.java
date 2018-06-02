@@ -6,8 +6,7 @@ import android.view.View;
 
 import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.IComponentBind;
-import com.xuan.eapi.IPresenterBind;
-import com.xuan.eapi.helper.ToolKitContext;
+import com.xuan.eapi.context.ToolKitContext;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.adapter.ComponentViewAdapter;
 
@@ -20,34 +19,16 @@ import java.lang.reflect.InvocationTargetException;
  * Description :View转ViewHolder
  */
 
-public class ViewComponentFactory implements IViewComponentFactory, ReflectCreate<IComponentBind> {
-    private ToolKitContext tContext;
+public class ViewComponentFactory implements IViewComponentFactory, ReflectCreate<IComponentBind>, AdapterComponent {
     private Context mContext;
 
     public ViewComponentFactory(ToolKitContext toolKitContext) {
-        this.tContext = toolKitContext;
         this.mContext = toolKitContext.getContext();
     }
 
     @Override
-    public Component createViewComponent(ViewInfo viewInfo) {
-        IComponentBind view = null;
-        if (viewInfo.isAutoCreate()) {
-            view = reflectCreate(viewInfo.getView());
-        } else {
-            view = selfCreateView(viewInfo);
-        }
-
-        //组件mvp,则需要实现IPresenterBind接口
-        if (IPresenterBind.class.isAssignableFrom(view.getClass())) {
-            IPresenterBind presenterBind = (IPresenterBind) view;
-            presenterBind.setPresenter(tContext.getPresenter(viewInfo.getPresenter()));
-        }
-        return new ComponentViewAdapter((View) view);
-    }
-
-    private IComponentBind selfCreateView(ViewInfo viewInfo) {
-        return tContext.createView(viewInfo.getId());
+    public IComponentBind createViewComponent(ViewInfo viewInfo) {
+        return reflectCreate(viewInfo.getView());
     }
 
     /**
@@ -69,5 +50,10 @@ public class ViewComponentFactory implements IViewComponentFactory, ReflectCreat
             e.printStackTrace();
         }
         return view;
+    }
+
+    @Override
+    public Component adapterComponent(IComponentBind componentBind) {
+        return new ComponentViewAdapter((View) componentBind);
     }
 }

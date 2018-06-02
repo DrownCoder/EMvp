@@ -1,6 +1,6 @@
 package com.xuan.eapi.factory.component;
 
-import com.xuan.eapi.helper.ToolKitContext;
+import com.xuan.eapi.context.ToolKitContext;
 import com.xuan.eapi.component.Component;
 
 

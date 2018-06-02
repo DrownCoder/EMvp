@@ -11,9 +11,10 @@ import com.study.xuan.emvp.model.SingleImg;
 import com.study.xuan.emvp.model.UserInfo;
 import com.study.xuan.emvp.presenter.MainPresenter;
 import com.study.xuan.emvp.presenter.OtherPresenter;
+import com.study.xuan.emvp.presenter.SinglePresenter;
 import com.xuan.eapi.BasePresenter;
 import com.xuan.eapi.adapter.EAdapter;
-import com.xuan.eapi.helper.ToolKitContext;
+import com.xuan.eapi.context.ToolKitContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +33,14 @@ public class MainActivity extends FragmentActivity {
         mRcy.setLayoutManager(new LinearLayoutManager(this));
         mData = new ArrayList<>();
         mData.add(new UserInfo());
-        mData.add(new Product(true,new OtherPresenter(this)));
+        mData.add(new Product(true,new SinglePresenter(this)));
         mData.add(new SingleImg());
         mData.add(new ImageInfo(ComponentId.IMAGE_TWO_VH));
         mData.add(new UserInfo());
         mData.add(new ImageInfo(ComponentId.TEXT_IMG));
         ToolKitContext toolKitContext = new ToolKitContext(this, mData);
-        toolKitContext.startPresenterEngine();
+        toolKitContext.registerPresenter(new MainPresenter(this));
+        toolKitContext.registerPresenter(new OtherPresenter(this));
         mRcy.setAdapter(new EAdapter(toolKitContext));
     }
 }

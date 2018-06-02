@@ -10,6 +10,6 @@ import com.xuan.eapi.component.Component;
  * Description :the description of this file
  */
 
-public interface IViewComponentFactory{
-    Component createViewComponent(ViewInfo type);
+public interface IViewComponentFactory {
+    IComponentBind createViewComponent(ViewInfo type);
 }
