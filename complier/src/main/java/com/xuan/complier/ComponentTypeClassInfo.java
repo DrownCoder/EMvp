@@ -1,4 +1,7 @@
-package com.xuan.annotation;
+package com.xuan.complier;
+
+import com.xuan.annotation.ComponentType;
+import com.xuan.annotation.ILogic;
 
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;

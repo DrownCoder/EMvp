@@ -3,9 +3,7 @@ package com.xuan.complier;
 import com.google.auto.service.AutoService;
 import com.xuan.annotation.BindType;
 import com.xuan.annotation.ComponentType;
-import com.xuan.annotation.ComponentTypeClassInfo;
 import com.xuan.annotation.ILogic;
-import com.xuan.annotation.ModelTypeClassInfo;
 import com.xuan.annotation.ViewInfo;
 
 import java.io.BufferedWriter;
@@ -15,13 +13,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
-import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
-import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
@@ -29,10 +22,9 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
-import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
+
+import static com.xuan.complier.Const.*;
 
 /**
  * Author : xuan.
@@ -40,40 +32,11 @@ import javax.tools.JavaFileObject;
  * Description :type类型的注解解析器
  */
 @AutoService(Processor.class)
-public class TypeProcessor extends AbstractProcessor {
-    private static final String DIRECTORY_PATH = "com.xuan.eapi.rule";
-    private static final String CREATE_FILE_NAME = "ComponentRule";
-    private static final String CREATE_FILE_PATH = "com.study.xuan.emvp";
-    private static final String[] SUPPORT_CLASS = new String[]{
-            "android.view.View",
-            "android.support.v7.widget.RecyclerView.ViewHolder"
-    };
-    private static final String IML_INTERFACE = "IComponentBind";
-
-    private Types typeUtils;
-    private Elements elementUtils;
-    private Filer filer;
-    private Messager messager;
+public class TypeProcessor extends BaseProcessor {
     private List<ModelTypeClassInfo> typeModel = new ArrayList<>();
     private List<ComponentTypeClassInfo> typeWidget = new ArrayList<>();
     private List<Integer> componentIds = new ArrayList<>();
     private StringBuilder strBuilder;
-
-    @Override
-    public synchronized void init(ProcessingEnvironment processingEnvironment) {
-        System.out.println("------ init -----");
-        super.init(processingEnvironment);
-        typeUtils = processingEnv.getTypeUtils();
-        elementUtils = processingEnv.getElementUtils();
-        filer = processingEnv.getFiler();
-        messager = processingEnv.getMessager();
-        strBuilder = new StringBuilder();
-    }
-
-    @Override
-    public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.latestSupported();
-    }
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
@@ -137,24 +100,17 @@ public class TypeProcessor extends AbstractProcessor {
         strBuilder.setLength(0);
     }
 
-    // 检查被注解为的元素是否是一个类
-    private void checkClassValid(Element annotatedElement, String className) {
-        if (annotatedElement.getKind() != ElementKind.CLASS) {
-            error(annotatedElement, "Only classes can be annotated with @%s", className);
-        }
-    }
-
     private void writeFile() {
         BufferedWriter writer = null;
         try {
-            JavaFileObject sourceFile = processingEnv.getFiler().createSourceFile(DIRECTORY_PATH + "." + CREATE_FILE_NAME);
+            JavaFileObject sourceFile = processingEnv.getFiler().createSourceFile(DIRECTORY_PATH + "." + FILE_NAME_RULE_COMPONENT);
             writer = new BufferedWriter(sourceFile.openWriter());
             writer.write("package " + DIRECTORY_PATH + ";\n\n");
             writer.write("import android.util.SparseArray;\n");
             writer.write("import java.util.HashMap;\n");
             writer.write("import java.util.Map;\n");
             writer.write("import com.xuan.annotation.ViewInfo;\n\n");
-            writer.write("public class " + CREATE_FILE_NAME + " implements IComponentRule " + " {\n");
+            writer.write("public class " + FILE_NAME_RULE_COMPONENT + " implements IComponentRule " + " {\n");
             writer.write("    public static final SparseArray<ViewInfo> WIDGET_TYPE;\n\n");
             writer.write("    public static final Map<Class<?>, Integer> MODEL_TYPE;\n\n");
             writer.write("    static {\n");
@@ -179,7 +135,7 @@ public class TypeProcessor extends AbstractProcessor {
             writer.write("    }\n\n");
             writer.write("}\n");
         } catch (IOException e) {
-            throw new RuntimeException("Could not write source for " + CREATE_FILE_NAME, e);
+            throw new RuntimeException("Could not write source for " + FILE_NAME_RULE_COMPONENT, e);
         } finally {
             if (writer != null) {
                 try {
@@ -349,12 +305,5 @@ public class TypeProcessor extends AbstractProcessor {
             builder.append(spStr).append(" Or ");
         }
         return builder.subSequence(0, builder.length() - 4).toString();
-    }
-
-    private void error(Element e, String msg, Object... args) {
-        messager.printMessage(
-                Diagnostic.Kind.ERROR,
-                String.format(msg, args),
-                e);
     }
 }

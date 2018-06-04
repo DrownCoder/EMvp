@@ -1,4 +1,6 @@
-package com.xuan.annotation;
+package com.xuan.complier;
+
+import com.xuan.annotation.BindType;
 
 import javax.lang.model.element.TypeElement;
 
