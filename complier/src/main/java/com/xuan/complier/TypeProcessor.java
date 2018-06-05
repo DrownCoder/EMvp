@@ -36,7 +36,6 @@ public class TypeProcessor extends BaseProcessor {
     private List<ModelTypeClassInfo> typeModel = new ArrayList<>();
     private List<ComponentTypeClassInfo> typeWidget = new ArrayList<>();
     private List<Integer> componentIds = new ArrayList<>();
-    private StringBuilder strBuilder;
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {

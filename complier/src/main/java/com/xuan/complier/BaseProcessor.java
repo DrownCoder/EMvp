@@ -26,6 +26,8 @@ public class BaseProcessor extends AbstractProcessor {
     protected Elements elementUtils;
     protected Filer filer;
     protected Messager messager;
+    protected StringBuilder strBuilder;
+
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         return false;
@@ -39,6 +41,7 @@ public class BaseProcessor extends AbstractProcessor {
         elementUtils = processingEnv.getElementUtils();
         filer = processingEnv.getFiler();
         messager = processingEnv.getMessager();
+        strBuilder = new StringBuilder(248);
     }
 
     @Override
