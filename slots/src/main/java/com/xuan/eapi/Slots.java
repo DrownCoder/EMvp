@@ -31,8 +31,10 @@ public class Slots {
 
     private void initRule() {
         try {
-            Class rule = Class.forName("com.xuan.eapi.rule.ComponentRule");
-            componentRule = (IComponentRule) rule.newInstance();
+            Class componentRule = Class.forName("com.xuan.eapi.rule.ComponentRule");
+            Class presenterRule = Class.forName("com.xuan.eapi.rule.IPresenterRule");
+            this.componentRule = (IComponentRule) componentRule.newInstance();
+            this.presenterRule = (IPresenterRule) presenterRule.newInstance();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

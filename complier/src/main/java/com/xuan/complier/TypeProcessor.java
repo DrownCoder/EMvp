@@ -89,7 +89,7 @@ public class TypeProcessor extends BaseProcessor {
             writeFile();
         }
         clear();
-        return true;
+        return false;
     }
 
     private void clear() {

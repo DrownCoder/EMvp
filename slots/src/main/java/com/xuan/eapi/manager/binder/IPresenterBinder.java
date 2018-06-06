@@ -18,4 +18,6 @@ public interface IPresenterBinder {
     public void startPresenterEngine(List<Integer> pIds);
 
     public BasePresenter obtainPresenter(Class<?> clazz);
+
+    public BasePresenter obtainPresenter(int pid);
 }

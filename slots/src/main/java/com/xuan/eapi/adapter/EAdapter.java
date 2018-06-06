@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.xuan.eapi.context.ToolKitContext;
 import com.xuan.eapi.component.Component;
+import com.xuan.eapi.imodel.InterceptLogic;
 
 /**
  * Author : xuan.
@@ -27,6 +28,13 @@ public class EAdapter extends RecyclerView.Adapter<Component> {
 
     @Override
     public void onBindViewHolder(Component holder, int position) {
+        Object item = toolKitContext.getItem(position);
+        if (InterceptLogic.class.isAssignableFrom(item.getClass())) {
+            InterceptLogic interceptor = (InterceptLogic) item;
+            if (interceptor.interceptEvent() && !interceptor.singlePresenter()) {
+                interceptor.injectPresenter(toolKitContext.obtainPresenter(interceptor.presenterId()));
+            }
+        }
         holder.onBind(position, toolKitContext.getItem(position));
     }
 

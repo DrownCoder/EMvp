@@ -82,6 +82,11 @@ public class ToolKitContext implements IPresenterBinder{
         return presenterBinder.obtainPresenter(viewClass);
     }
 
+    @Override
+    public BasePresenter obtainPresenter(int pid) {
+        return presenterBinder.obtainPresenter(pid);
+    }
+
     public Component createComponent(int viewType, ViewGroup parent) {
         rcyRoot = (RecyclerView) parent;
         if (componentFactory == null) {

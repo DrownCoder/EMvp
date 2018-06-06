@@ -9,4 +9,6 @@ package com.study.xuan.emvp;
 public class PresenterId {
     //购物车逻辑
     public static final int CART_PRESENTER = 1;
+    //社区逻辑
+    public static final int COMMUNITY_PRESENTER = 2;
 }

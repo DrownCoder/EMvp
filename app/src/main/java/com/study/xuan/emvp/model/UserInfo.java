@@ -1,9 +1,10 @@
 package com.study.xuan.emvp.model;
 
 import com.study.xuan.emvp.ComponentId;
+import com.study.xuan.emvp.PresenterId;
 import com.xuan.annotation.BindType;
 import com.xuan.eapi.BasePresenter;
-import com.xuan.eapi.imodel.PostEvent;
+import com.xuan.eapi.imodel.InterceptLogic;
 
 /**
  * Author : xuan.
@@ -11,19 +12,18 @@ import com.xuan.eapi.imodel.PostEvent;
  * Description :the description of this file
  */
 @BindType(ComponentId.USER_INFO_LAYOUT)
-public class UserInfo implements PostEvent,IUserInfo{
+public class UserInfo implements InterceptLogic,IUserInfo{
     public boolean isIntercept = false;
     public BasePresenter presenter;
     public int imgUrl;
     public String name = "用户名字";
 
     public UserInfo() {
-        this(false, null);
+        this(false);
     }
 
-    public UserInfo(boolean isIntercept, BasePresenter presenter) {
+    public UserInfo(boolean isIntercept) {
         this.isIntercept = isIntercept;
-        this.presenter = presenter;
     }
 
     @Override
@@ -34,6 +34,16 @@ public class UserInfo implements PostEvent,IUserInfo{
     @Override
     public BasePresenter postPresenter() {
         return presenter;
+    }
+
+    @Override
+    public void injectPresenter(BasePresenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public int presenterId() {
+        return PresenterId.COMMUNITY_PRESENTER;
     }
 
     @Override

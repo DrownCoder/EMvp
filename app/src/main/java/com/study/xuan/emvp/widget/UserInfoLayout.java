@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.model.IUserInfo;
 import com.xuan.annotation.ILogic;
-import com.xuan.eapi.imodel.PostEvent;
+import com.xuan.eapi.imodel.InterceptLogic;
 import com.study.xuan.emvp.presenter.IUserInfoPresenter;
 import com.xuan.annotation.ComponentType;
 import com.xuan.component.R;
@@ -54,8 +54,8 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserI
         tvText.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (PostEvent.class.isAssignableFrom(info.getClass())) {
-                    PostEvent post = (PostEvent) info;
+                if (InterceptLogic.class.isAssignableFrom(info.getClass())) {
+                    InterceptLogic post = (InterceptLogic) info;
                     if (post.interceptEvent()) {
                         if (IUserInfoPresenter.class.isAssignableFrom(post.postPresenter().getClass())) {
                             IUserInfoPresenter presenter = (IUserInfoPresenter) post.postPresenter();

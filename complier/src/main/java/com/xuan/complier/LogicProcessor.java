@@ -38,9 +38,9 @@ public class LogicProcessor extends BaseProcessor {
                 error(annotatedElement, e.getMessage());
                 return true;
             }
-            if (presenterIds.size() > 0) {
-                writeFile();
-            }
+        }
+        if (presenterIds.size() > 0) {
+            writeFile();
         }
         return false;
     }

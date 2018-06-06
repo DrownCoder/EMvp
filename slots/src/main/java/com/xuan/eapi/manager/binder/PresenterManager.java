@@ -77,4 +77,9 @@ public class PresenterManager implements IPresenterBinder {
     public BasePresenter obtainPresenter(Class<?> clazz) {
         return globalPresenter.get(clazz);
     }
+
+    @Override
+    public BasePresenter obtainPresenter(int pid) {
+        return presenterPool.get(pid);
+    }
 }
