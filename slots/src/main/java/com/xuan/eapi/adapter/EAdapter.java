@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 
+import com.xuan.annotation.ViewInfo;
+import com.xuan.eapi.Slots;
 import com.xuan.eapi.context.ToolKitContext;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.imodel.InterceptLogic;
@@ -31,8 +33,14 @@ public class EAdapter extends RecyclerView.Adapter<Component> {
         Object item = toolKitContext.getItem(position);
         if (InterceptLogic.class.isAssignableFrom(item.getClass())) {
             InterceptLogic interceptor = (InterceptLogic) item;
-            if (interceptor.interceptEvent() && !interceptor.singlePresenter()) {
-                interceptor.injectPresenter(toolKitContext.obtainPresenter(interceptor.presenterId()));
+            if (interceptor.interceptEvent()) {
+                if (interceptor.singlePresenter()) {
+                    interceptor.injectPresenter(toolKitContext.obtainPresenter(interceptor.presenterId()));
+                }else{
+                    int viewType = toolKitContext.getItemType(position);
+                    ViewInfo info = Slots.getInstance().obtainRule().obtainViewInfo(viewType);
+                    interceptor.injectPresenter(toolKitContext.obtainPresenter(info.getPresenter()));
+                }
             }
         }
         holder.onBind(position, toolKitContext.getItem(position));

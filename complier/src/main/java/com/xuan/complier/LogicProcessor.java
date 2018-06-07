@@ -23,10 +23,15 @@ import javax.tools.JavaFileObject;
  */
 @AutoService(Processor.class)
 public class LogicProcessor extends BaseProcessor {
+    protected static boolean hasProcessor;
     private HashMap<Integer, String> presenterIds = new HashMap();
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
+        if (hasProcessor) {
+            return true;
+        }
+        hasProcessor = true;
         for (Element annotatedElement : roundEnvironment.getElementsAnnotatedWith(RegisterLogic.class)) {
             checkClassValid(annotatedElement, RegisterLogic.class.getSimpleName());
             //检查被注解的类是否标准
@@ -42,7 +47,7 @@ public class LogicProcessor extends BaseProcessor {
         if (presenterIds.size() > 0) {
             writeFile();
         }
-        return false;
+        return true;
     }
 
     @Override

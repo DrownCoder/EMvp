@@ -21,17 +21,12 @@ import javax.tools.Diagnostic;
  * Description :the description of this file
  */
 
-public class BaseProcessor extends AbstractProcessor {
+public abstract class BaseProcessor extends AbstractProcessor {
     protected Types typeUtils;
     protected Elements elementUtils;
     protected Filer filer;
     protected Messager messager;
     protected StringBuilder strBuilder;
-
-    @Override
-    public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-        return false;
-    }
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {

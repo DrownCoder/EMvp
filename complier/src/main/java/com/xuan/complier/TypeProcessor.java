@@ -36,6 +36,7 @@ public class TypeProcessor extends BaseProcessor {
     private List<ModelTypeClassInfo> typeModel = new ArrayList<>();
     private List<ComponentTypeClassInfo> typeWidget = new ArrayList<>();
     private List<Integer> componentIds = new ArrayList<>();
+    protected static boolean hasProcessor;
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
@@ -49,6 +50,10 @@ public class TypeProcessor extends BaseProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
+        if (hasProcessor) {
+            return true;
+        }
+        hasProcessor = true;
         System.out.println("------ process -----");
         //检查ComponentType注解
         for (Element annotatedElement : roundEnvironment.getElementsAnnotatedWith(ComponentType.class)) {
@@ -89,7 +94,7 @@ public class TypeProcessor extends BaseProcessor {
             writeFile();
         }
         clear();
-        return false;
+        return true;
     }
 
     private void clear() {

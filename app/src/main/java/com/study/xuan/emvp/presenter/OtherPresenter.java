@@ -15,13 +15,13 @@ import com.xuan.eapi.BasePresenter;
  * Date : 2018/5/24.
  * Description :the description of this file
  */
-public class OtherPresenter extends BasePresenter implements IUserInfoPresenter<UserInfo> {
+public class OtherPresenter extends BasePresenter implements IUserInfoPresenter<Product> {
     public OtherPresenter(Context context) {
         super(context);
     }
 
     @Override
-    public void onTextClick(UserInfo userInfo) {
+    public void onTextClick(Product userInfo) {
         Toast.makeText(mContext, "单品逻辑，进入单品页", Toast.LENGTH_SHORT).show();
     }
 }

@@ -40,6 +40,9 @@ public class MainActivity extends FragmentActivity {
         mData.add(new UserInfo(true));
         mData.add(new ImageInfo(ComponentId.TEXT_IMG));
         ToolKitContext toolKitContext = new ToolKitContext(this, mData);
+        List<Integer> pid = new ArrayList<>();
+        pid.add(PresenterId.COMMUNITY_PRESENTER);
+        toolKitContext.startPresenterEngine(pid);
         toolKitContext.registerPresenter(new MainPresenter(this));
         toolKitContext.registerPresenter(new OtherPresenter(this));
         mRcy.setAdapter(new EAdapter(toolKitContext));
