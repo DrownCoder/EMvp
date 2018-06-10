@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 
 import com.xuan.eapi.BasePresenter;
 import com.xuan.eapi.IComponentBind;
-import com.xuan.eapi.manager.binder.IPresenterBinder;
-import com.xuan.eapi.manager.binder.PresenterManager;
+import com.xuan.eapi.manager.binder.ILogicBinder;
+import com.xuan.eapi.manager.binder.LogicManager;
 import com.xuan.eapi.manager.count.DefaultModelManager;
 import com.xuan.eapi.manager.count.IModelManager;
 import com.xuan.eapi.component.Component;
@@ -24,11 +24,11 @@ import java.util.List;
  * Description :工具包
  */
 
-public class ToolKitContext implements IPresenterBinder{
+public class ToolKitContext implements ILogicBinder {
     private Context context;
     private IModerBinder moderBinder;
     private IModelManager modelManager;
-    private IPresenterBinder presenterBinder;
+    private ILogicBinder presenterBinder;
     private List<Object> data;
     private IComponentFactory componentFactory;
     private RecyclerView rcyRoot;
@@ -42,7 +42,7 @@ public class ToolKitContext implements IPresenterBinder{
         this.data = data;
         this.moderBinder = moderBinder;
         this.modelManager = new DefaultModelManager(data);
-        this.presenterBinder = new PresenterManager(this);
+        this.presenterBinder = new LogicManager(this);
     }
 
     public Context getContext() {
@@ -66,25 +66,25 @@ public class ToolKitContext implements IPresenterBinder{
     }
 
     @Override
-    public void registerPresenter(BasePresenter presenter) {
-        presenterBinder.registerPresenter(presenter);
+    public void registerLogic(BasePresenter presenter) {
+        presenterBinder.registerLogic(presenter);
     }
     @Override
-    public void startPresenterEngine() {
-        presenterBinder.startPresenterEngine();
+    public void prepareLogic() {
+        presenterBinder.prepareLogic();
     }
     @Override
-    public void startPresenterEngine(List<Integer> pids) {
-        presenterBinder.startPresenterEngine(pids);
+    public void prepareLogic(List<Integer> pids) {
+        presenterBinder.prepareLogic(pids);
     }
     @Override
-    public BasePresenter obtainPresenter(Class<?> viewClass) {
-        return presenterBinder.obtainPresenter(viewClass);
+    public BasePresenter obtainPageLogic(Class<?> viewClass) {
+        return presenterBinder.obtainPageLogic(viewClass);
     }
 
     @Override
-    public BasePresenter obtainPresenter(int pid) {
-        return presenterBinder.obtainPresenter(pid);
+    public BasePresenter obtainModelLogic(int pid) {
+        return presenterBinder.obtainModelLogic(pid);
     }
 
     public Component createComponent(int viewType, ViewGroup parent) {

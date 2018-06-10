@@ -34,12 +34,8 @@ public class EAdapter extends RecyclerView.Adapter<Component> {
         if (InterceptLogic.class.isAssignableFrom(item.getClass())) {
             InterceptLogic interceptor = (InterceptLogic) item;
             if (interceptor.interceptEvent()) {
-                if (interceptor.singlePresenter()) {
-                    interceptor.injectPresenter(toolKitContext.obtainPresenter(interceptor.presenterId()));
-                }else{
-                    int viewType = toolKitContext.getItemType(position);
-                    ViewInfo info = Slots.getInstance().obtainRule().obtainViewInfo(viewType);
-                    interceptor.injectPresenter(toolKitContext.obtainPresenter(info.getPresenter()));
+                if (!interceptor.singlePresenter()) {
+                    interceptor.injectPresenter(toolKitContext.obtainModelLogic(interceptor.presenterId()));
                 }
             }
         }

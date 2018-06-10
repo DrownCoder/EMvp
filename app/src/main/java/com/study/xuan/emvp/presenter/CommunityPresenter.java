@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.study.xuan.emvp.PresenterId;
 import com.study.xuan.emvp.model.Product;
+import com.study.xuan.emvp.model.UserInfo;
 import com.xuan.annotation.RegisterLogic;
 import com.xuan.eapi.BasePresenter;
 
@@ -14,13 +15,13 @@ import com.xuan.eapi.BasePresenter;
  * Description :the description of this file
  */
 @RegisterLogic(PresenterId.COMMUNITY_PRESENTER)
-public class CommunityPresenter extends BasePresenter implements IUserInfoPresenter<Product> {
+public class CommunityPresenter extends BasePresenter implements IUserInfoPresenter<UserInfo> {
     public CommunityPresenter(Context context) {
         super(context);
     }
 
     @Override
-    public void onTextClick(Product o) {
+    public void onTextClick(UserInfo o) {
         Toast.makeText(mContext, "社区逻辑，进入评论详情", Toast.LENGTH_SHORT).show();
     }
 }

@@ -17,7 +17,7 @@ import java.util.List;
  * Description :区分逻辑对应的View
  */
 
-public class PresenterManager implements IPresenterBinder {
+public class LogicManager implements ILogicBinder {
     private ToolKitContext tookContext;
     //presenter冗余，拆分Presenter，一个Activity中可能存在多个Presenter实例
     private HashMap<Class,BasePresenter> globalPresenter;
@@ -26,13 +26,13 @@ public class PresenterManager implements IPresenterBinder {
     private ReflectPresenterFactory reflectPresenterFactory;
 
 
-    public PresenterManager(ToolKitContext tookContext) {
+    public LogicManager(ToolKitContext tookContext) {
         this.tookContext = tookContext;
         this.globalPresenter = new HashMap<>();
     }
 
     @Override
-    public void registerPresenter(BasePresenter presenter) {
+    public void registerLogic(BasePresenter presenter) {
         Class<?>[] inters = presenter.getClass().getInterfaces();
         for (Class clazz : inters) {
             globalPresenter.put(clazz, presenter);
@@ -40,12 +40,12 @@ public class PresenterManager implements IPresenterBinder {
     }
 
     @Override
-    public void startPresenterEngine() {
-        startPresenterEngine(null);
+    public void prepareLogic() {
+        prepareLogic(null);
     }
 
     @Override
-    public void startPresenterEngine(List<Integer> pIds) {
+    public void prepareLogic(List<Integer> pIds) {
         if (presenterPool == null) {
             presenterPool = new SparseArray<>();
         }
@@ -74,12 +74,27 @@ public class PresenterManager implements IPresenterBinder {
     }
 
     @Override
-    public BasePresenter obtainPresenter(Class<?> clazz) {
+    public BasePresenter obtainPageLogic(Class<?> clazz) {
         return globalPresenter.get(clazz);
     }
 
     @Override
-    public BasePresenter obtainPresenter(int pid) {
-        return presenterPool.get(pid);
+    public BasePresenter obtainModelLogic(int pid) {
+        BasePresenter presenter;
+        if (presenterPool != null) {
+            presenter = presenterPool.get(pid);
+            if (presenter != null) {
+                return presenter;
+            }
+        }
+        presenterPool = new SparseArray<>();
+        if (reflectPresenterFactory == null) {
+            reflectPresenterFactory = new ReflectPresenterFactory(tookContext.getContext());
+        }
+        Class<?> presentClazz;
+        presentClazz = Slots.getInstance().obtainPresenterRule().obtainPresenter(pid);
+        presenter = reflectPresenterFactory.reflectCreate(presentClazz);
+        presenterPool.put(pid, presenter);
+        return presenter;
     }
 }

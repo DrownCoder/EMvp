@@ -3,7 +3,6 @@ package com.study.xuan.emvp.presenter;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.study.xuan.emvp.model.UserInfo;
 import com.xuan.eapi.BasePresenter;
 
 
