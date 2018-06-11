@@ -4,8 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 
-import com.xuan.annotation.ViewInfo;
-import com.xuan.eapi.Slots;
 import com.xuan.eapi.context.ToolKitContext;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.imodel.InterceptLogic;
@@ -16,7 +14,7 @@ import com.xuan.eapi.imodel.InterceptLogic;
  * Description :the description of this file
  */
 
-public class EAdapter extends RecyclerView.Adapter<Component> {
+public abstract class EAdapter extends RecyclerView.Adapter<Component> {
     private ToolKitContext toolKitContext;
 
     public EAdapter(ToolKitContext toolKitContext) {
@@ -35,12 +33,15 @@ public class EAdapter extends RecyclerView.Adapter<Component> {
             InterceptLogic interceptor = (InterceptLogic) item;
             if (interceptor.interceptEvent()) {
                 if (!interceptor.singlePresenter()) {
-                    interceptor.injectPresenter(toolKitContext.obtainModelLogic(interceptor.presenterId()));
+                    interceptor.injectPresenter(toolKitContext.bindModelLogic(interceptor.presenterId()));
                 }
             }
         }
         holder.onBind(position, toolKitContext.getItem(position));
+        onBind(holder, position);
     }
+
+    protected abstract void onBind(Component holder, int position);
 
     @Override
     public int getItemCount() {

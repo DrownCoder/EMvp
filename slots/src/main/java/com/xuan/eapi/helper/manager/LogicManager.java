@@ -1,4 +1,4 @@
-package com.xuan.eapi.manager.binder;
+package com.xuan.eapi.helper.manager;
 
 import android.util.SparseArray;
 
@@ -10,32 +10,27 @@ import com.xuan.eapi.factory.presenter.ReflectPresenterFactory;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author : xuan.
- * Date : 2018/6/2.
- * Description :区分逻辑对应的View
+ * Date : 2018/6/11.
+ * Description :the description of this file
  */
 
-public class LogicManager implements ILogicBinder {
+public class LogicManager implements ILogicManger {
     private ToolKitContext tookContext;
     //presenter冗余，拆分Presenter，一个Activity中可能存在多个Presenter实例
-    private HashMap<Class,BasePresenter> globalPresenter;
-    private SparseArray<BasePresenter> presenterPool;
+    private HashMap<Class, BasePresenter> globalLogic;
+    private SparseArray<BasePresenter> modelLogic;
     private IPresenterFactory presenterFactory;
     private ReflectPresenterFactory reflectPresenterFactory;
-
-
-    public LogicManager(ToolKitContext tookContext) {
-        this.tookContext = tookContext;
-        this.globalPresenter = new HashMap<>();
-    }
 
     @Override
     public void registerLogic(BasePresenter presenter) {
         Class<?>[] inters = presenter.getClass().getInterfaces();
         for (Class clazz : inters) {
-            globalPresenter.put(clazz, presenter);
+            globalLogic.put(clazz, presenter);
         }
     }
 
@@ -44,17 +39,18 @@ public class LogicManager implements ILogicBinder {
         prepareLogic(null);
     }
 
+
     @Override
     public void prepareLogic(List<Integer> pIds) {
-        if (presenterPool == null) {
-            presenterPool = new SparseArray<>();
+        if (modelLogic == null) {
+            modelLogic = new SparseArray<>();
         }
         if (presenterFactory != null) {
             List<BasePresenter> cusPresenters = presenterFactory.createPresenter();
             int pid;
             for (BasePresenter presenter : cusPresenters) {
                 pid = Slots.getInstance().obtainPresenterRule().obtainPresenterId(presenter.getClass());
-                presenterPool.put(pid, presenter);
+                modelLogic.put(pid, presenter);
             }
         }
         if (pIds == null || pIds.size() == 0) {
@@ -62,39 +58,35 @@ public class LogicManager implements ILogicBinder {
         }
         Class<?> presentClazz;
         for (int pid : pIds) {
-            if (presenterPool.get(pid) != null) {
+            if (modelLogic.get(pid) != null) {
                 continue;
             }
             if (reflectPresenterFactory == null) {
                 reflectPresenterFactory = new ReflectPresenterFactory(tookContext.getContext());
             }
             presentClazz = Slots.getInstance().obtainPresenterRule().obtainPresenter(pid);
-            presenterPool.put(pid, reflectPresenterFactory.reflectCreate(presentClazz));
+            modelLogic.put(pid, reflectPresenterFactory.reflectCreate(presentClazz));
         }
     }
 
     @Override
-    public BasePresenter obtainPageLogic(Class<?> clazz) {
-        return globalPresenter.get(clazz);
+    public Map obtainViewLogicPool() {
+        return globalLogic;
     }
 
     @Override
-    public BasePresenter obtainModelLogic(int pid) {
-        BasePresenter presenter;
-        if (presenterPool != null) {
-            presenter = presenterPool.get(pid);
-            if (presenter != null) {
-                return presenter;
-            }
+    public SparseArray obtainModelLogicPool() {
+        if (modelLogic == null) {
+            modelLogic = new SparseArray<>();
         }
-        presenterPool = new SparseArray<>();
+        return modelLogic;
+    }
+
+    @Override
+    public ReflectPresenterFactory obtainLogicFactory() {
         if (reflectPresenterFactory == null) {
             reflectPresenterFactory = new ReflectPresenterFactory(tookContext.getContext());
         }
-        Class<?> presentClazz;
-        presentClazz = Slots.getInstance().obtainPresenterRule().obtainPresenter(pid);
-        presenter = reflectPresenterFactory.reflectCreate(presentClazz);
-        presenterPool.put(pid, presenter);
-        return presenter;
+        return reflectPresenterFactory;
     }
 }

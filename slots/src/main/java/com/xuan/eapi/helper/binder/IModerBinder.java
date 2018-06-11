@@ -1,4 +1,4 @@
-package com.xuan.eapi.manager.binder;
+package com.xuan.eapi.helper.binder;
 
 import com.xuan.eapi.IComponentBind;
 
@@ -8,8 +8,8 @@ import com.xuan.eapi.IComponentBind;
  * Description :数据对应的组件样式
  */
 
-public interface IModerBinder {
-    int getItemType(int pos);
+public interface IModerBinder<T> {
+    int getItemType(int pos, T t);
 
     IComponentBind createView(int type);
 }

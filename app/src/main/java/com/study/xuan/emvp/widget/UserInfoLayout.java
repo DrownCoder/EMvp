@@ -26,7 +26,7 @@ import com.xuan.eapi.LogUtil;
  * Date : 2018/5/14.
  * Description :the description of this file
  */
-@ComponentType(value = ComponentId.USER_INFO_LAYOUT)
+@ComponentType(value = ComponentId.USER_INFO_LAYOUT, autoCreate = false)
 @ILogic(IUserInfoPresenter.class)
 public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserInfo>, IPresenterBind<IUserInfoPresenter<IUserInfo>> {
     private ImageView ivImg;
