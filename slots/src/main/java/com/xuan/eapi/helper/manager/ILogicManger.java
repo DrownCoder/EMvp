@@ -17,13 +17,15 @@ import java.util.Map;
 public interface ILogicManger {
     public void registerLogic(BasePresenter presenter);
 
+    public void registerModelLogic(int id, BasePresenter presenter);
+
     public void prepareLogic();
 
     public void prepareLogic(List<Integer> pIds);
 
-    public Map obtainViewLogicPool();
+    public Map<Class<?>, BasePresenter> obtainViewLogicPool();
 
-    public SparseArray obtainModelLogicPool();
+    public SparseArray<BasePresenter> obtainModelLogicPool();
 
     public ReflectPresenterFactory obtainLogicFactory();
 }

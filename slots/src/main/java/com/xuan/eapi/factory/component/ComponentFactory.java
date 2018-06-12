@@ -73,15 +73,13 @@ public class ComponentFactory implements IComponentFactory {
         return tookContext.createView(viewInfo.getId());
     }
 
-    @Override
-    public void createViewFactory(ToolKitContext toolKitContext) {
+    private void createViewFactory(ToolKitContext toolKitContext) {
         if (viewFactory == null) {
             viewFactory = new ViewComponentFactory(toolKitContext);
         }
     }
 
-    @Override
-    public void createViewHolderFactory(ToolKitContext toolKitContext) {
+    private void createViewHolderFactory(ToolKitContext toolKitContext) {
         if (viewHolderFactory == null) {
             viewHolderFactory = new ViewHolderComponentFactory(toolKitContext);
         }

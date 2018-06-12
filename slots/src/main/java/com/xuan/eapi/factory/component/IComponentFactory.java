@@ -1,6 +1,5 @@
 package com.xuan.eapi.factory.component;
 
-import com.xuan.eapi.context.ToolKitContext;
 import com.xuan.eapi.component.Component;
 
 
@@ -12,8 +11,4 @@ import com.xuan.eapi.component.Component;
 
 public interface IComponentFactory {
     Component createViewHolder(int type);
-
-    void createViewFactory(ToolKitContext toolKitContext);
-
-    void createViewHolderFactory(ToolKitContext toolKitContext);
 }

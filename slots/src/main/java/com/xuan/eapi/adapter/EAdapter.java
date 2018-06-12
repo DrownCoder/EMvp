@@ -14,7 +14,7 @@ import com.xuan.eapi.imodel.InterceptLogic;
  * Description :the description of this file
  */
 
-public abstract class EAdapter extends RecyclerView.Adapter<Component> {
+public class EAdapter extends RecyclerView.Adapter<Component> {
     private ToolKitContext toolKitContext;
 
     public EAdapter(ToolKitContext toolKitContext) {
@@ -41,7 +41,9 @@ public abstract class EAdapter extends RecyclerView.Adapter<Component> {
         onBind(holder, position);
     }
 
-    protected abstract void onBind(Component holder, int position);
+    protected void onBind(Component holder, int position){
+
+    }
 
     @Override
     public int getItemCount() {

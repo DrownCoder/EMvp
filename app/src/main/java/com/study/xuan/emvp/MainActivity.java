@@ -15,6 +15,9 @@ import com.study.xuan.emvp.presenter.OtherPresenter;
 import com.study.xuan.emvp.widget.UserInfoLayout;
 import com.xuan.eapi.BasePresenter;
 import com.xuan.eapi.IComponentBind;
+import com.xuan.eapi.adapter.EAdapter;
+import com.xuan.eapi.component.Component;
+import com.xuan.eapi.context.ToolKitBuilder;
 import com.xuan.eapi.context.ToolKitContext;
 import com.xuan.eapi.helper.binder.ModelBinder;
 
@@ -43,7 +46,8 @@ public class MainActivity extends FragmentActivity {
         userInfo.injectPresenter(new CommunityPresenter(this));
         mData.add(userInfo);
         mData.add(new ImageInfo(ComponentId.TEXT_IMG));
-        ToolKitContext toolKitContext = new ToolKitContext(this, mData, new ModelBinder() {
+        //ToolKitContext toolKitContext = new ToolKitContext(this, mData);
+        ToolKitContext toolKitContext = ToolKitBuilder.init(this, mData).setModerBinder(new ModelBinder() {
             @Override
             public IComponentBind createComponent(int viewId) {
                 switch (viewId) {
@@ -52,13 +56,13 @@ public class MainActivity extends FragmentActivity {
                 }
                 return null;
             }
-        });
+        }).build();
         //ToolKitContext toolKitContext = new ToolKitContext(this, mData);
        /* List<Integer> pid = new ArrayList<>();
         pid.add(PresenterId.COMMUNITY_PRESENTER);
         toolKitContext.prepareLogic(pid);*/
         toolKitContext.registerLogic(new MainPresenter(this));
         toolKitContext.registerLogic(new OtherPresenter(this));
-        mRcy.setAdapter(toolKitContext.getAdapter());
+        mRcy.setAdapter(new EAdapter(toolKitContext));
     }
 }

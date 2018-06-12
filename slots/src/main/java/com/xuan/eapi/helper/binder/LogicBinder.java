@@ -4,18 +4,12 @@ import android.util.SparseArray;
 
 import com.xuan.eapi.BasePresenter;
 import com.xuan.eapi.Slots;
-import com.xuan.eapi.context.ToolKitContext;
-import com.xuan.eapi.factory.presenter.IPresenterFactory;
-import com.xuan.eapi.factory.presenter.ReflectPresenterFactory;
 import com.xuan.eapi.helper.manager.ILogicManger;
-
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Author : xuan.
  * Date : 2018/6/2.
- * Description :区分逻辑对应的View
+ * Description :区分逻辑对应的View,用于处理View和逻辑的对应关系
  */
 
 public class LogicBinder implements ILogicBinder {
@@ -24,17 +18,28 @@ public class LogicBinder implements ILogicBinder {
         this.logicManger = logicManger;
     }
 
+    /**
+     * View的逻辑都交给逻辑P处理
+     * @param clazz View的对应Class类型
+     * @return 返回用于处理该View类型的逻辑
+     */
     @Override
     public BasePresenter bindViewLogic(Class<?> clazz) {
-        return (BasePresenter) logicManger.obtainViewLogicPool().get(clazz);
+        return logicManger.obtainViewLogicPool().get(clazz);
     }
 
+    /**
+     * 当多个Model对应同一个View类型，但是某一个Model的逻辑与其他Model的逻辑处理不同，
+     * 这时就不能走bindViewLogic返回的逻辑类型，而是需要走Model自己携带逻辑
+     * @param pid 逻辑Id，当某个Model是特殊逻辑时，对应与特殊的逻辑Id
+     * @return 返回这个Model所对应的逻辑
+     */
     @Override
     public BasePresenter bindModelLogic(int pid) {
-        SparseArray logicPool = logicManger.obtainModelLogicPool();
+        SparseArray<BasePresenter> logicPool = logicManger.obtainModelLogicPool();
         BasePresenter presenter;
         if (logicPool != null) {
-            presenter = (BasePresenter) logicPool.get(pid);
+            presenter = logicPool.get(pid);
             if (presenter != null) {
                 return presenter;
             }

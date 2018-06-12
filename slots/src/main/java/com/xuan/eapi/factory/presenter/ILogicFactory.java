@@ -10,6 +10,6 @@ import java.util.List;
  * Description :Presenter工厂
  */
 
-public interface IPresenterFactory {
-    List<BasePresenter> createPresenter();
+public interface ILogicFactory {
+    List<BasePresenter> createLogic();
 }

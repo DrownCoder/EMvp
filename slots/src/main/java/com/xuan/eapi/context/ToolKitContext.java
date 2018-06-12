@@ -7,20 +7,14 @@ import android.view.ViewGroup;
 
 import com.xuan.eapi.BasePresenter;
 import com.xuan.eapi.IComponentBind;
-import com.xuan.eapi.adapter.DefaultEAdapter;
-import com.xuan.eapi.adapter.EAdapter;
 import com.xuan.eapi.factory.presenter.ReflectPresenterFactory;
-import com.xuan.eapi.helper.binder.DefaultModelBinder;
 import com.xuan.eapi.helper.binder.ILogicBinder;
-import com.xuan.eapi.helper.binder.LogicBinder;
-import com.xuan.eapi.helper.manager.DefaultModelManager;
 import com.xuan.eapi.helper.manager.ILogicManger;
 import com.xuan.eapi.helper.manager.IModelManager;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.factory.component.ComponentFactory;
 import com.xuan.eapi.factory.component.IComponentFactory;
 import com.xuan.eapi.helper.binder.IModerBinder;
-import com.xuan.eapi.helper.manager.LogicManager;
 
 import java.util.List;
 import java.util.Map;
@@ -37,23 +31,20 @@ public class ToolKitContext implements ILogicBinder, ILogicManger {
     private IModelManager modelManager;
     private ILogicBinder logicBinder;
     private ILogicManger logicManger;
-    private List<Object> data;
     private IComponentFactory componentFactory;
     private RecyclerView rcyRoot;
-    private EAdapter adapter;
 
     public ToolKitContext(Context context, List<Object> data) {
-        this(context, data, new DefaultModelBinder());
+        this(new ToolKitBuilder(context, data));
     }
 
-    public ToolKitContext(Context context, List<Object> data, IModerBinder moderBinder) {
-        this.context = context;
-        this.data = data;
-        this.moderBinder = moderBinder;
-        this.modelManager = new DefaultModelManager(data);
-        this.logicManger = new LogicManager();
-        this.logicBinder = new LogicBinder(logicManger);
-        this.adapter = new DefaultEAdapter(this);
+    public ToolKitContext(ToolKitBuilder builder) {
+        context = builder.getContext();
+        moderBinder = builder.getModerBinder();
+        modelManager = builder.getModelManager();
+        logicBinder = builder.getLogicBinder();
+        logicManger = builder.getLogicManger();
+        componentFactory = builder.getComponentFactory();
     }
 
     public Context getContext() {
@@ -62,10 +53,6 @@ public class ToolKitContext implements ILogicBinder, ILogicManger {
 
     public ViewGroup getParentRoot() {
         return rcyRoot;
-    }
-
-    public RecyclerView.Adapter getAdapter() {
-        return adapter;
     }
 
     public Object getItem(int pos) {
@@ -86,6 +73,11 @@ public class ToolKitContext implements ILogicBinder, ILogicManger {
     }
 
     @Override
+    public void registerModelLogic(int id, BasePresenter presenter) {
+        logicManger.registerModelLogic(id, presenter);
+    }
+
+    @Override
     public void prepareLogic() {
         logicManger.prepareLogic();
     }
@@ -96,12 +88,12 @@ public class ToolKitContext implements ILogicBinder, ILogicManger {
     }
 
     @Override
-    public Map obtainViewLogicPool() {
+    public Map<Class<?>, BasePresenter> obtainViewLogicPool() {
         return logicManger.obtainViewLogicPool();
     }
 
     @Override
-    public SparseArray obtainModelLogicPool() {
+    public SparseArray<BasePresenter> obtainModelLogicPool() {
         return logicManger.obtainModelLogicPool();
     }
 
