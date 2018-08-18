@@ -42,12 +42,12 @@ public class TextImgLayout extends LinearLayout implements IComponentBind<ImageI
     }
 
     private void initView() {
-        tvInfo = root.findViewById(R.id.tv_pro);
+        //tvInfo = root.findViewById(R.id.tv_pro);
     }
 
     @Override
     public void bind(ImageInfo item) {
-        tvInfo.setText(item.promInfo.desc);
+        //tvInfo.setText(item.promInfo.desc);
     }
 
     @Override

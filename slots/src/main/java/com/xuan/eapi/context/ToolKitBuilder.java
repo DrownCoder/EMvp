@@ -1,6 +1,7 @@
 package com.xuan.eapi.context;
 
 import android.content.Context;
+import android.view.View;
 
 import com.xuan.eapi.factory.component.IComponentFactory;
 import com.xuan.eapi.helper.binder.DefaultModelBinder;
@@ -27,6 +28,7 @@ public class ToolKitBuilder {
     private ILogicBinder logicBinder;
     private ILogicManger logicManger;
     private IComponentFactory componentFactory;
+    private View.OnClickListener eventCenter;
 
     public ToolKitBuilder(Context context, List<Object> data) {
         this.context = context;
@@ -65,6 +67,11 @@ public class ToolKitBuilder {
         return this;
     }
 
+    public ToolKitBuilder setEventCenter(View.OnClickListener onClickListener) {
+        this.eventCenter = onClickListener;
+        return this;
+    }
+
     public Context getContext() {
         return context;
     }
@@ -87,6 +94,10 @@ public class ToolKitBuilder {
 
     public IComponentFactory getComponentFactory() {
         return componentFactory;
+    }
+
+    public View.OnClickListener getEventCenter() {
+        return eventCenter;
     }
 
     public ToolKitContext build() {

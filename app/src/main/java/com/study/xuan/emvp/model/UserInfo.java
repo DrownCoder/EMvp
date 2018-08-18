@@ -3,7 +3,7 @@ package com.study.xuan.emvp.model;
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.PresenterId;
 import com.xuan.annotation.BindType;
-import com.xuan.eapi.BasePresenter;
+import com.xuan.eapi.BaseLogic;
 import com.xuan.eapi.imodel.InterceptLogic;
 
 /**
@@ -14,7 +14,7 @@ import com.xuan.eapi.imodel.InterceptLogic;
 @BindType(ComponentId.USER_INFO_LAYOUT)
 public class UserInfo implements InterceptLogic,IUserInfo{
     public boolean isIntercept = false;
-    public BasePresenter presenter;
+    public BaseLogic presenter;
     public int imgUrl;
     public String name = "用户名字";
 
@@ -32,12 +32,12 @@ public class UserInfo implements InterceptLogic,IUserInfo{
     }
 
     @Override
-    public BasePresenter postPresenter() {
+    public BaseLogic postPresenter() {
         return presenter;
     }
 
     @Override
-    public void injectPresenter(BasePresenter presenter) {
+    public void injectPresenter(BaseLogic presenter) {
         this.presenter = presenter;
     }
 

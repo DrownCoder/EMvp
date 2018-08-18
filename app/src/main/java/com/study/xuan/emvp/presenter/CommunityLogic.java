@@ -4,10 +4,9 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.study.xuan.emvp.PresenterId;
-import com.study.xuan.emvp.model.Product;
 import com.study.xuan.emvp.model.UserInfo;
 import com.xuan.annotation.RegisterLogic;
-import com.xuan.eapi.BasePresenter;
+import com.xuan.eapi.BaseLogic;
 
 /**
  * Author : xuan.
@@ -15,8 +14,8 @@ import com.xuan.eapi.BasePresenter;
  * Description :the description of this file
  */
 @RegisterLogic(PresenterId.COMMUNITY_PRESENTER)
-public class CommunityPresenter extends BasePresenter implements IUserInfoPresenter<UserInfo> {
-    public CommunityPresenter(Context context) {
+public class CommunityLogic extends BaseLogic implements IUserInfoPresenter<UserInfo> {
+    public CommunityLogic(Context context) {
         super(context);
     }
 

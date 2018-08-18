@@ -1,6 +1,6 @@
 package com.xuan.eapi.factory.presenter;
 
-import com.xuan.eapi.BasePresenter;
+import com.xuan.eapi.BaseLogic;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ import java.util.List;
  */
 
 public interface ILogicFactory {
-    List<BasePresenter> createLogic();
+    List<BaseLogic> createLogic();
 }

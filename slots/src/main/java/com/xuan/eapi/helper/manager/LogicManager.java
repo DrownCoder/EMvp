@@ -3,9 +3,8 @@ package com.xuan.eapi.helper.manager;
 import android.content.Context;
 import android.util.SparseArray;
 
-import com.xuan.eapi.BasePresenter;
+import com.xuan.eapi.BaseLogic;
 import com.xuan.eapi.Slots;
-import com.xuan.eapi.context.ToolKitContext;
 import com.xuan.eapi.factory.presenter.ReflectPresenterFactory;
 
 import java.util.HashMap;
@@ -21,8 +20,8 @@ import java.util.Map;
 public class LogicManager implements ILogicManger {
     private Context context;
     //presenter冗余，拆分Presenter，一个Activity中可能存在多个Presenter实例
-    private Map<Class<?>, BasePresenter> globalLogic;
-    private SparseArray<BasePresenter> modelLogic;
+    private Map<Class<?>, BaseLogic> globalLogic;
+    private SparseArray<BaseLogic> modelLogic;
     private ReflectPresenterFactory reflectPresenterFactory;
 
     public LogicManager(Context context) {
@@ -30,7 +29,7 @@ public class LogicManager implements ILogicManger {
     }
 
     @Override
-    public void registerLogic(BasePresenter presenter) {
+    public void registerLogic(BaseLogic presenter) {
         Class<?>[] inters = presenter.getClass().getInterfaces();
         for (Class clazz : inters) {
             obtainViewLogicPool().put(clazz, presenter);
@@ -38,7 +37,7 @@ public class LogicManager implements ILogicManger {
     }
 
     @Override
-    public void registerModelLogic(int id, BasePresenter presenter) {
+    public void registerModelLogic(int id, BaseLogic presenter) {
         obtainModelLogicPool().put(id, presenter);
     }
 
@@ -52,9 +51,9 @@ public class LogicManager implements ILogicManger {
     public void prepareLogic(List<Integer> pIds) {
         modelLogic = obtainModelLogicPool();
         /*if (presenterFactory != null) {
-            List<BasePresenter> cusPresenters = presenterFactory.createPresenter();
+            List<BaseLogic> cusPresenters = presenterFactory.createPresenter();
             int pid;
-            for (BasePresenter presenter : cusPresenters) {
+            for (BaseLogic presenter : cusPresenters) {
                 pid = Slots.getInstance().obtainPresenterRule().obtainPresenterId(presenter.getClass());
                 modelLogic.put(pid, presenter);
             }
@@ -73,7 +72,7 @@ public class LogicManager implements ILogicManger {
     }
 
     @Override
-    public Map<Class<?>, BasePresenter> obtainViewLogicPool() {
+    public Map<Class<?>, BaseLogic> obtainViewLogicPool() {
         if (globalLogic == null) {
             globalLogic = new HashMap<>();
         }
@@ -81,7 +80,7 @@ public class LogicManager implements ILogicManger {
     }
 
     @Override
-    public SparseArray<BasePresenter> obtainModelLogicPool() {
+    public SparseArray<BaseLogic> obtainModelLogicPool() {
         if (modelLogic == null) {
             modelLogic = new SparseArray<>();
         }

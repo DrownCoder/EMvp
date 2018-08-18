@@ -1,9 +1,11 @@
 package com.study.xuan.emvp.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
-import com.xuan.eapi.BasePresenter;
+import com.study.xuan.emvp.test.TestActivity;
+import com.xuan.eapi.BaseLogic;
 
 
 /**
@@ -12,15 +14,17 @@ import com.xuan.eapi.BasePresenter;
  * Description :the description of this file
  */
 
-public class MainPresenter extends BasePresenter
+public class MainLogic extends BaseLogic
         implements Contract.ImagePresenter, Contract.TwoImgPresenter {
 
-    public MainPresenter(Context context) {
+    public MainLogic(Context context) {
         super(context);
     }
 
     @Override
     public void onImgClick() {
+        Intent intent = new Intent(mContext, TestActivity.class);
+        mContext.startActivity(intent);
         Toast.makeText(mContext, "一行一图，一张图片的点击逻辑，这是Activity的默认逻辑1", Toast.LENGTH_SHORT).show();
     }
 

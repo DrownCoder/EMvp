@@ -2,7 +2,7 @@ package com.xuan.eapi.helper.binder;
 
 import android.util.SparseArray;
 
-import com.xuan.eapi.BasePresenter;
+import com.xuan.eapi.BaseLogic;
 import com.xuan.eapi.Slots;
 import com.xuan.eapi.helper.manager.ILogicManger;
 
@@ -24,7 +24,7 @@ public class LogicBinder implements ILogicBinder {
      * @return 返回用于处理该View类型的逻辑
      */
     @Override
-    public BasePresenter bindViewLogic(Class<?> clazz) {
+    public BaseLogic bindViewLogic(Class<?> clazz) {
         return logicManger.obtainViewLogicPool().get(clazz);
     }
 
@@ -35,9 +35,9 @@ public class LogicBinder implements ILogicBinder {
      * @return 返回这个Model所对应的逻辑
      */
     @Override
-    public BasePresenter bindModelLogic(int pid) {
-        SparseArray<BasePresenter> logicPool = logicManger.obtainModelLogicPool();
-        BasePresenter presenter;
+    public BaseLogic bindModelLogic(int pid) {
+        SparseArray<BaseLogic> logicPool = logicManger.obtainModelLogicPool();
+        BaseLogic presenter;
         if (logicPool != null) {
             presenter = logicPool.get(pid);
             if (presenter != null) {

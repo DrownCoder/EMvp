@@ -9,14 +9,13 @@ import com.study.xuan.emvp.model.ImageInfo;
 import com.study.xuan.emvp.model.Product;
 import com.study.xuan.emvp.model.SingleImg;
 import com.study.xuan.emvp.model.UserInfo;
-import com.study.xuan.emvp.presenter.CommunityPresenter;
-import com.study.xuan.emvp.presenter.MainPresenter;
-import com.study.xuan.emvp.presenter.OtherPresenter;
+import com.study.xuan.emvp.presenter.CommunityLogic;
+import com.study.xuan.emvp.presenter.MainLogic;
+import com.study.xuan.emvp.presenter.OtherLogic;
 import com.study.xuan.emvp.widget.UserInfoLayout;
-import com.xuan.eapi.BasePresenter;
+import com.xuan.eapi.BaseLogic;
 import com.xuan.eapi.IComponentBind;
-import com.xuan.eapi.adapter.EAdapter;
-import com.xuan.eapi.component.Component;
+import com.xuan.eapi.adapter.MagicAdapter;
 import com.xuan.eapi.context.ToolKitBuilder;
 import com.xuan.eapi.context.ToolKitContext;
 import com.xuan.eapi.helper.binder.ModelBinder;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity {
-    protected BasePresenter mPresenter;
+    protected BaseLogic mPresenter;
     RecyclerView mRcy;
     private List<Object> mData;
 
@@ -33,7 +32,7 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mPresenter = new MainPresenter(this);
+        mPresenter = new MainLogic(this);
         mRcy = findViewById(R.id.rcy);
         mRcy.setLayoutManager(new LinearLayoutManager(this));
         mData = new ArrayList<>();
@@ -43,7 +42,7 @@ public class MainActivity extends FragmentActivity {
         mData.add(new ImageInfo(ComponentId.IMAGE_TWO_VH));
         mData.add(new UserInfo());
         UserInfo userInfo = new UserInfo(true);
-        userInfo.injectPresenter(new CommunityPresenter(this));
+        userInfo.injectPresenter(new CommunityLogic(this));
         mData.add(userInfo);
         mData.add(new ImageInfo(ComponentId.TEXT_IMG));
         //ToolKitContext toolKitContext = new ToolKitContext(this, mData);
@@ -61,8 +60,8 @@ public class MainActivity extends FragmentActivity {
        /* List<Integer> pid = new ArrayList<>();
         pid.add(PresenterId.COMMUNITY_PRESENTER);
         toolKitContext.prepareLogic(pid);*/
-        toolKitContext.registerLogic(new MainPresenter(this));
-        toolKitContext.registerLogic(new OtherPresenter(this));
-        mRcy.setAdapter(new EAdapter(toolKitContext));
+        toolKitContext.registerLogic(new MainLogic(this));
+        toolKitContext.registerLogic(new OtherLogic(this));
+        mRcy.setAdapter(new MagicAdapter(toolKitContext));
     }
 }

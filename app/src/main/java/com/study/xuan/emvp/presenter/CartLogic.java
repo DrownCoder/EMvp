@@ -6,7 +6,7 @@ import android.widget.Toast;
 import com.study.xuan.emvp.PresenterId;
 import com.study.xuan.emvp.model.Product;
 import com.xuan.annotation.RegisterLogic;
-import com.xuan.eapi.BasePresenter;
+import com.xuan.eapi.BaseLogic;
 
 /**
  * Author : xuan.
@@ -14,8 +14,8 @@ import com.xuan.eapi.BasePresenter;
  * Description :the description of this file
  */
 @RegisterLogic(PresenterId.CART_PRESENTER)
-public class CartPresenter extends BasePresenter implements IUserInfoPresenter<Product> {
-    public CartPresenter(Context context) {
+public class CartLogic extends BaseLogic implements IUserInfoPresenter<Product> {
+    public CartLogic(Context context) {
         super(context);
     }
 

@@ -3,9 +3,10 @@ package com.xuan.eapi.context;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
+import android.view.View;
 import android.view.ViewGroup;
 
-import com.xuan.eapi.BasePresenter;
+import com.xuan.eapi.BaseLogic;
 import com.xuan.eapi.IComponentBind;
 import com.xuan.eapi.factory.presenter.ReflectPresenterFactory;
 import com.xuan.eapi.helper.binder.ILogicBinder;
@@ -22,16 +23,17 @@ import java.util.Map;
 /**
  * Author : xuan.
  * Date : 2018/5/30.
- * Description :工具包
+ * Description :结耦后的全局代理
  */
 
-public class ToolKitContext implements ILogicBinder, ILogicManger {
+public class ToolKitContext implements ILogicBinder, ILogicManger, IContextService {
     private Context context;
     private IModerBinder moderBinder;
     private IModelManager modelManager;
     private ILogicBinder logicBinder;
     private ILogicManger logicManger;
     private IComponentFactory componentFactory;
+    private View.OnClickListener eventCenter;
     private RecyclerView rcyRoot;
 
     public ToolKitContext(Context context, List<Object> data) {
@@ -45,6 +47,7 @@ public class ToolKitContext implements ILogicBinder, ILogicManger {
         logicBinder = builder.getLogicBinder();
         logicManger = builder.getLogicManger();
         componentFactory = builder.getComponentFactory();
+        eventCenter = builder.getEventCenter();
     }
 
     public Context getContext() {
@@ -67,13 +70,16 @@ public class ToolKitContext implements ILogicBinder, ILogicManger {
         return moderBinder.getItemType(pos, modelManager.getItem(pos));
     }
 
+    /**
+     * 注册逻辑
+     */
     @Override
-    public void registerLogic(BasePresenter presenter) {
-        logicManger.registerLogic(presenter);
+    public void registerLogic(BaseLogic logic) {
+        logicManger.registerLogic(logic);
     }
 
     @Override
-    public void registerModelLogic(int id, BasePresenter presenter) {
+    public void registerModelLogic(int id, BaseLogic presenter) {
         logicManger.registerModelLogic(id, presenter);
     }
 
@@ -88,12 +94,12 @@ public class ToolKitContext implements ILogicBinder, ILogicManger {
     }
 
     @Override
-    public Map<Class<?>, BasePresenter> obtainViewLogicPool() {
+    public Map<Class<?>, BaseLogic> obtainViewLogicPool() {
         return logicManger.obtainViewLogicPool();
     }
 
     @Override
-    public SparseArray<BasePresenter> obtainModelLogicPool() {
+    public SparseArray<BaseLogic> obtainModelLogicPool() {
         return logicManger.obtainModelLogicPool();
     }
 
@@ -103,12 +109,12 @@ public class ToolKitContext implements ILogicBinder, ILogicManger {
     }
 
     @Override
-    public BasePresenter bindViewLogic(Class<?> viewClass) {
+    public BaseLogic bindViewLogic(Class<?> viewClass) {
         return logicBinder.bindViewLogic(viewClass);
     }
 
     @Override
-    public BasePresenter bindModelLogic(int pid) {
+    public BaseLogic bindModelLogic(int pid) {
         return logicBinder.bindModelLogic(pid);
     }
 
@@ -122,5 +128,10 @@ public class ToolKitContext implements ILogicBinder, ILogicManger {
 
     public IComponentBind createView(int viewType) {
         return moderBinder.createView(viewType);
+    }
+
+    @Override
+    public View.OnClickListener obtainEventCenter() {
+        return eventCenter;
     }
 }

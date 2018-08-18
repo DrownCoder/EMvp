@@ -1,8 +1,6 @@
 package com.xuan.eapi.helper.binder;
 
-import com.xuan.eapi.BasePresenter;
-
-import java.util.List;
+import com.xuan.eapi.BaseLogic;
 
 /**
  * Author : xuan.
@@ -11,7 +9,7 @@ import java.util.List;
  */
 
 public interface ILogicBinder {
-    public BasePresenter bindViewLogic(Class<?> clazz);
+    public BaseLogic bindViewLogic(Class<?> clazz);
 
-    public BasePresenter bindModelLogic(int pid);
+    public BaseLogic bindModelLogic(int pid);
 }

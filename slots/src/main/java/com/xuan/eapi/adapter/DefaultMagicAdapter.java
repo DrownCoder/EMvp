@@ -9,8 +9,8 @@ import com.xuan.eapi.context.ToolKitContext;
  * Description :the description of this file
  */
 
-public class DefaultEAdapter extends EAdapter {
-    public DefaultEAdapter(ToolKitContext toolKitContext) {
+public class DefaultMagicAdapter extends MagicAdapter {
+    public DefaultMagicAdapter(ToolKitContext toolKitContext) {
         super(toolKitContext);
     }
 

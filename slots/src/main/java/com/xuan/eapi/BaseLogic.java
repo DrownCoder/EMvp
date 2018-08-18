@@ -8,10 +8,10 @@ import android.content.Context;
  * Description :the description of this file
  */
 
-public abstract class BasePresenter implements IBasePresenter {
+public abstract class BaseLogic implements ILifeCycle {
     protected Context mContext;
 
-    public BasePresenter(Context context) {
+    public BaseLogic(Context context) {
         this.mContext = context;
     }
 

@@ -1,12 +1,12 @@
 package com.xuan.eapi.imodel;
 
 
-import com.xuan.eapi.BasePresenter;
+import com.xuan.eapi.BaseLogic;
 
 /**
  * Author : xuan.
  * Date : 2018/5/23.
- * Description :the description of this file
+ * Description :逻辑拦截器，适合Model和Logic的一对一绑定
  */
 
 public interface InterceptLogic {
@@ -14,10 +14,10 @@ public interface InterceptLogic {
     boolean interceptEvent();
 
     //处理该model的presenter
-    BasePresenter postPresenter();
+    BaseLogic postPresenter();
 
     //注入Presenter
-    void injectPresenter(BasePresenter presenter);
+    void injectPresenter(BaseLogic presenter);
 
     int presenterId();
 

@@ -3,10 +3,10 @@ package com.xuan.eapi;
 /**
  * Author : xuan.
  * Date : 2018/5/4.
- * Description :input the description of this file
+ * Description :生命周期Activity
  */
 
-public interface IBasePresenter {
+public interface ILifeCycle {
     void onDestroy();
 
     void onResume();
