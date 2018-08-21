@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.model.IUserInfo;
 import com.xuan.annotation.ILogic;
-import com.xuan.eapi.imodel.InterceptLogic;
+import com.xuan.eapi.imodel.ICreateLogic;
 import com.study.xuan.emvp.presenter.IUserInfoPresenter;
 import com.xuan.annotation.ComponentType;
 import com.xuan.component.R;
@@ -28,7 +28,8 @@ import com.xuan.eapi.LogUtil;
  */
 @ComponentType(value = ComponentId.USER_INFO_LAYOUT)
 @ILogic(IUserInfoPresenter.class)
-public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserInfo>, IPresenterBind<IUserInfoPresenter<IUserInfo>> {
+public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserInfo>,
+        IPresenterBind<IUserInfoPresenter<IUserInfo>> {
     private ImageView ivImg;
     private TextView tvText;
     private View root;
@@ -43,7 +44,8 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserI
         this(context, attrs, 0);
     }
 
-    public UserInfoLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public UserInfoLayout(@NonNull Context context, @Nullable AttributeSet attrs, int
+            defStyleAttr) {
         super(context, attrs, defStyleAttr);
         root = LayoutInflater.from(context).inflate(R.layout.user_info_layout, this);
         initView();
@@ -54,17 +56,15 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserI
         tvText.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (InterceptLogic.class.isAssignableFrom(info.getClass())) {
-                    InterceptLogic post = (InterceptLogic) info;
-                    if (post.interceptEvent()) {
-                        if (IUserInfoPresenter.class.isAssignableFrom(post.postPresenter().getClass())) {
-                            IUserInfoPresenter presenter = (IUserInfoPresenter) post.postPresenter();
-                            presenter.onTextClick(post);
-                        } else {
-                            LogUtil.Error("the presenter must implement the IUserInfoPresenter");
-                        }
-                        return;
+                if (ICreateLogic.class.isAssignableFrom(info.getClass())) {
+                    ICreateLogic post = (ICreateLogic) info;
+                    if (IUserInfoPresenter.class.isAssignableFrom(post.postPresenter().getClass())) {
+                        IUserInfoPresenter presenter = (IUserInfoPresenter) post.postPresenter();
+                        presenter.onTextClick(post);
+                    } else {
+                        LogUtil.Error("the presenter must implement the IUserInfoPresenter");
                     }
+                    return;
                 }
 
                 presenter.onTextClick(info);

@@ -4,7 +4,7 @@ import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.PresenterId;
 import com.xuan.annotation.BindType;
 import com.xuan.eapi.BaseLogic;
-import com.xuan.eapi.imodel.InterceptLogic;
+import com.xuan.eapi.imodel.ICreateLogic;
 
 /**
  * Author : xuan.
@@ -12,7 +12,7 @@ import com.xuan.eapi.imodel.InterceptLogic;
  * Description :the description of this file
  */
 @BindType(ComponentId.USER_INFO_LAYOUT)
-public class Product implements InterceptLogic, IUserInfo {
+public class Product implements ICreateLogic, IUserInfo {
     public boolean isPostEvent = false;
     public BaseLogic presenter;
     public int imgUrl;
@@ -24,11 +24,6 @@ public class Product implements InterceptLogic, IUserInfo {
 
     public Product(boolean isPostEvent) {
         this.isPostEvent = isPostEvent;
-    }
-
-    @Override
-    public boolean interceptEvent() {
-        return isPostEvent;
     }
 
     @Override
@@ -44,11 +39,6 @@ public class Product implements InterceptLogic, IUserInfo {
     @Override
     public int presenterId() {
         return PresenterId.CART_PRESENTER;
-    }
-
-    @Override
-    public boolean singlePresenter() {
-        return false;
     }
 
     @Override
