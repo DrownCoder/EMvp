@@ -1,5 +1,6 @@
 package com.xuan.eapi.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.xuan.eapi.IComponentBind;
@@ -15,8 +16,8 @@ import com.xuan.eapi.component.Component;
 public class ComponentViewHolderAdapter extends Component {
     private IComponentBind root;
 
-    public ComponentViewHolderAdapter(RecyclerView.ViewHolder vh) {
-        super(vh.itemView);
+    public ComponentViewHolderAdapter(Context context, RecyclerView.ViewHolder vh) {
+        super(context, vh.itemView);
         root = (IComponentBind) vh;
     }
 

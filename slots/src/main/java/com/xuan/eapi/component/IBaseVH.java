@@ -10,6 +10,4 @@ public interface IBaseVH<T> {
     void onBind(int pos,T item);
 
     void onUnBind();
-
-    void onCreate(T item);
 }

@@ -54,6 +54,6 @@ public class ViewComponentFactory implements IViewComponentFactory, ReflectCreat
 
     @Override
     public Component adapterComponent(IComponentBind componentBind) {
-        return new ComponentViewAdapter((View) componentBind);
+        return new ComponentViewAdapter(mContext,(View) componentBind);
     }
 }

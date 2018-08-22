@@ -21,7 +21,8 @@ import java.lang.reflect.InvocationTargetException;
  * Description :the RecyclerView.ViewHolder Factory
  */
 
-public class ViewHolderComponentFactory implements IViewHolderComponentFactory, ReflectCreate<RecyclerView.ViewHolder>, AdapterComponent {
+public class ViewHolderComponentFactory implements IViewHolderComponentFactory,
+        ReflectCreate<RecyclerView.ViewHolder>, AdapterComponent {
     private Context mContext;
     private LayoutInflater mInflater;
     private View rootView;
@@ -34,7 +35,7 @@ public class ViewHolderComponentFactory implements IViewHolderComponentFactory, 
 
     @Override
     public Component adapterComponent(IComponentBind componentBind) {
-        return new ComponentViewHolderAdapter((RecyclerView.ViewHolder) componentBind);
+        return new ComponentViewHolderAdapter(mContext, (RecyclerView.ViewHolder) componentBind);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.xuan.eapi.adapter;
 
+import android.content.Context;
 import android.view.View;
 
 import com.xuan.eapi.IComponentBind;
@@ -15,8 +16,8 @@ import com.xuan.eapi.component.Component;
 public class ComponentViewAdapter extends Component {
     private IComponentBind root;
 
-    public ComponentViewAdapter(View itemView) {
-        super(itemView);
+    public ComponentViewAdapter(Context context, View itemView) {
+        super(context, itemView);
         root = (IComponentBind) itemView;
     }
 

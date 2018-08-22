@@ -1,5 +1,7 @@
 package com.xuan.eapi;
 
+import android.content.Intent;
+
 /**
  * Author : xuan.
  * Date : 2018/5/4.
@@ -22,4 +24,6 @@ public interface ILifeCycle {
     void onRestart();
 
     void onNewIntent();
+
+    void onActivityResult(int requestCode, int resultCode, Intent data);
 }
