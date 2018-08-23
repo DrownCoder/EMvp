@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xuan.eapi.IComponentBind;
-import com.xuan.eapi.context.ToolKitContext;
+import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.component.Component;
 import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.adapter.ComponentViewHolderAdapter;
@@ -28,9 +28,9 @@ public class ViewHolderComponentFactory implements IViewHolderComponentFactory,
     private View rootView;
     private ViewGroup mParentRoot;
 
-    public ViewHolderComponentFactory(ToolKitContext toolKitContext) {
-        this.mContext = toolKitContext.getContext();
-        this.mParentRoot = toolKitContext.getParentRoot();
+    public ViewHolderComponentFactory(SlotContext slotContext) {
+        this.mContext = slotContext.getContext();
+        this.mParentRoot = slotContext.getParentRoot();
     }
 
     @Override

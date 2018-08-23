@@ -16,6 +16,9 @@ import com.xuan.eapi.component.Component;
 import com.xuan.eapi.factory.component.ComponentFactory;
 import com.xuan.eapi.factory.component.IComponentFactory;
 import com.xuan.eapi.helper.binder.IModerBinder;
+import com.xuan.eapi.lifecycle.ILifeCycle;
+import com.xuan.eapi.lifecycle.ILifeRegistor;
+import com.xuan.eapi.lifecycle.LifeOwner;
 
 import java.util.List;
 import java.util.Map;
@@ -26,7 +29,7 @@ import java.util.Map;
  * Description :结耦后的全局代理
  */
 
-public class ToolKitContext implements ILogicBinder, ILogicManger, IContextService {
+public class SlotContext implements ILogicBinder, ILogicManger, IContextService, ILifeRegistor {
     private Context context;
     private IModerBinder moderBinder;
     private IModelManager modelManager;
@@ -34,13 +37,14 @@ public class ToolKitContext implements ILogicBinder, ILogicManger, IContextServi
     private ILogicManger logicManger;
     private IComponentFactory componentFactory;
     private View.OnClickListener eventCenter;
+    private LifeOwner lifeOwner;
     private RecyclerView rcyRoot;
 
-    public ToolKitContext(Context context, List<Object> data) {
+    public SlotContext(Context context, List<Object> data) {
         this(new ToolKitBuilder(context, data));
     }
 
-    public ToolKitContext(ToolKitBuilder builder) {
+    public SlotContext(ToolKitBuilder builder) {
         context = builder.getContext();
         moderBinder = builder.getModerBinder();
         modelManager = builder.getModelManager();
@@ -133,5 +137,13 @@ public class ToolKitContext implements ILogicBinder, ILogicManger, IContextServi
     @Override
     public View.OnClickListener obtainEventCenter() {
         return eventCenter;
+    }
+
+    @Override
+    public void pushLife(ILifeCycle lifeCycle) {
+        if (lifeOwner == null) {
+            lifeOwner = LifeOwner.init(context);
+        }
+        lifeOwner.pushLife(lifeCycle);
     }
 }

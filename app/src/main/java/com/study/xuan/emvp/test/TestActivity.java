@@ -14,7 +14,7 @@ import com.study.xuan.emvp.presenter.MainLogic;
 import com.study.xuan.emvp.presenter.OtherLogic;
 import com.study.xuan.emvp.widget.TextImgLayout;
 import com.xuan.eapi.adapter.MagicAdapter;
-import com.xuan.eapi.context.ToolKitContext;
+import com.xuan.eapi.context.SlotContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,7 @@ public class TestActivity extends AppCompatActivity {
         mData.add(new UserInfo());
         mData.add(new UserInfo());
         //mData.add(new ImageInfo(ComponentId.TEXT_IMG));
-        final ToolKitContext tookContext = new ToolKitContext(this, mData);
+        final SlotContext tookContext = new SlotContext(this, mData);
         dragRcy = findViewById(R.id.drag_rcy);
         //final TestLayoutManager layoutManager = new TestLayoutManager(this);
         dragRcy.setLayoutManager(new LinearLayoutManager(this));

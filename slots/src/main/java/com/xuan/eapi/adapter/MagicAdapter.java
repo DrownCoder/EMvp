@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 
-import com.xuan.eapi.context.ToolKitContext;
+import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.helper.event.InjectCallback;
 import com.xuan.eapi.imodel.ICreateLogic;
@@ -20,32 +20,32 @@ import com.xuan.eapi.imodel.ICreateLogic;
  */
 
 public class MagicAdapter extends RecyclerView.Adapter<Component> {
-    private ToolKitContext toolKitContext;
+    private SlotContext slotContext;
 
-    public MagicAdapter(ToolKitContext toolKitContext) {
-        this.toolKitContext = toolKitContext;
+    public MagicAdapter(SlotContext slotContext) {
+        this.slotContext = slotContext;
     }
 
     @Override
     public Component onCreateViewHolder(ViewGroup parent, int viewType) {
-        return toolKitContext.createComponent(viewType, parent);
+        return slotContext.createComponent(viewType, parent);
     }
 
     @Override
     public void onBindViewHolder(Component holder, int position) {
-        Object item = toolKitContext.getItem(position);
+        Object item = slotContext.getItem(position);
         //注入逻辑
         if (ICreateLogic.class.isAssignableFrom(item.getClass())) {
             ICreateLogic creator = (ICreateLogic) item;
             if (creator.postPresenter() != null) {
-                creator.injectPresenter(toolKitContext.bindModelLogic(creator.presenterId()));
+                creator.injectPresenter(slotContext.bindModelLogic(creator.presenterId()));
             }
         }
         //注入监听器
         if (InjectCallback.class.isAssignableFrom(item.getClass())) {
-            ((InjectCallback) item).injectCallback(toolKitContext.obtainEventCenter());
+            ((InjectCallback) item).injectCallback(slotContext.obtainEventCenter());
         }
-        holder.onBind(position, toolKitContext.getItem(position));
+        holder.onBind(position, slotContext.getItem(position));
         onBind(holder, position);
     }
 
@@ -55,11 +55,11 @@ public class MagicAdapter extends RecyclerView.Adapter<Component> {
 
     @Override
     public int getItemCount() {
-        return toolKitContext.getItemCount();
+        return slotContext.getItemCount();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return toolKitContext.getItemType(position);
+        return slotContext.getItemType(position);
     }
 }

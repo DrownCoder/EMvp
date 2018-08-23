@@ -3,6 +3,8 @@ package com.xuan.eapi;
 import android.content.Context;
 import android.content.Intent;
 
+import com.xuan.eapi.lifecycle.ILifeCycle;
+
 /**
  * Author : xuan.
  * Date : 2018/5/9.

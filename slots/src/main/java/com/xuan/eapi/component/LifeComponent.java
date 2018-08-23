@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.xuan.eapi.ILifeCycle;
+import com.xuan.eapi.lifecycle.ILifeCycle;
 
 /**
  * Author : xuan.

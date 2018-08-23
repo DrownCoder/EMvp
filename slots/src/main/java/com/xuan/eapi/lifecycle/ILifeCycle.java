@@ -1,4 +1,4 @@
-package com.xuan.eapi;
+package com.xuan.eapi.lifecycle;
 
 import android.content.Intent;
 

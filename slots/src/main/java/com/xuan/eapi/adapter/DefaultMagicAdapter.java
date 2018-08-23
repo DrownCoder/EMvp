@@ -1,7 +1,7 @@
 package com.xuan.eapi.adapter;
 
 import com.xuan.eapi.component.Component;
-import com.xuan.eapi.context.ToolKitContext;
+import com.xuan.eapi.context.SlotContext;
 
 /**
  * Author : xuan.
@@ -10,8 +10,8 @@ import com.xuan.eapi.context.ToolKitContext;
  */
 
 public class DefaultMagicAdapter extends MagicAdapter {
-    public DefaultMagicAdapter(ToolKitContext toolKitContext) {
-        super(toolKitContext);
+    public DefaultMagicAdapter(SlotContext slotContext) {
+        super(slotContext);
     }
 
     @Override

@@ -100,7 +100,7 @@ public class ToolKitBuilder {
         return eventCenter;
     }
 
-    public ToolKitContext build() {
-        return new ToolKitContext(this);
+    public SlotContext build() {
+        return new SlotContext(this);
     }
 }

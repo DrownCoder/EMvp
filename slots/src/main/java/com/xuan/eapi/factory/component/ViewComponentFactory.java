@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.IComponentBind;
-import com.xuan.eapi.context.ToolKitContext;
+import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.adapter.ComponentViewAdapter;
 
@@ -22,8 +22,8 @@ import java.lang.reflect.InvocationTargetException;
 public class ViewComponentFactory implements IViewComponentFactory, ReflectCreate<IComponentBind>, AdapterComponent {
     private Context mContext;
 
-    public ViewComponentFactory(ToolKitContext toolKitContext) {
-        this.mContext = toolKitContext.getContext();
+    public ViewComponentFactory(SlotContext slotContext) {
+        this.mContext = slotContext.getContext();
     }
 
     @Override

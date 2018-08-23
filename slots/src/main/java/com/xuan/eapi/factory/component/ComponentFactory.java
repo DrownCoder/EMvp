@@ -5,7 +5,7 @@ import com.xuan.eapi.IComponentBind;
 import com.xuan.eapi.IPresenterBind;
 import com.xuan.eapi.Slots;
 import com.xuan.eapi.component.Component;
-import com.xuan.eapi.context.ToolKitContext;
+import com.xuan.eapi.context.SlotContext;
 
 
 /**
@@ -15,10 +15,10 @@ import com.xuan.eapi.context.ToolKitContext;
  */
 
 public class ComponentFactory implements IComponentFactory {
-    private ToolKitContext tookContext;
+    private SlotContext tookContext;
 
-    public ComponentFactory(ToolKitContext toolKitContext) {
-        this.tookContext = toolKitContext;
+    public ComponentFactory(SlotContext slotContext) {
+        this.tookContext = slotContext;
     }
 
     private IViewComponentFactory viewFactory;
@@ -73,15 +73,15 @@ public class ComponentFactory implements IComponentFactory {
         return tookContext.createView(viewInfo.getId());
     }
 
-    private void createViewFactory(ToolKitContext toolKitContext) {
+    private void createViewFactory(SlotContext slotContext) {
         if (viewFactory == null) {
-            viewFactory = new ViewComponentFactory(toolKitContext);
+            viewFactory = new ViewComponentFactory(slotContext);
         }
     }
 
-    private void createViewHolderFactory(ToolKitContext toolKitContext) {
+    private void createViewHolderFactory(SlotContext slotContext) {
         if (viewHolderFactory == null) {
-            viewHolderFactory = new ViewHolderComponentFactory(toolKitContext);
+            viewHolderFactory = new ViewHolderComponentFactory(slotContext);
         }
 
     }
