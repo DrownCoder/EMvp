@@ -46,7 +46,7 @@ public class MainActivity extends FragmentActivity {
         mData.add(userInfo);
         mData.add(new ImageInfo(ComponentId.TEXT_IMG));
         //SlotContext slotContext = new SlotContext(this, mData);
-        SlotContext slotContext = ToolKitBuilder.init(this, mData).setModerBinder(new ModelBinder() {
+        SlotContext slotContext = ToolKitBuilder.init(this).setModerBinder(new ModelBinder() {
             @Override
             public IComponentBind createComponent(int viewId) {
                 switch (viewId) {

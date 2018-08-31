@@ -1,4 +1,4 @@
-package com.xuan.eapi.imodel;
+package com.xuan.eapi.vm;
 
 /**
  * Author : xuan.

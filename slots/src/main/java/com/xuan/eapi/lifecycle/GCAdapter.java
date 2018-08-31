@@ -1,25 +1,25 @@
-package com.xuan.eapi.component;
+package com.xuan.eapi.lifecycle;
 
-import android.content.Context;
 import android.content.Intent;
-import android.view.View;
-
-import com.xuan.eapi.lifecycle.ILifeCycle;
 
 /**
  * Author : xuan.
- * Date : 2018/8/22.
- * Description :实现生命周期的Component
+ * Date : 2018/8/31.
+ * Description :只需要感知onDestroy的adapter
  */
 
-public abstract class LifeComponent<T> extends Component<T> implements ILifeCycle {
-    public LifeComponent(Context context, View itemView) {
-        super(context, itemView);
+public class GCAdapter implements ILifeCycle{
+    private IGC gc;
+
+    public GCAdapter(IGC gc) {
+        this.gc = gc;
     }
 
     @Override
     public void onDestroy() {
-
+        if (gc != null) {
+            gc.onDestroy();
+        }
     }
 
     @Override

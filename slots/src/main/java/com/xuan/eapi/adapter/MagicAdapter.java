@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.helper.event.InjectCallback;
-import com.xuan.eapi.imodel.ICreateLogic;
+import com.xuan.eapi.vm.ICarryLogic;
 
 /**
  * Author : xuan.
@@ -35,8 +35,8 @@ public class MagicAdapter extends RecyclerView.Adapter<Component> {
     public void onBindViewHolder(Component holder, int position) {
         Object item = slotContext.getItem(position);
         //注入逻辑
-        if (ICreateLogic.class.isAssignableFrom(item.getClass())) {
-            ICreateLogic creator = (ICreateLogic) item;
+        if (ICarryLogic.class.isAssignableFrom(item.getClass())) {
+            ICarryLogic creator = (ICarryLogic) item;
             if (creator.postPresenter() != null) {
                 creator.injectPresenter(slotContext.bindModelLogic(creator.presenterId()));
             }

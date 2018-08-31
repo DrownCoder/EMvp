@@ -16,6 +16,8 @@ import com.xuan.eapi.component.Component;
 import com.xuan.eapi.factory.component.ComponentFactory;
 import com.xuan.eapi.factory.component.IComponentFactory;
 import com.xuan.eapi.helper.binder.IModerBinder;
+import com.xuan.eapi.lifecycle.GCAdapter;
+import com.xuan.eapi.lifecycle.IGC;
 import com.xuan.eapi.lifecycle.ILifeCycle;
 import com.xuan.eapi.lifecycle.ILifeRegistor;
 import com.xuan.eapi.lifecycle.LifeOwner;
@@ -29,7 +31,7 @@ import java.util.Map;
  * Description :结耦后的全局代理
  */
 
-public class SlotContext implements ILogicBinder, ILogicManger, IContextService, ILifeRegistor {
+public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextService, ILifeRegistor,IModelManager<T> {
     private Context context;
     private IModerBinder moderBinder;
     private IModelManager modelManager;
@@ -62,8 +64,18 @@ public class SlotContext implements ILogicBinder, ILogicManger, IContextService,
         return rcyRoot;
     }
 
-    public Object getItem(int pos) {
-        return modelManager.getItem(pos);
+    public T getItem(int pos) {
+        return (T) modelManager.getItem(pos);
+    }
+
+    @Override
+    public void addAll(List<T> data) {
+        modelManager.addAll(data);
+    }
+
+    @Override
+    public void setData(List<T> data) {
+        modelManager.setData(data);
     }
 
     public int getItemCount() {
@@ -80,6 +92,7 @@ public class SlotContext implements ILogicBinder, ILogicManger, IContextService,
     @Override
     public void registerLogic(BaseLogic logic) {
         logicManger.registerLogic(logic);
+        pushLife(logic);
     }
 
     @Override
@@ -139,11 +152,23 @@ public class SlotContext implements ILogicBinder, ILogicManger, IContextService,
         return eventCenter;
     }
 
-    @Override
+    /**
+     * 监听全部的生命周期
+     */
     public void pushLife(ILifeCycle lifeCycle) {
         if (lifeOwner == null) {
             lifeOwner = LifeOwner.init(context);
         }
         lifeOwner.pushLife(lifeCycle);
+    }
+
+    /**
+     * 监听Destroy
+     */
+    public void pushGC(IGC gc) {
+        if (lifeOwner == null) {
+            lifeOwner = LifeOwner.init(context);
+        }
+        pushLife(new GCAdapter(gc));
     }
 }

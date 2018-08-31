@@ -4,7 +4,7 @@ import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.PresenterId;
 import com.xuan.annotation.BindType;
 import com.xuan.eapi.BaseLogic;
-import com.xuan.eapi.imodel.ICreateLogic;
+import com.xuan.eapi.vm.ICarryLogic;
 
 /**
  * Author : xuan.
@@ -12,7 +12,7 @@ import com.xuan.eapi.imodel.ICreateLogic;
  * Description :the description of this file
  */
 @BindType(ComponentId.USER_INFO_LAYOUT)
-public class Product implements ICreateLogic, IUserInfo {
+public class Product implements ICarryLogic, IUserInfo {
     public boolean isPostEvent = false;
     public BaseLogic presenter;
     public int imgUrl;

@@ -1,4 +1,4 @@
-package com.xuan.eapi.imodel;
+package com.xuan.eapi.vm;
 
 
 import com.xuan.eapi.BaseLogic;
@@ -9,7 +9,7 @@ import com.xuan.eapi.BaseLogic;
  * Description :逻辑创建器，适合Model和Logic的一对一绑定
  */
 
-public interface ICreateLogic {
+public interface ICarryLogic {
     //处理该model的presenter
     BaseLogic postPresenter();
 

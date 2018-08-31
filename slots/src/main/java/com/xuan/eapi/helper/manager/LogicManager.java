@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class LogicManager implements ILogicManger {
     private Context context;
-    //presenter冗余，拆分Presenter，一个Activity中可能存在多个Presenter实例
+    //Logic冗余，拆分Logic，一个Activity中可能存在多个Logic实例
     private Map<Class<?>, BaseLogic> globalLogic;
     private SparseArray<BaseLogic> modelLogic;
     private ReflectPresenterFactory reflectPresenterFactory;

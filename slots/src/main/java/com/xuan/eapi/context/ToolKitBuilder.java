@@ -21,7 +21,7 @@ import java.util.List;
  * Description :工具类建造者
  */
 
-public class ToolKitBuilder {
+public class ToolKitBuilder<T> {
     private Context context;
     private IModerBinder moderBinder;
     private IModelManager modelManager;
@@ -30,7 +30,7 @@ public class ToolKitBuilder {
     private IComponentFactory componentFactory;
     private View.OnClickListener eventCenter;
 
-    public ToolKitBuilder(Context context, List<Object> data) {
+    public ToolKitBuilder(Context context, List<T> data) {
         this.context = context;
         this.moderBinder = new DefaultModelBinder();
         this.modelManager = new DefaultModelManager(data);
@@ -38,8 +38,16 @@ public class ToolKitBuilder {
         this.logicBinder = new LogicBinder(logicManger);
     }
 
-    public static ToolKitBuilder init(Context context, List<Object> mData) {
-        return new ToolKitBuilder(context, mData);
+    public ToolKitBuilder(Context context) {
+        this.context = context;
+        this.moderBinder = new DefaultModelBinder();
+        this.modelManager = new DefaultModelManager(null);
+        this.logicManger = new LogicManager(context);
+        this.logicBinder = new LogicBinder(logicManger);
+    }
+
+    public static ToolKitBuilder init(Context context) {
+        return new ToolKitBuilder(context);
     }
 
     public ToolKitBuilder setModerBinder(IModerBinder moderBinder) {

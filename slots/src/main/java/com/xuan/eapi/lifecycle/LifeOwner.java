@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -59,6 +60,7 @@ public class LifeOwner implements ILifeRegistor {
         if (fragment == null) {
             fragment = LifeFragment.newInstance();
             fm.beginTransaction().add(fragment, FRAGMENT_TAG).commitAllowingStateLoss();
+            injectLifeListener((InjectLifeListener) fragment);
         }
     }
 
@@ -75,14 +77,103 @@ public class LifeOwner implements ILifeRegistor {
         if (fragment == null) {
             fragment = LifeV4Fragment.newInstance();
             fm.beginTransaction().add(fragment, FRAGMENT_TAG).commitAllowingStateLoss();
+            injectLifeListener((InjectLifeListener) fragment);
         }
     }
 
-    @Override
+    private void injectLifeListener(InjectLifeListener owner) {
+        if (owner != null) {
+            owner.setLifeCycle(lifeCycleNotify);
+        }
+    }
+
     public void pushLife(ILifeCycle lifeCycle) {
         if (lifes == null) {
             lifes = new ArrayList<>();
         }
         lifes.add(lifeCycle);
     }
+
+    private ILifeCycle lifeCycleNotify = new ILifeCycle() {
+        @Override
+        public void onDestroy() {
+            if (lifes != null) {
+                for (ILifeCycle life : lifes) {
+                    life.onDestroy();
+                }
+            }
+        }
+
+        @Override
+        public void onResume() {
+            if (lifes != null) {
+                for (ILifeCycle life : lifes) {
+                    life.onResume();
+                }
+            }
+        }
+
+        @Override
+        public void onStart() {
+            if (lifes != null) {
+                for (ILifeCycle life : lifes) {
+                    life.onStart();
+                }
+            }
+        }
+
+        @Override
+        public void onCreate() {
+            if (lifes != null) {
+                for (ILifeCycle life : lifes) {
+                    life.onCreate();
+                }
+            }
+        }
+
+        @Override
+        public void onPause() {
+            if (lifes != null) {
+                for (ILifeCycle life : lifes) {
+                    life.onPause();
+                }
+            }
+        }
+
+        @Override
+        public void onStop() {
+            if (lifes != null) {
+                for (ILifeCycle life : lifes) {
+                    life.onStop();
+                }
+            }
+        }
+
+        @Override
+        public void onRestart() {
+            if (lifes != null) {
+                for (ILifeCycle life : lifes) {
+                    life.onRestart();
+                }
+            }
+        }
+
+        @Override
+        public void onNewIntent() {
+            if (lifes != null) {
+                for (ILifeCycle life : lifes) {
+                    life.onNewIntent();
+                }
+            }
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (lifes != null) {
+                for (ILifeCycle life : lifes) {
+                    life.onActivityResult(requestCode, resultCode, data);
+                }
+            }
+        }
+    };
 }

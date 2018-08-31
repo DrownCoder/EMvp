@@ -10,7 +10,7 @@ import android.view.View;
  * Description :基础的ViewHolder，无生命周期的感知
  */
 
-public class Component extends RecyclerView.ViewHolder implements IBaseVH {
+public abstract class Component<T> extends RecyclerView.ViewHolder implements IBaseVH<T> {
     protected Context context;
     private View root;
 
@@ -20,10 +20,7 @@ public class Component extends RecyclerView.ViewHolder implements IBaseVH {
         this.root = itemView;
     }
 
-    @Override
-    public void onBind(int pos, Object item) {
-
-    }
+    public abstract void onBind(int pos, T item);
 
     @Override
     public void onUnBind() {

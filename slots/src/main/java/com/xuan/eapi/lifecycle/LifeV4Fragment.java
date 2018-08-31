@@ -10,8 +10,14 @@ import android.support.v4.app.Fragment;
  * Description :the description of this file
  */
 
-public class LifeV4Fragment extends Fragment {
+public class LifeV4Fragment extends Fragment implements InjectLifeListener {
     private ILifeCycle lifeCycle;
+
+    @Override
+    public void setLifeCycle(ILifeCycle lifeCycle) {
+        this.lifeCycle = lifeCycle;
+    }
+
     public static LifeV4Fragment newInstance() {
         LifeV4Fragment fragment = new LifeV4Fragment();
         return fragment;

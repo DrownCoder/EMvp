@@ -5,7 +5,7 @@ package com.xuan.eapi.helper.binder;
 import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.Slots;
 import com.xuan.eapi.IComponentBind;
-import com.xuan.eapi.imodel.HandlerType;
+import com.xuan.eapi.vm.HandlerType;
 
 /**
  * Author : xuan.

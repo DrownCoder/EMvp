@@ -8,26 +8,39 @@ import java.util.List;
  * Description :默认数据，没header和footer
  */
 
-public class DefaultModelManager implements IModelManager {
-    private List<Object> data;
+public class DefaultModelManager<T> implements IModelManager<T> {
+    private List<T> mData;
 
-    public DefaultModelManager(List<Object> data) {
-        this.data = data;
+    public DefaultModelManager(List<T> data) {
+        this.mData = data;
     }
 
     @Override
     public int getItemCount() {
-        if (data == null) {
+        if (mData == null) {
             return 0;
         }
-        return data.size();
+        return mData.size();
     }
 
     @Override
-    public Object getItem(int pos) {
-        if (data == null || pos < 0 || pos >= data.size()) {
+    public T getItem(int pos) {
+        if (mData == null || pos < 0 || pos >= mData.size()) {
             return null;
         }
-        return data.get(pos);
+        return mData.get(pos);
+    }
+
+    @Override
+    public void addAll(List<T> data) {
+        if (mData == null) {
+            setData(data);
+        }
+        mData.addAll(data);
+    }
+
+    @Override
+    public void setData(List<T> data) {
+        mData = data;
     }
 }
