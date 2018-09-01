@@ -44,11 +44,12 @@ public class WebViewLayout extends WebView implements IComponentBind{
     }
 
     @Override
-    public void bind(Object item) {
+    public void onBind(int pos, Object item) {
+
     }
 
     @Override
-    public void unBind() {
+    public void onUnBind() {
 
     }
 }

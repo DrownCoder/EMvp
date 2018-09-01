@@ -39,13 +39,13 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements ICompone
     }
 
     @Override
-    public void bind(SingleImg item) {
-        //iv.setImageResource(item.imgUrl);
+    public void onBind(int pos, SingleImg item) {
         iv.setBackgroundColor(Color.BLUE);
+
     }
 
     @Override
-    public void unBind() {
+    public void onUnBind() {
 
     }
 

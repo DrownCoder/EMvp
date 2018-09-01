@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
 import com.xuan.eapi.LogUtil;
-import com.xuan.eapi.Utils.Util;
+import com.xuan.eapi.utils.Util;
 
 import java.util.ArrayList;
 

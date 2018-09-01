@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
 
 import com.study.xuan.emvp.model.ImageInfo;
 import com.study.xuan.emvp.model.Product;
 import com.study.xuan.emvp.model.SingleImg;
+import com.study.xuan.emvp.model.Text;
 import com.study.xuan.emvp.model.UserInfo;
 import com.study.xuan.emvp.presenter.CommunityLogic;
 import com.study.xuan.emvp.presenter.MainLogic;
@@ -21,12 +24,20 @@ import com.xuan.eapi.context.ToolKitBuilder;
 import com.xuan.eapi.helper.binder.ModelBinder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements View.OnClickListener {
+    public static final String TITLE[] = new String[]{
+            "简单列表",
+            "多种样式",
+    };
+    public static final int EVENT[] = new int[]{
+            0, 1
+    };
     protected BaseLogic mPresenter;
     RecyclerView mRcy;
-    private List<Object> mData;
+    private List<Text> mData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,33 +46,25 @@ public class MainActivity extends FragmentActivity {
         mPresenter = new MainLogic(this);
         mRcy = findViewById(R.id.rcy);
         mRcy.setLayoutManager(new LinearLayoutManager(this));
-        mData = new ArrayList<>();
-        mData.add(new UserInfo());
-        mData.add(new Product(true));
-        mData.add(new SingleImg());
-        mData.add(new ImageInfo(ComponentId.IMAGE_TWO_VH));
-        mData.add(new UserInfo());
-        UserInfo userInfo = new UserInfo(true);
-        userInfo.injectPresenter(new CommunityLogic(this));
-        mData.add(userInfo);
-        mData.add(new ImageInfo(ComponentId.TEXT_IMG));
-        //SlotContext slotContext = new SlotContext(this, mData);
-        SlotContext slotContext = ToolKitBuilder.init(this).setModerBinder(new ModelBinder() {
-            @Override
-            public IComponentBind createComponent(int viewId) {
-                switch (viewId) {
-                    case ComponentId.USER_INFO_LAYOUT:
-                        return new UserInfoLayout(MainActivity.this);
-                }
-                return null;
-            }
-        }).build();
-        //SlotContext slotContext = new SlotContext(this, mData);
-       /* List<Integer> pid = new ArrayList<>();
-        pid.add(PresenterId.COMMUNITY_PRESENTER);
-        slotContext.prepareLogic(pid);*/
-        slotContext.registerLogic(new MainLogic(this));
-        slotContext.registerLogic(new OtherLogic(this));
-        mRcy.setAdapter(new MagicAdapter(slotContext));
+        for (int i = 0; i < TITLE.length; i++) {
+
+            mData.add(new Text(TITLE[i], EVENT[i]));
+        }
+        ToolKitBuilder<Text> builder = new ToolKitBuilder<>(this);
+        SlotContext slot = builder.setData(mData).setEventCenter(this).build();
+        slot.bind(mRcy);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Integer integer = (Integer) v.getTag();
+        switch (integer) {
+            case 0:
+                Toast.makeText(MainActivity.this, "点击简单列表", Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                Toast.makeText(MainActivity.this, "点击多种样式", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

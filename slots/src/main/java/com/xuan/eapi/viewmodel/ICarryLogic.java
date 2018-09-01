@@ -1,4 +1,4 @@
-package com.xuan.eapi.vm;
+package com.xuan.eapi.viewmodel;
 
 
 import com.xuan.eapi.BaseLogic;

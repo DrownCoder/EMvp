@@ -29,12 +29,12 @@ public class DividerView extends View implements IComponentBind{
     }
 
     @Override
-    public void bind(Object item) {
+    public void onBind(int pos, Object item) {
 
     }
 
     @Override
-    public void unBind() {
+    public void onUnBind() {
 
     }
 }

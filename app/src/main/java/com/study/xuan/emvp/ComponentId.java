@@ -13,4 +13,5 @@ public class ComponentId {
     public static final int TEXT_IMG = 4;
     public static final int WEBVIEW = 5;
     public static final int DIVIDER = 6;
+    public static final int SINGLE_TEXT = 7;
 }

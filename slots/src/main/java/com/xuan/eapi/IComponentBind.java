@@ -7,8 +7,8 @@ package com.xuan.eapi;
  */
 
 public interface IComponentBind<T> {
-    void bind(T item);
+    void onBind(int pos, T item);
 
-    void unBind();
+    void onUnBind();
 
 }

@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.model.IUserInfo;
 import com.xuan.annotation.ILogic;
-import com.xuan.eapi.vm.ICarryLogic;
 import com.study.xuan.emvp.presenter.IUserInfoPresenter;
 import com.xuan.annotation.ComponentType;
 import com.xuan.component.R;
@@ -56,17 +55,6 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserI
         tvText.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ICarryLogic.class.isAssignableFrom(info.getClass())) {
-                    ICarryLogic post = (ICarryLogic) info;
-                    if (IUserInfoPresenter.class.isAssignableFrom(post.postPresenter().getClass())) {
-                        IUserInfoPresenter presenter = (IUserInfoPresenter) post.postPresenter();
-                        presenter.onTextClick(post);
-                    } else {
-                        LogUtil.Error("the presenter must implement the IUserInfoPresenter");
-                    }
-                    return;
-                }
-
                 presenter.onTextClick(info);
             }
         });
@@ -78,14 +66,14 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserI
     }
 
     @Override
-    public void bind(IUserInfo item) {
+    public void onBind(int pos, IUserInfo item) {
         info = item;
         //ivImg.setImageResource(R.drawable.ic_launcher_foreground);
         tvText.setText(item.getText());
     }
 
     @Override
-    public void unBind() {
+    public void onUnBind() {
 
     }
 

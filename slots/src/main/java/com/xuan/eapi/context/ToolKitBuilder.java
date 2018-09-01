@@ -12,6 +12,7 @@ import com.xuan.eapi.helper.manager.DefaultModelManager;
 import com.xuan.eapi.helper.manager.ILogicManger;
 import com.xuan.eapi.helper.manager.IModelManager;
 import com.xuan.eapi.helper.manager.LogicManager;
+import com.xuan.eapi.viewmodel.IViewNotify;
 
 import java.util.List;
 
@@ -23,17 +24,18 @@ import java.util.List;
 
 public class ToolKitBuilder<T> {
     private Context context;
-    private IModerBinder moderBinder;
-    private IModelManager modelManager;
+    private IModerBinder<T> moderBinder;
+    private IModelManager<T> modelManager;
     private ILogicBinder logicBinder;
     private ILogicManger logicManger;
     private IComponentFactory componentFactory;
     private View.OnClickListener eventCenter;
+    private IViewNotify viewNotify;
 
     public ToolKitBuilder(Context context, List<T> data) {
         this.context = context;
         this.moderBinder = new DefaultModelBinder();
-        this.modelManager = new DefaultModelManager(data);
+        this.modelManager = new DefaultModelManager<>(data);
         this.logicManger = new LogicManager(context);
         this.logicBinder = new LogicBinder(logicManger);
     }
@@ -41,21 +43,31 @@ public class ToolKitBuilder<T> {
     public ToolKitBuilder(Context context) {
         this.context = context;
         this.moderBinder = new DefaultModelBinder();
-        this.modelManager = new DefaultModelManager(null);
+        this.modelManager = new DefaultModelManager<>(null);
         this.logicManger = new LogicManager(context);
         this.logicBinder = new LogicBinder(logicManger);
     }
 
-    public static ToolKitBuilder init(Context context) {
-        return new ToolKitBuilder(context);
+    public ToolKitBuilder setData(List<T> data) {
+        if (modelManager != null) {
+            modelManager.setData(data);
+        }
+        return this;
     }
 
-    public ToolKitBuilder setModerBinder(IModerBinder moderBinder) {
+    public ToolKitBuilder addAll(List<T> data) {
+        if (modelManager != null) {
+            modelManager.addAll(data);
+        }
+        return this;
+    }
+
+    public ToolKitBuilder setModerBinder(IModerBinder<T> moderBinder) {
         this.moderBinder = moderBinder;
         return this;
     }
 
-    public ToolKitBuilder setModerManager(IModelManager moderManager) {
+    public ToolKitBuilder setModerManager(IModelManager<T> moderManager) {
         this.modelManager = moderManager;
         return this;
     }
@@ -80,11 +92,19 @@ public class ToolKitBuilder<T> {
         return this;
     }
 
+    public IViewNotify getViewNotify() {
+        return viewNotify;
+    }
+
+    public void setViewNotify(IViewNotify viewNotify) {
+        this.viewNotify = viewNotify;
+    }
+
     public Context getContext() {
         return context;
     }
 
-    public IModerBinder getModerBinder() {
+    public IModerBinder<T> getModerBinder() {
         return moderBinder;
     }
 

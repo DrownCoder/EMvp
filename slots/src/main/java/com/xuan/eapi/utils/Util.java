@@ -1,4 +1,4 @@
-package com.xuan.eapi.Utils;
+package com.xuan.eapi.utils;
 
 import android.os.Looper;
 

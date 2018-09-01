@@ -21,7 +21,6 @@ public class LogicManager implements ILogicManger {
     private Context context;
     //Logic冗余，拆分Logic，一个Activity中可能存在多个Logic实例
     private Map<Class<?>, BaseLogic> globalLogic;
-    private SparseArray<BaseLogic> modelLogic;
     private ReflectPresenterFactory reflectPresenterFactory;
 
     public LogicManager(Context context) {
@@ -37,54 +36,11 @@ public class LogicManager implements ILogicManger {
     }
 
     @Override
-    public void registerModelLogic(int id, BaseLogic presenter) {
-        obtainModelLogicPool().put(id, presenter);
-    }
-
-    @Override
-    public void prepareLogic() {
-        prepareLogic(null);
-    }
-
-
-    @Override
-    public void prepareLogic(List<Integer> pIds) {
-        modelLogic = obtainModelLogicPool();
-        /*if (presenterFactory != null) {
-            List<BaseLogic> cusPresenters = presenterFactory.createPresenter();
-            int pid;
-            for (BaseLogic presenter : cusPresenters) {
-                pid = Slots.getInstance().obtainPresenterRule().obtainPresenterId(presenter.getClass());
-                modelLogic.put(pid, presenter);
-            }
-        }*/
-        if (pIds == null || pIds.size() == 0) {
-            return;
-        }
-        Class<?> presentClazz;
-        for (int pid : pIds) {
-            if (modelLogic.get(pid) != null) {
-                continue;
-            }
-            presentClazz = Slots.getInstance().obtainPresenterRule().obtainPresenter(pid);
-            modelLogic.put(pid, obtainLogicFactory().reflectCreate(presentClazz));
-        }
-    }
-
-    @Override
     public Map<Class<?>, BaseLogic> obtainViewLogicPool() {
         if (globalLogic == null) {
             globalLogic = new HashMap<>();
         }
         return globalLogic;
-    }
-
-    @Override
-    public SparseArray<BaseLogic> obtainModelLogicPool() {
-        if (modelLogic == null) {
-            modelLogic = new SparseArray<>();
-        }
-        return modelLogic;
     }
 
     @Override

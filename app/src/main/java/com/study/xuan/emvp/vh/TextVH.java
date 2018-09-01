@@ -1,0 +1,51 @@
+package com.study.xuan.emvp.vh;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
+
+import com.study.xuan.emvp.ComponentId;
+import com.study.xuan.emvp.R;
+import com.study.xuan.emvp.model.Text;
+import com.xuan.annotation.ComponentType;
+import com.xuan.eapi.IComponentBind;
+import com.xuan.eapi.component.Component;
+import com.xuan.eapi.helper.event.InjectCallback;
+
+/**
+ * Author : xuan.
+ * Date : 2018/9/1.
+ * Description :一行文字
+ */
+
+@ComponentType(
+        value = ComponentId.SINGLE_TEXT,
+        layout = R.layout.single_text
+)
+public class TextVH extends RecyclerView.ViewHolder implements IComponentBind<Text>, InjectCallback {
+    private TextView tv;
+    private View.OnClickListener onClickListener;
+
+    public TextVH(View itemView) {
+        super(itemView);
+        tv = (TextView) itemView;
+    }
+
+    @Override
+    public void onBind(int pos, Text item) {
+        tv.setText(item.title);
+        tv.setTag(item.eventId);
+        tv.setOnClickListener(onClickListener);
+    }
+
+    @Override
+    public void onUnBind() {
+
+    }
+
+    @Override
+    public void injectCallback(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+}

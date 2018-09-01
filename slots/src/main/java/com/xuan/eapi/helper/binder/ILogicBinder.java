@@ -10,6 +10,4 @@ import com.xuan.eapi.BaseLogic;
 
 public interface ILogicBinder {
     public BaseLogic bindViewLogic(Class<?> clazz);
-
-    public BaseLogic bindModelLogic(int pid);
 }

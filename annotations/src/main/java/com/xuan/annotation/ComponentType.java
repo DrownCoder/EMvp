@@ -19,8 +19,12 @@ import java.lang.annotation.Target;
 public @interface ComponentType {
     //ComponentId
     int value() default -1;
+
     //LayoutId，当为ViewHolder类型需要
     int layout() default -1;
+
     //是否利用反射创建，默认打开的(复杂的，性能相关的，数量大的当然建议关闭咯)
+    Class view() default Object.class;
+
     boolean autoCreate() default true;
 }

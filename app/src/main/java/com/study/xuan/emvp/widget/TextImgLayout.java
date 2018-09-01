@@ -46,12 +46,12 @@ public class TextImgLayout extends LinearLayout implements IComponentBind<ImageI
     }
 
     @Override
-    public void bind(ImageInfo item) {
-        //tvInfo.setText(item.promInfo.desc);
+    public void onBind(int pos, ImageInfo item) {
+
     }
 
     @Override
-    public void unBind() {
+    public void onUnBind() {
 
     }
 }

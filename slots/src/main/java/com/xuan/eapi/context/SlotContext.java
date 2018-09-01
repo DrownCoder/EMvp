@@ -2,12 +2,12 @@ package com.xuan.eapi.context;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.xuan.eapi.BaseLogic;
 import com.xuan.eapi.IComponentBind;
+import com.xuan.eapi.adapter.MagicAdapter;
 import com.xuan.eapi.factory.presenter.ReflectPresenterFactory;
 import com.xuan.eapi.helper.binder.ILogicBinder;
 import com.xuan.eapi.helper.manager.ILogicManger;
@@ -21,6 +21,7 @@ import com.xuan.eapi.lifecycle.IGC;
 import com.xuan.eapi.lifecycle.ILifeCycle;
 import com.xuan.eapi.lifecycle.ILifeRegistor;
 import com.xuan.eapi.lifecycle.LifeOwner;
+import com.xuan.eapi.viewmodel.IViewNotify;
 
 import java.util.List;
 import java.util.Map;
@@ -31,19 +32,22 @@ import java.util.Map;
  * Description :结耦后的全局代理
  */
 
-public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextService, ILifeRegistor,IModelManager<T> {
+public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextService,
+        ILifeRegistor, IModelManager<T> {
     private Context context;
-    private IModerBinder moderBinder;
-    private IModelManager modelManager;
+    private IModerBinder<T> moderBinder;
+    private IModelManager<T> modelManager;
     private ILogicBinder logicBinder;
     private ILogicManger logicManger;
     private IComponentFactory componentFactory;
     private View.OnClickListener eventCenter;
     private LifeOwner lifeOwner;
+    private IViewNotify viewNotify;
     private RecyclerView rcyRoot;
+    private RecyclerView.Adapter mAdapter;
 
-    public SlotContext(Context context, List<Object> data) {
-        this(new ToolKitBuilder(context, data));
+    public SlotContext(Context context, List<T> data) {
+        this(new ToolKitBuilder<>(context, data));
     }
 
     public SlotContext(ToolKitBuilder builder) {
@@ -65,7 +69,7 @@ public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextServi
     }
 
     public T getItem(int pos) {
-        return (T) modelManager.getItem(pos);
+        return modelManager.getItem(pos);
     }
 
     @Override
@@ -96,28 +100,8 @@ public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextServi
     }
 
     @Override
-    public void registerModelLogic(int id, BaseLogic presenter) {
-        logicManger.registerModelLogic(id, presenter);
-    }
-
-    @Override
-    public void prepareLogic() {
-        logicManger.prepareLogic();
-    }
-
-    @Override
-    public void prepareLogic(List<Integer> pids) {
-        logicManger.prepareLogic(pids);
-    }
-
-    @Override
     public Map<Class<?>, BaseLogic> obtainViewLogicPool() {
         return logicManger.obtainViewLogicPool();
-    }
-
-    @Override
-    public SparseArray<BaseLogic> obtainModelLogicPool() {
-        return logicManger.obtainModelLogicPool();
     }
 
     @Override
@@ -128,11 +112,6 @@ public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextServi
     @Override
     public BaseLogic bindViewLogic(Class<?> viewClass) {
         return logicBinder.bindViewLogic(viewClass);
-    }
-
-    @Override
-    public BaseLogic bindModelLogic(int pid) {
-        return logicBinder.bindModelLogic(pid);
     }
 
     public Component createComponent(int viewType, ViewGroup parent) {
@@ -150,6 +129,16 @@ public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextServi
     @Override
     public View.OnClickListener obtainEventCenter() {
         return eventCenter;
+    }
+
+    public void bind(RecyclerView rcy) {
+        this.rcyRoot = rcy;
+        mAdapter = new MagicAdapter(this);
+        rcyRoot.setAdapter(mAdapter);
+    }
+
+    public RecyclerView.Adapter getAdapter() {
+        return mAdapter;
     }
 
     /**

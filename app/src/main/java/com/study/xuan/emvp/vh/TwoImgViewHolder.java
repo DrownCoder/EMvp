@@ -42,12 +42,12 @@ public class TwoImgViewHolder extends RecyclerView.ViewHolder implements ICompon
     }
 
     @Override
-    public void bind(ImageInfo item) {
+    public void onBind(int pos, ImageInfo item) {
 
     }
 
     @Override
-    public void unBind() {
+    public void onUnBind() {
 
     }
 

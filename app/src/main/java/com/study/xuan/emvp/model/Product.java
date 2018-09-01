@@ -1,10 +1,7 @@
 package com.study.xuan.emvp.model;
 
 import com.study.xuan.emvp.ComponentId;
-import com.study.xuan.emvp.PresenterId;
 import com.xuan.annotation.BindType;
-import com.xuan.eapi.BaseLogic;
-import com.xuan.eapi.vm.ICarryLogic;
 
 /**
  * Author : xuan.
@@ -12,9 +9,8 @@ import com.xuan.eapi.vm.ICarryLogic;
  * Description :the description of this file
  */
 @BindType(ComponentId.USER_INFO_LAYOUT)
-public class Product implements ICarryLogic, IUserInfo {
+public class Product implements IUserInfo {
     public boolean isPostEvent = false;
-    public BaseLogic presenter;
     public int imgUrl;
     public String title = "商品名称";
 
@@ -24,21 +20,6 @@ public class Product implements ICarryLogic, IUserInfo {
 
     public Product(boolean isPostEvent) {
         this.isPostEvent = isPostEvent;
-    }
-
-    @Override
-    public BaseLogic postPresenter() {
-        return presenter;
-    }
-
-    @Override
-    public void injectPresenter(BaseLogic presenter) {
-        this.presenter = presenter;
-    }
-
-    @Override
-    public int presenterId() {
-        return PresenterId.CART_PRESENTER;
     }
 
     @Override
