@@ -32,13 +32,14 @@ public class MagicAdapter extends RecyclerView.Adapter<Component> {
         if (InjectCallback.class.isAssignableFrom(component.getClass())) {
             ((InjectCallback) component).injectCallback(slotContext.obtainEventCenter());
         }
+        component.itemView.setOnClickListener(slotContext.obtainEventCenter());
         return component;
     }
 
     @Override
     public void onBindViewHolder(Component holder, int position) {
         Object item = slotContext.getItem(position);
-        holder.onBind(position, slotContext.getItem(position));
+        holder.onBind(position, item);
         onBind(holder, position);
     }
 

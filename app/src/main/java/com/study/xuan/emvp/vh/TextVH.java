@@ -1,7 +1,6 @@
 package com.study.xuan.emvp.vh;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,7 +8,6 @@ import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.R;
 import com.study.xuan.emvp.model.Text;
 import com.xuan.annotation.ComponentType;
-import com.xuan.eapi.IComponentBind;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.helper.event.InjectCallback;
 
