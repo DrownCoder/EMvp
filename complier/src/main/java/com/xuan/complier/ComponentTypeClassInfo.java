@@ -2,6 +2,7 @@ package com.xuan.complier;
 
 import com.xuan.annotation.ComponentType;
 import com.xuan.annotation.ILogic;
+import com.xuan.annotation.ViewInfo;
 
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
@@ -20,7 +21,7 @@ public class ComponentTypeClassInfo {
     //被注解类的全类名
     private String className;
     //View类型 ViewHolder或者自定义View
-    private int componentType;
+    private int componentType = ViewInfo.TYPE_NONE;
     private int layoutId;
     private boolean autoCreate;
     private String presenterName;

@@ -23,6 +23,7 @@ public class ComponentFactory implements IComponentFactory {
 
     private IViewComponentFactory viewFactory;
     private IViewHolderComponentFactory viewHolderFactory;
+    private IDFComponentFactory dfComponentFactory;
     private AdapterComponent adapter;
 
 
@@ -39,11 +40,14 @@ public class ComponentFactory implements IComponentFactory {
         } else {
             int viewType = viewInfo.getViewType();
             switch (viewType) {
-                case 0:
+                case ViewInfo.TYPE_VIEW:
                     component = viewFactory.createViewComponent(viewInfo);
                     break;
-                case 1:
+                case ViewInfo.TYPE_HOLDER:
                     component = viewHolderFactory.createViewHolderComponent(viewInfo);
+                    break;
+                case ViewInfo.TYPE_COMPONENT:
+                    component = dfComponentFactory.createViewHolder(viewInfo);
                     break;
             }
         }
@@ -56,34 +60,47 @@ public class ComponentFactory implements IComponentFactory {
     }
 
     private void initFactory(ViewInfo viewInfo) {
-
+        AdapterComponent adapterComponent = null;
         switch (viewInfo.getViewType()) {
-            case 0:
-                createViewFactory(tookContext);
-                adapter = (AdapterComponent) viewFactory;
+            case ViewInfo.TYPE_VIEW:
+                adapterComponent = createViewFactory(tookContext);
                 break;
-            case 1:
-                createViewHolderFactory(tookContext);
-                adapter = (AdapterComponent) viewHolderFactory;
+            case ViewInfo.TYPE_HOLDER:
+                adapterComponent = createViewHolderFactory(tookContext);
+                break;
+            case ViewInfo.TYPE_COMPONENT:
+                adapterComponent = createComponentFactory();
                 break;
         }
+        adapter = adapterComponent;
+    }
+
+    /**
+     * 继承Component的ViewHolder的创建工厂
+     */
+    private AdapterComponent createComponentFactory() {
+        if (dfComponentFactory == null) {
+            dfComponentFactory = new DFComponentFactory(tookContext.getContext(), tookContext.getParentRoot());
+        }
+        return (AdapterComponent) dfComponentFactory;
     }
 
     private IComponentBind selfCreateComponent(ViewInfo viewInfo) {
         return tookContext.createView(viewInfo.getId());
     }
 
-    private void createViewFactory(SlotContext slotContext) {
+    private AdapterComponent createViewFactory(SlotContext slotContext) {
         if (viewFactory == null) {
             viewFactory = new ViewComponentFactory(slotContext);
         }
+        return (AdapterComponent) viewFactory;
     }
 
-    private void createViewHolderFactory(SlotContext slotContext) {
+    private AdapterComponent createViewHolderFactory(SlotContext slotContext) {
         if (viewHolderFactory == null) {
             viewHolderFactory = new ViewHolderComponentFactory(slotContext);
         }
-
+        return (AdapterComponent) viewHolderFactory;
     }
 
     private Component defaultViewHolder() {

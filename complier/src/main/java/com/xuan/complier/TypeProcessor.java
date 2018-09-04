@@ -56,7 +56,8 @@ public class TypeProcessor extends BaseProcessor {
         hasProcessor = true;
         System.out.println("------ process -----");
         //检查ComponentType注解
-        for (Element annotatedElement : roundEnvironment.getElementsAnnotatedWith(ComponentType.class)) {
+        for (Element annotatedElement : roundEnvironment.getElementsAnnotatedWith(ComponentType
+                .class)) {
             checkClassValid(annotatedElement, ComponentType.class.getSimpleName());
             //检查被注解的类是否标准
             try {
@@ -107,14 +108,16 @@ public class TypeProcessor extends BaseProcessor {
     private void writeFile() {
         BufferedWriter writer = null;
         try {
-            JavaFileObject sourceFile = processingEnv.getFiler().createSourceFile(DIRECTORY_PATH + "." + FILE_NAME_RULE_COMPONENT);
+            JavaFileObject sourceFile = processingEnv.getFiler().createSourceFile(DIRECTORY_PATH
+                    + "." + FILE_NAME_RULE_COMPONENT);
             writer = new BufferedWriter(sourceFile.openWriter());
             writer.write("package " + DIRECTORY_PATH + ";\n\n");
             writer.write("import android.util.SparseArray;\n");
             writer.write("import java.util.HashMap;\n");
             writer.write("import java.util.Map;\n");
             writer.write("import com.xuan.annotation.ViewInfo;\n\n");
-            writer.write("public class " + FILE_NAME_RULE_COMPONENT + " implements IComponentRule " + " {\n");
+            writer.write("public class " + FILE_NAME_RULE_COMPONENT + " implements IComponentRule" +
+                    " " + " {\n");
             writer.write("    public static final SparseArray<ViewInfo> WIDGET_TYPE;\n\n");
             writer.write("    public static final Map<Class<?>, Integer> MODEL_TYPE;\n\n");
             writer.write("    static {\n");
@@ -154,7 +157,8 @@ public class TypeProcessor extends BaseProcessor {
     private void writePutModelLine(BufferedWriter writer) throws IOException {
         strBuilder.setLength(0);
         for (ModelTypeClassInfo model : typeModel) {
-            strBuilder.append("        putModel(").append(model.getClassName()).append(".class").append(",")
+            strBuilder.append("        putModel(").append(model.getClassName()).append(".class")
+                    .append(",")
                     .append(model.getComponentId())
                     .append(");\n");
             writer.write(strBuilder.toString());
@@ -166,13 +170,14 @@ public class TypeProcessor extends BaseProcessor {
         strBuilder.setLength(0);
         for (ComponentTypeClassInfo info : typeWidget) {
             strBuilder.append("        putWidget(").append(info.getComponentId()).append(",")
-                    .append("new ViewInfo(").append(info.getComponentId()).append(",\n                ")
+                    .append("new ViewInfo(").append(info.getComponentId()).append(",\n           " +
+                    "     ")
                     .append(info.getClassName()).append(".class").append(",");
             if (info.getComponentType() == ViewInfo.TYPE_VIEW) {
-                strBuilder.append(ViewInfo.TYPE_VIEW);
+                strBuilder.append(info.getComponentType());
             } else {
                 strBuilder.append(info.getLayoutId()).append(",")
-                        .append(ViewInfo.TYPE_VIEWHOLDER);
+                        .append(info.getComponentType());
             }
             if (!info.isAutoCreate()) {
                 strBuilder.append(", false");
@@ -208,9 +213,11 @@ public class TypeProcessor extends BaseProcessor {
         }
         //类是抽象的
         if (typeElement.getModifiers().contains(Modifier.ABSTRACT)) {
-            error(typeElement, "The class %s is abstract. You can't annotate abstract classes with @%" +
+            error(typeElement, "The class %s is abstract. You can't annotate abstract classes " +
+                            "with @%" +
                             "\n被注解的组件不能是抽象类",
-                    typeElement.getQualifiedName().toString(), ComponentTypeClassInfo.class.getSimpleName());
+                    typeElement.getQualifiedName().toString(), ComponentTypeClassInfo.class
+                            .getSimpleName());
             return false;
         }
         if (componentInfo.getComponentId() == -1) {
@@ -228,7 +235,8 @@ public class TypeProcessor extends BaseProcessor {
         }
         //组件id唯一
         if (componentIds.contains(componentInfo.getComponentId())) {
-            error(typeElement, "The ComponentId %s has been used\n该组件id已经被使用过", componentInfo.getComponentId());
+            error(typeElement, "The ComponentId %s has been used\n该组件id已经被使用过", componentInfo
+                    .getComponentId());
             return false;
         }
         //检查继承是否符合要求
@@ -239,53 +247,75 @@ public class TypeProcessor extends BaseProcessor {
                 // 到达了基本类型(java.lang.Object), 所以退出
                 error(typeElement, "The Class %s annotated with @%s must extend from %s" +
                                 "\n 被注解的的类必须是ViewHolder或者自定义View",
-                        typeElement.getQualifiedName().toString(), ComponentType.class.getSimpleName(),
+                        typeElement.getQualifiedName().toString(), ComponentType.class
+                                .getSimpleName(),
                         getSupportClass());
                 return false;
             }
-            if (isSupportView(superClassType.toString())) {
+            String superName = superClassType.toString();
+            String type = isSupportView(superName);
+            switch (type) {
                 // 找到了要求的父类
-                if (superClassType.toString().equals(SUPPORT_CLASS[0])) {
+                case SUPPORT_VIEW:
+                    //继承的是View
                     componentInfo.setComponentType(ViewInfo.TYPE_VIEW);
-                } else if (superClassType.toString().equals(SUPPORT_CLASS[1])) {
-                    componentInfo.setComponentType(ViewInfo.TYPE_VIEWHOLDER);
-                }
+                    break;
+                case SUPPORT_HOLDER:
+                    //继承的是ViewHolder
+                    componentInfo.setComponentType(ViewInfo.TYPE_HOLDER);
+                    break;
+                case SUPPORT_COMPONENT:
+                    //继承的是Component
+                    componentInfo.setComponentType(ViewInfo.TYPE_COMPONENT);
+                    break;
+                default:
+                    break;
+            }
+            if (componentInfo.getComponentType() != ViewInfo.TYPE_NONE) {
                 break;
             }
             // 在继承树上继续向上搜寻
             currentClass = (TypeElement) typeUtils.asElement(superClassType);
         }
         //必须实现IComponentBind接口
-        int i = 0;
-        List<TypeMirror> interfaces = (List<TypeMirror>) typeElement.getInterfaces();
-        TypeMirror currentInterface = interfaces.get(i);
-        while (true) {
-            if (currentInterface.toString().contains(IML_INTERFACE)) {
-                break;
-            }
-            if (i < interfaces.size()) {
-                currentInterface = interfaces.get(i++);
-            } else {
-                error(typeElement, "The class %s must implement IComponentBind" +
-                                "\n被注解的组件必须实现IComponentBind接口",
-                        typeElement.getQualifiedName().toString());
-                return false;
+        if (componentInfo.getComponentType() != ViewInfo.TYPE_COMPONENT) {
+            //继承Component的类不需要实现IComponent接口，因为Component类实现类IComponentBind接口
+            int i = 0;
+            List<TypeMirror> interfaces = (List<TypeMirror>) typeElement.getInterfaces();
+            TypeMirror currentInterface = interfaces.get(i);
+            while (true) {
+                if (currentInterface.toString().contains(IML_INTERFACE)) {
+                    break;
+                }
+                if (i < interfaces.size()) {
+                    currentInterface = interfaces.get(i++);
+                } else {
+                    error(typeElement, "The class %s must implement IComponentBind" +
+                                    "\n被注解的组件必须实现IComponentBind接口",
+                            typeElement.getQualifiedName().toString());
+                    return false;
+                }
             }
         }
-        if (componentInfo.isAutoCreate() && componentInfo.getComponentType() == ViewInfo.TYPE_VIEW) {
+
+        if (componentInfo.isAutoCreate() && componentInfo.getComponentType() == ViewInfo
+                .TYPE_VIEW) {
             //如果需要自动创建类，自定义View需要实现默认只包含一个参数的构造函数，因为可能需要使用反射创建对象
             for (Element enclosed : typeElement.getEnclosedElements()) {
                 if (enclosed.getKind() == ElementKind.CONSTRUCTOR) {
                     ExecutableElement constructorElement = (ExecutableElement) enclosed;
                     if (constructorElement.getParameters().size() == 1
                             && constructorElement.getModifiers().contains(Modifier.PUBLIC)
-                            && constructorElement.getParameters().get(0).toString().equals("context")) {
+                            && constructorElement.getParameters().get(0).toString().equals
+                            ("context")) {
                         // 找到了默认构造函数
                         return true;
                     } else {
-                        error(typeElement, "The Class %s annotated with @%s must have a Constructor(Context context)" +
+                        error(typeElement, "The Class %s annotated with @%s must have a " +
+                                        "Constructor(Context context)" +
                                         "\n被注解的类当autoCreate为true时需要有一个以Context为参数的默认构造函数，因为可能需要使用反射创建对象",
-                                typeElement.getQualifiedName().toString(), ComponentType.class.getSimpleName());
+                                typeElement.getQualifiedName().toString(), ComponentType.class
+                                        .getSimpleName());
                         return false;
                     }
                 }
@@ -294,13 +324,18 @@ public class TypeProcessor extends BaseProcessor {
         return true;
     }
 
-    private boolean isSupportView(String s) {
+    /**
+     * 检测被注解对类是否是可以支持对类型，目前只支持继承ViewHolder,或者继承View，或者继承Componet<T>
+     */
+    private String isSupportView(String s) {
+        String type = "";
         for (String spStr : SUPPORT_CLASS) {
-            if (spStr.equals(s)) {
-                return true;
+            if (spStr.equals(s) || s.startsWith(spStr)) {
+                type = spStr;
+                return type;
             }
         }
-        return false;
+        return type;
     }
 
     private String getSupportClass() {

@@ -9,8 +9,10 @@ package com.xuan.annotation;
 
 public class ViewInfo {
     public static final int LAYOUT_NONE = -1;
+    public static final int TYPE_NONE = -1;
     public static final int TYPE_VIEW = 0;
-    public static final int TYPE_VIEWHOLDER = 1;
+    public static final int TYPE_HOLDER = 1;
+    public static final int TYPE_COMPONENT = 2;
     //View类
     private Class<?> viewClass;
     //View类型 0代表自定义View，1代表ViewHolder

@@ -23,8 +23,8 @@ public @interface ComponentType {
     //LayoutId，当为ViewHolder类型需要
     int layout() default -1;
 
-    //是否利用反射创建，默认打开的(复杂的，性能相关的，数量大的当然建议关闭咯)
     Class view() default Object.class;
 
+    //是否利用反射创建，默认打开的(复杂的，性能相关的，数量大的当然建议关闭咯)
     boolean autoCreate() default true;
 }

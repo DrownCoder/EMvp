@@ -1,0 +1,63 @@
+package com.xuan.eapi.factory.component;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.xuan.annotation.ViewInfo;
+import com.xuan.eapi.IComponentBind;
+import com.xuan.eapi.component.Component;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+/**
+ * Author : xuan.
+ * Date : 2018/9/4.
+ * Description :默认继承Component的创建工厂
+ */
+
+public class DFComponentFactory implements IDFComponentFactory, ReflectCreate<Component>,AdapterComponent {
+    private Context context;
+    private LayoutInflater mInflater;
+    private ViewGroup mParentRoot;
+    private View rootView;
+
+    public DFComponentFactory(Context context, ViewGroup parent) {
+        this.context = context;
+        this.mParentRoot = parent;
+    }
+
+    @Override
+    public Component reflectCreate(Class<?> clazz) {
+        Component component = null;
+        try {
+            Constructor c = clazz.getConstructor(Context.class, View.class);
+            component = (Component) c.newInstance(context, rootView);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return component;
+    }
+
+    @Override
+    public Component createViewHolder(ViewInfo viewInfo) {
+        if (mInflater == null) {
+            mInflater = LayoutInflater.from(context);
+        }
+        rootView = mInflater.inflate(viewInfo.getLayoutId(), mParentRoot, false);
+        return reflectCreate(viewInfo.getView());
+    }
+
+    @Override
+    public Component adapterComponent(IComponentBind componentBind) {
+        return (Component) componentBind;
+    }
+}

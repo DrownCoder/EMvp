@@ -23,12 +23,12 @@ import com.xuan.eapi.helper.event.InjectCallback;
         value = ComponentId.SINGLE_TEXT,
         layout = R.layout.single_text
 )
-public class TextVH extends RecyclerView.ViewHolder implements IComponentBind<Text>, InjectCallback {
+public class TextVH extends Component<Text> implements InjectCallback {
     private TextView tv;
     private View.OnClickListener onClickListener;
 
-    public TextVH(View itemView) {
-        super(itemView);
+    public TextVH(Context context, View itemView) {
+        super(context, itemView);
         tv = (TextView) itemView;
     }
 
