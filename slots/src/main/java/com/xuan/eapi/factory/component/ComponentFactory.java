@@ -1,5 +1,9 @@
 package com.xuan.eapi.factory.component;
 
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.IComponentBind;
 import com.xuan.eapi.IPresenterBind;
@@ -16,9 +20,12 @@ import com.xuan.eapi.context.SlotContext;
 
 public class ComponentFactory implements IComponentFactory {
     private SlotContext tookContext;
+    private Context context;
+    private ViewGroup parent;
 
-    public ComponentFactory(SlotContext slotContext) {
-        this.tookContext = slotContext;
+    public ComponentFactory(Context context, ViewGroup parent) {
+        this.context = context;
+        this.parent = parent;
     }
 
     private IViewComponentFactory viewFactory;
@@ -28,7 +35,7 @@ public class ComponentFactory implements IComponentFactory {
 
 
     @Override
-    public Component createViewHolder(int type) {
+    public Component createViewHolder(Context context, ViewGroup parent, int type) {
         ViewInfo viewInfo = Slots.getInstance().obtainRule().obtainViewInfo(type);
         if (viewInfo == null) {
             return defaultViewHolder();
@@ -80,7 +87,7 @@ public class ComponentFactory implements IComponentFactory {
      */
     private AdapterComponent createComponentFactory() {
         if (dfComponentFactory == null) {
-            dfComponentFactory = new DFComponentFactory(tookContext.getContext(), tookContext.getParentRoot());
+            dfComponentFactory = new DFComponentFactory(context, parent);
         }
         return (AdapterComponent) dfComponentFactory;
     }
@@ -98,7 +105,7 @@ public class ComponentFactory implements IComponentFactory {
 
     private AdapterComponent createViewHolderFactory(SlotContext slotContext) {
         if (viewHolderFactory == null) {
-            viewHolderFactory = new ViewHolderComponentFactory(slotContext);
+            viewHolderFactory = new ViewHolderComponentFactory(context, parent);
         }
         return (AdapterComponent) viewHolderFactory;
     }
@@ -106,5 +113,4 @@ public class ComponentFactory implements IComponentFactory {
     private Component defaultViewHolder() {
         return null;
     }
-
 }

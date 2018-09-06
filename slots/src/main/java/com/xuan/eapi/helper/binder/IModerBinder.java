@@ -1,7 +1,5 @@
 package com.xuan.eapi.helper.binder;
 
-import com.xuan.eapi.IComponentBind;
-
 /**
  * Author : xuan.
  * Date : 2018/5/15.
@@ -10,6 +8,4 @@ import com.xuan.eapi.IComponentBind;
 
 public interface IModerBinder<T> {
     int getItemType(int pos, T t);
-
-    IComponentBind createView(int type);
 }

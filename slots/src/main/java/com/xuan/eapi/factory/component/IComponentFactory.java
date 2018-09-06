@@ -1,5 +1,8 @@
 package com.xuan.eapi.factory.component;
 
+import android.content.Context;
+import android.view.ViewGroup;
+
 import com.xuan.eapi.component.Component;
 
 
@@ -10,5 +13,5 @@ import com.xuan.eapi.component.Component;
  */
 
 public interface IComponentFactory {
-    Component createViewHolder(int type);
+    Component createViewHolder(Context context, ViewGroup parent, int type);
 }

@@ -33,7 +33,7 @@ import java.util.Map;
  */
 
 public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextService,
-        ILifeRegistor, IModelManager<T> {
+        ILifeRegistor, IModelManager<T>, IComponentFactory {
     private Context context;
     private IModerBinder<T> moderBinder;
     private IModelManager<T> modelManager;
@@ -117,9 +117,9 @@ public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextServi
     public Component createComponent(int viewType, ViewGroup parent) {
         rcyRoot = (RecyclerView) parent;
         if (componentFactory == null) {
-            componentFactory = new ComponentFactory(this);
+            componentFactory = new ComponentFactory(context, parent);
         }
-        return componentFactory.createViewHolder(viewType);
+        return componentFactory.createViewHolder(context, parent, viewType);
     }
 
     public IComponentBind createView(int viewType) {
@@ -159,5 +159,10 @@ public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextServi
             lifeOwner = LifeOwner.init(context);
         }
         pushLife(new GCAdapter(gc));
+    }
+
+    @Override
+    public Component createViewHolder(Context context, ViewGroup parent, int type) {
+        return null;
     }
 }

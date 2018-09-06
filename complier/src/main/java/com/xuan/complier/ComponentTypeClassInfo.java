@@ -22,7 +22,10 @@ public class ComponentTypeClassInfo {
     private String className;
     //View类型 ViewHolder或者自定义View
     private int componentType = ViewInfo.TYPE_NONE;
+    //ViewHolder的布局文件
     private int layoutId;
+    private Class parentClass;
+    private String parentViewName;
     private boolean autoCreate;
     private String presenterName;
 
@@ -32,6 +35,14 @@ public class ComponentTypeClassInfo {
         componentId = annotation.value();
         autoCreate = annotation.autoCreate();
         layoutId = annotation.layout();
+        try {
+            parentClass = annotation.view();
+            parentViewName = parentClass.getName();
+        } catch (MirroredTypeException mte) {
+            DeclaredType classTypeMirror = (DeclaredType) mte.getTypeMirror();
+            TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
+            parentViewName = classTypeElement.getQualifiedName().toString();
+        }
         System.out.println("getQualifiedName = " + classElement.getQualifiedName());
         System.out.println("getSimpleName = " + classElement.getSimpleName());
         System.out.println("getSuperClass = " + classElement.getSuperclass());
@@ -83,6 +94,14 @@ public class ComponentTypeClassInfo {
 
     public String getPresenterClass(){
         return presenterName;
+    }
+
+    public Class getParentClass() {
+        return parentClass;
+    }
+
+    public String getParentViewName() {
+        return parentViewName;
     }
 }
 

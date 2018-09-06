@@ -31,21 +31,15 @@ public class ToolKitBuilder<T> {
     private IComponentFactory componentFactory;
     private View.OnClickListener eventCenter;
     private IViewNotify viewNotify;
+    private List<T> mData;
 
     public ToolKitBuilder(Context context, List<T> data) {
         this.context = context;
-        this.moderBinder = new DefaultModelBinder();
-        this.modelManager = new DefaultModelManager<>(data);
-        this.logicManger = new LogicManager(context);
-        this.logicBinder = new LogicBinder(logicManger);
+        this.mData = data;
     }
 
     public ToolKitBuilder(Context context) {
         this.context = context;
-        this.moderBinder = new DefaultModelBinder();
-        this.modelManager = new DefaultModelManager<>(null);
-        this.logicManger = new LogicManager(context);
-        this.logicBinder = new LogicBinder(logicManger);
     }
 
     public ToolKitBuilder setData(List<T> data) {
@@ -129,6 +123,18 @@ public class ToolKitBuilder<T> {
     }
 
     public SlotContext build() {
+        if (moderBinder == null) {
+            this.moderBinder = new DefaultModelBinder();
+        }
+        if (modelManager == null) {
+            this.modelManager = new DefaultModelManager<>(mData);
+        }
+        if (logicManger == null) {
+            this.logicManger = new LogicManager(context);
+        }
+        if (logicBinder == null) {
+            this.logicBinder = new LogicBinder(logicManger);
+        }
         return new SlotContext(this);
     }
 }

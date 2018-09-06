@@ -23,27 +23,38 @@ public class ViewInfo {
     private int layoutId;
     //是否自动创建
     private boolean autoCreate;
+    //父View的class
+    private Class<?> parentClass;
     //view的Presenter接口
     private Class<?> presenterClass;
+
+    public ViewInfo(int id, Class<?> viewClass, int viewType, boolean autoCreate, Class<?>
+            parentClass, Class<?> presenterClass) {
+        this(id, viewClass, LAYOUT_NONE, viewType, autoCreate, parentClass, presenterClass);
+    }
 
     public ViewInfo(int id, Class<?> viewClass, int viewType, Class<?> presenterClass) {
         this(id, viewClass, viewType, true, presenterClass);
     }
 
-    public ViewInfo(int id, Class<?> viewClazz, int layoutId, int viewType, Class<?> presenterClass) {
-        this(id, viewClazz, layoutId, viewType, true, presenterClass);
+    public ViewInfo(int id, Class<?> viewClazz, int layoutId, int viewType, Class<?>
+            presenterClass) {
+        this(id, viewClazz, layoutId, viewType, true, null, presenterClass);
     }
 
-    public ViewInfo(int id, Class<?> viewClazz, int viewType, boolean autoCreate, Class<?> presenterClass) {
-        this(id, viewClazz, LAYOUT_NONE, viewType, autoCreate, presenterClass);
+    public ViewInfo(int id, Class<?> viewClazz, int viewType, boolean autoCreate, Class<?>
+            presenterClass) {
+        this(id, viewClazz, LAYOUT_NONE, viewType, autoCreate, null, presenterClass);
     }
 
-    public ViewInfo(int id, Class<?> viewClazz, int layoutId, int viewType, boolean autoCreate, Class<?> presenterClass) {
+    public ViewInfo(int id, Class<?> viewClazz, int layoutId, int viewType, boolean autoCreate,
+                    Class<?> parentClass, Class<?> presenterClass) {
         this.id = id;
         this.viewClass = viewClazz;
         this.layoutId = layoutId;
         this.viewType = viewType;
         this.autoCreate = autoCreate;
+        this.parentClass = parentClass;
         this.presenterClass = presenterClass;
     }
 
@@ -69,5 +80,9 @@ public class ViewInfo {
 
     public Class<?> getPresenter() {
         return presenterClass;
+    }
+
+    public Class<?> getParentClass() {
+        return parentClass;
     }
 }

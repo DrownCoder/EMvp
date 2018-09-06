@@ -182,6 +182,11 @@ public class TypeProcessor extends BaseProcessor {
             if (!info.isAutoCreate()) {
                 strBuilder.append(", false");
             }
+            if (info.getComponentType() != ViewInfo.TYPE_VIEW) {
+                if (!info.getParentClass().getSimpleName().equals(Object.class.getSimpleName())) {
+                    strBuilder.append(",").append(info.getParentViewName()).append(".class");
+                }
+            }
             if (info.getPresenterClass() != null) {
                 strBuilder.append(", ").append(info.getPresenterClass()).append(".class");
             } else {
@@ -276,6 +281,13 @@ public class TypeProcessor extends BaseProcessor {
             }
             // 在继承树上继续向上搜寻
             currentClass = (TypeElement) typeUtils.asElement(superClassType);
+        }
+        if (componentInfo.getComponentType() == ViewInfo.TYPE_VIEW) {
+            Class clazz = componentInfo.getParentClass();
+            if (!clazz.getSimpleName().equals(Object.class.getSimpleName())) {
+                error(typeElement, "只有继承ViewHolder的类才能使用view属性",
+                        typeElement.getQualifiedName().toString());
+            }
         }
         //必须实现IComponentBind接口
         if (componentInfo.getComponentType() != ViewInfo.TYPE_COMPONENT) {
