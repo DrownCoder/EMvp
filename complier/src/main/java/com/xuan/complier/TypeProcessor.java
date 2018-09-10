@@ -232,12 +232,12 @@ public class TypeProcessor extends BaseProcessor {
             return false;
         }
         //必须实现IComponentBind接口
-        if (typeElement.getInterfaces().size() <= 0) {
+        /*if (typeElement.getInterfaces().size() <= 0) {
             error(typeElement, "The class %s must implement IComponentBind" +
                             "\n被注解的组件必须实现IComponentBind接口",
                     typeElement.getQualifiedName().toString());
             return false;
-        }
+        }*/
         //组件id唯一
         if (componentIds.contains(componentInfo.getComponentId())) {
             error(typeElement, "The ComponentId %s has been used\n该组件id已经被使用过", componentInfo
@@ -284,7 +284,7 @@ public class TypeProcessor extends BaseProcessor {
         }
         if (componentInfo.getComponentType() == ViewInfo.TYPE_VIEW) {
             Class clazz = componentInfo.getParentClass();
-            if (!clazz.getSimpleName().equals(Object.class.getSimpleName())) {
+            if (clazz != null && !clazz.getSimpleName().equals(Object.class.getSimpleName())) {
                 error(typeElement, "只有继承ViewHolder的类才能使用view属性",
                         typeElement.getQualifiedName().toString());
             }

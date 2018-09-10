@@ -1,8 +1,5 @@
 package com.xuan.eapi.helper.binder;
 
-
-import com.xuan.eapi.IComponentBind;
-
 /**
  * Author : xuan.
  * Date : 2018/5/15.
@@ -10,9 +7,8 @@ import com.xuan.eapi.IComponentBind;
  */
 
 public class DefaultModelBinder extends ModelBinder {
-
     @Override
-    public IComponentBind createComponent(int viewId) {
-        return null;
+    protected int bindItemType(int pos, Object obj) {
+        return 0;
     }
 }

@@ -36,34 +36,42 @@ public class ComponentFactory implements IComponentFactory {
 
     @Override
     public Component createViewHolder(Context context, ViewGroup parent, int type) {
+        //自定义映射关系,对应ViewHolder类型
+        Component component = tookContext.createViewHolder(context, parent, type);
+        if (component != null) {
+            return component;
+        }
         ViewInfo viewInfo = Slots.getInstance().obtainRule().obtainViewInfo(type);
         if (viewInfo == null) {
             return defaultViewHolder();
         }
-        IComponentBind component = null;
+        IComponentBind componentIml = null;
         initFactory(viewInfo);
         if (!viewInfo.isAutoCreate()) {
-            component = selfCreateComponent(viewInfo);
+            //如果不需要自动创建
+            //自定义映射关系，实现IComponentBind就行
+            componentIml = selfCreateComponent(viewInfo);
         } else {
             int viewType = viewInfo.getViewType();
             switch (viewType) {
                 case ViewInfo.TYPE_VIEW:
-                    component = viewFactory.createViewComponent(viewInfo);
+                    componentIml = viewFactory.createViewComponent(viewInfo);
                     break;
                 case ViewInfo.TYPE_HOLDER:
-                    component = viewHolderFactory.createViewHolderComponent(viewInfo);
+                    componentIml = viewHolderFactory.createViewHolderComponent(viewInfo);
                     break;
                 case ViewInfo.TYPE_COMPONENT:
-                    component = dfComponentFactory.createViewHolder(viewInfo);
+                    componentIml = dfComponentFactory.createViewHolder(viewInfo);
                     break;
             }
         }
         //组件mvp,注入Presenter到View中
         if (IPresenterBind.class.isAssignableFrom(viewInfo.getView())) {
-            IPresenterBind presenterBind = (IPresenterBind) component;
+            IPresenterBind presenterBind = (IPresenterBind) componentIml;
             presenterBind.injectPresenter(tookContext.bindViewLogic(viewInfo.getPresenter()));
         }
-        return adapter.adapterComponent(component);
+        component = adapter.adapterComponent(componentIml);
+        return component;
     }
 
     private void initFactory(ViewInfo viewInfo) {
@@ -93,7 +101,7 @@ public class ComponentFactory implements IComponentFactory {
     }
 
     private IComponentBind selfCreateComponent(ViewInfo viewInfo) {
-        return tookContext.createView(viewInfo.getId());
+        return tookContext.createViewComponent(viewInfo);
     }
 
     private AdapterComponent createViewFactory(SlotContext slotContext) {

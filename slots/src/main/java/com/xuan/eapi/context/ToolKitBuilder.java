@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.xuan.eapi.factory.component.IComponentFactory;
+import com.xuan.eapi.factory.component.IViewComponentFactory;
 import com.xuan.eapi.helper.binder.DefaultModelBinder;
 import com.xuan.eapi.helper.binder.ILogicBinder;
 import com.xuan.eapi.helper.binder.IModerBinder;
@@ -29,6 +30,7 @@ public class ToolKitBuilder<T> {
     private ILogicBinder logicBinder;
     private ILogicManger logicManger;
     private IComponentFactory componentFactory;
+    private IViewComponentFactory viewComponentFactory;
     private View.OnClickListener eventCenter;
     private IViewNotify viewNotify;
     private List<T> mData;
@@ -116,6 +118,14 @@ public class ToolKitBuilder<T> {
 
     public IComponentFactory getComponentFactory() {
         return componentFactory;
+    }
+
+    public IViewComponentFactory getViewComponentFactory() {
+        return viewComponentFactory;
+    }
+
+    public void setViewComponentFactory(IViewComponentFactory viewComponentFactory) {
+        this.viewComponentFactory = viewComponentFactory;
     }
 
     public View.OnClickListener getEventCenter() {

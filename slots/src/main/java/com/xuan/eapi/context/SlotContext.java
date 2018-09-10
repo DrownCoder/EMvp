@@ -5,9 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.BaseLogic;
 import com.xuan.eapi.IComponentBind;
 import com.xuan.eapi.adapter.MagicAdapter;
+import com.xuan.eapi.factory.component.IViewComponentFactory;
 import com.xuan.eapi.factory.presenter.ReflectPresenterFactory;
 import com.xuan.eapi.helper.binder.ILogicBinder;
 import com.xuan.eapi.helper.manager.ILogicManger;
@@ -33,13 +35,15 @@ import java.util.Map;
  */
 
 public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextService,
-        ILifeRegistor, IModelManager<T>, IComponentFactory {
+        ILifeRegistor, IModelManager<T>, IComponentFactory,IViewComponentFactory {
     private Context context;
+    private ToolKitBuilder builder;
     private IModerBinder<T> moderBinder;
     private IModelManager<T> modelManager;
     private ILogicBinder logicBinder;
     private ILogicManger logicManger;
     private IComponentFactory componentFactory;
+
     private View.OnClickListener eventCenter;
     private LifeOwner lifeOwner;
     private IViewNotify viewNotify;
@@ -51,12 +55,12 @@ public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextServi
     }
 
     public SlotContext(ToolKitBuilder builder) {
+        this.builder = builder;
         context = builder.getContext();
         moderBinder = builder.getModerBinder();
         modelManager = builder.getModelManager();
         logicBinder = builder.getLogicBinder();
         logicManger = builder.getLogicManger();
-        componentFactory = builder.getComponentFactory();
         eventCenter = builder.getEventCenter();
     }
 
@@ -122,10 +126,6 @@ public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextServi
         return componentFactory.createViewHolder(context, parent, viewType);
     }
 
-    public IComponentBind createView(int viewType) {
-        return moderBinder.createView(viewType);
-    }
-
     @Override
     public View.OnClickListener obtainEventCenter() {
         return eventCenter;
@@ -163,6 +163,17 @@ public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextServi
 
     @Override
     public Component createViewHolder(Context context, ViewGroup parent, int type) {
+        if (builder != null && builder.getComponentFactory() != null) {
+            return builder.getComponentFactory().createViewHolder(context, parent, type);
+        }
+        return null;
+    }
+
+    @Override
+    public IComponentBind createViewComponent(ViewInfo type) {
+        if (builder != null && builder.getViewComponentFactory() != null) {
+            return builder.getViewComponentFactory().createViewComponent(type);
+        }
         return null;
     }
 }
