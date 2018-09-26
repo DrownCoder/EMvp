@@ -45,15 +45,21 @@ public class ToolKitBuilder<T> {
     }
 
     public ToolKitBuilder setData(List<T> data) {
+        mData = data;
         if (modelManager != null) {
-            modelManager.setData(data);
+            modelManager.setData(mData);
         }
         return this;
     }
 
     public ToolKitBuilder addAll(List<T> data) {
+        if (mData != null) {
+            mData.addAll(data);
+        }else{
+            mData = data;
+        }
         if (modelManager != null) {
-            modelManager.addAll(data);
+            modelManager.addAll(mData);
         }
         return this;
     }

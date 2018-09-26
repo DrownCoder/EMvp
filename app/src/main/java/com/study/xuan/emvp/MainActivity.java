@@ -1,5 +1,6 @@
 package com.study.xuan.emvp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import com.study.xuan.emvp.model.UserInfo;
 import com.study.xuan.emvp.presenter.CommunityLogic;
 import com.study.xuan.emvp.presenter.MainLogic;
 import com.study.xuan.emvp.presenter.OtherLogic;
+import com.study.xuan.emvp.test.TestActivity;
 import com.study.xuan.emvp.widget.UserInfoLayout;
 import com.xuan.eapi.BaseLogic;
 import com.xuan.eapi.IComponentBind;
@@ -47,7 +49,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mRcy = findViewById(R.id.rcy);
         mRcy.setLayoutManager(new LinearLayoutManager(this));
         for (int i = 0; i < TITLE.length; i++) {
-
             mData.add(new Text(TITLE[i], EVENT[i]));
         }
         ToolKitBuilder<Text> builder = new ToolKitBuilder<>(this);
@@ -64,6 +65,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
             case 1:
                 Toast.makeText(MainActivity.this, "点击多种样式", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, TestActivity.class);
+                startActivity(intent);
                 break;
         }
     }

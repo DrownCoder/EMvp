@@ -183,7 +183,9 @@ public class TypeProcessor extends BaseProcessor {
                 strBuilder.append(", false");
             }
             if (info.getComponentType() != ViewInfo.TYPE_VIEW) {
-                if (!info.getParentClass().getSimpleName().equals(Object.class.getSimpleName())) {
+                if (info.getParentClass() != null &&
+                        !info.getParentClass().getSimpleName()
+                                .equals(Object.class.getSimpleName())) {
                     strBuilder.append(",").append(info.getParentViewName()).append(".class");
                 }
             }

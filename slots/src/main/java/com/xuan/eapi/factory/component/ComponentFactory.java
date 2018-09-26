@@ -23,9 +23,10 @@ public class ComponentFactory implements IComponentFactory {
     private Context context;
     private ViewGroup parent;
 
-    public ComponentFactory(Context context, ViewGroup parent) {
-        this.context = context;
-        this.parent = parent;
+    public ComponentFactory(SlotContext tookContext) {
+        this.tookContext = tookContext;
+        this.context = tookContext.getContext();
+        this.parent = tookContext.getParentRoot();
     }
 
     private IViewComponentFactory viewFactory;
@@ -70,18 +71,23 @@ public class ComponentFactory implements IComponentFactory {
             IPresenterBind presenterBind = (IPresenterBind) componentIml;
             presenterBind.injectPresenter(tookContext.bindViewLogic(viewInfo.getPresenter()));
         }
-        component = adapter.adapterComponent(componentIml);
-        return component;
+        if (viewInfo.getViewType() == ViewInfo.TYPE_COMPONENT) {
+            return (Component) componentIml;
+        } else {
+            //需要适配器转换为Component
+            component = adapter.adapterComponent(componentIml);
+            return component;
+        }
     }
 
     private void initFactory(ViewInfo viewInfo) {
         AdapterComponent adapterComponent = null;
         switch (viewInfo.getViewType()) {
             case ViewInfo.TYPE_VIEW:
-                adapterComponent = createViewFactory(tookContext);
+                adapterComponent = createViewFactory();
                 break;
             case ViewInfo.TYPE_HOLDER:
-                adapterComponent = createViewHolderFactory(tookContext);
+                adapterComponent = createViewHolderFactory();
                 break;
             case ViewInfo.TYPE_COMPONENT:
                 adapterComponent = createComponentFactory();
@@ -104,14 +110,14 @@ public class ComponentFactory implements IComponentFactory {
         return tookContext.createViewComponent(viewInfo);
     }
 
-    private AdapterComponent createViewFactory(SlotContext slotContext) {
+    private AdapterComponent createViewFactory() {
         if (viewFactory == null) {
-            viewFactory = new ViewComponentFactory(slotContext);
+            viewFactory = new ViewComponentFactory(context);
         }
         return (AdapterComponent) viewFactory;
     }
 
-    private AdapterComponent createViewHolderFactory(SlotContext slotContext) {
+    private AdapterComponent createViewHolderFactory() {
         if (viewHolderFactory == null) {
             viewHolderFactory = new ViewHolderComponentFactory(context, parent);
         }

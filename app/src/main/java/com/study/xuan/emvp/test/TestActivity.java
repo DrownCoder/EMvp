@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearSmoothScroller;
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.R;
 import com.study.xuan.emvp.model.ImageInfo;
+import com.study.xuan.emvp.model.ImageModel;
 import com.study.xuan.emvp.model.UserInfo;
 import com.study.xuan.emvp.presenter.MainLogic;
 import com.study.xuan.emvp.presenter.OtherLogic;
@@ -30,6 +31,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         mData = new ArrayList<>();
+        mData.add(new ImageModel());
         mData.add(new UserInfo());
         mData.add(new UserInfo());
         mData.add(new UserInfo());
@@ -80,8 +82,8 @@ public class TestActivity extends AppCompatActivity {
         dragRcy = findViewById(R.id.drag_rcy);
         //final TestLayoutManager layoutManager = new TestLayoutManager(this);
         dragRcy.setLayoutManager(new LinearLayoutManager(this));
-        tookContext.registerLogic(new MainLogic(this));
-        tookContext.registerLogic(new OtherLogic(this));
+        //tookContext.registerLogic(new MainLogic(this));
+        //tookContext.registerLogic(new OtherLogic(this));
         dragRcy.setAdapter(new MagicAdapter(tookContext));
         dragRcy.setLockClass(TextImgLayout.class);
         dragRcy.addLockIndex(14);

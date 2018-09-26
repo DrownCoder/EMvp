@@ -35,7 +35,7 @@ import java.util.Map;
  */
 
 public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextService,
-        ILifeRegistor, IModelManager<T>, IComponentFactory,IViewComponentFactory {
+        ILifeRegistor, IModelManager<T>, IComponentFactory, IViewComponentFactory {
     private Context context;
     private ToolKitBuilder builder;
     private IModerBinder<T> moderBinder;
@@ -121,7 +121,7 @@ public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextServi
     public Component createComponent(int viewType, ViewGroup parent) {
         rcyRoot = (RecyclerView) parent;
         if (componentFactory == null) {
-            componentFactory = new ComponentFactory(context, parent);
+            componentFactory = new ComponentFactory(this);
         }
         return componentFactory.createViewHolder(context, parent, viewType);
     }

@@ -18,7 +18,8 @@ import java.lang.reflect.InvocationTargetException;
  * Description :默认继承Component的创建工厂
  */
 
-public class DFComponentFactory extends BaseViewFactory implements IDFComponentFactory, ReflectCreate<Component>,AdapterComponent {
+public class DFComponentFactory extends BaseViewFactory implements IDFComponentFactory,
+        ReflectCreate<Component>, AdapterComponent {
     private LayoutInflater mInflater;
     private ViewGroup mParentRoot;
     private View rootView;
@@ -48,9 +49,10 @@ public class DFComponentFactory extends BaseViewFactory implements IDFComponentF
 
     @Override
     public Component createViewHolder(ViewInfo viewInfo) {
-        if (viewInfo.getParentClass() != Object.class) {
+        if (viewInfo.getParentClass() != null &&
+                viewInfo.getParentClass() != Object.class) {
             rootView = reflectCreateView(viewInfo.getParentClass());
-        }else{
+        } else {
             if (mInflater == null) {
                 mInflater = LayoutInflater.from(context);
             }
