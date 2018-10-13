@@ -55,7 +55,7 @@ public class ToolKitBuilder<T> {
     public ToolKitBuilder addAll(List<T> data) {
         if (mData != null) {
             mData.addAll(data);
-        }else{
+        } else {
             mData = data;
         }
         if (modelManager != null) {
@@ -107,19 +107,19 @@ public class ToolKitBuilder<T> {
     }
 
     public IModerBinder<T> getModerBinder() {
-        return moderBinder;
+        return moderBinder == null ? dfModelBinder() : moderBinder;
     }
 
     public IModelManager getModelManager() {
-        return modelManager;
+        return modelManager == null ? dfModelManager() : modelManager;
     }
 
     public ILogicBinder getLogicBinder() {
-        return logicBinder;
+        return logicBinder == null ? dfLogicBinder() : logicBinder;
     }
 
     public ILogicManger getLogicManger() {
-        return logicManger;
+        return logicManger == null ? dfLogicManager() : logicManger;
     }
 
     public IComponentFactory getComponentFactory() {
@@ -139,18 +139,39 @@ public class ToolKitBuilder<T> {
     }
 
     public SlotContext build() {
-        if (moderBinder == null) {
-            this.moderBinder = new DefaultModelBinder();
-        }
+        dfModelBinder();
+        dfModelManager();
+        dfLogicManager();
+        dfLogicBinder();
+        return new SlotContext(this);
+    }
+
+    private IModelManager<T> dfModelManager() {
         if (modelManager == null) {
             this.modelManager = new DefaultModelManager<>(mData);
         }
+        return modelManager;
+    }
+
+    private IModerBinder<T> dfModelBinder() {
+        if (moderBinder == null) {
+            this.moderBinder = new DefaultModelBinder();
+        }
+        return moderBinder;
+    }
+
+    private ILogicManger dfLogicManager() {
         if (logicManger == null) {
             this.logicManger = new LogicManager(context);
         }
+        return logicManger;
+    }
+
+    private ILogicBinder dfLogicBinder() {
         if (logicBinder == null) {
+            dfLogicManager();
             this.logicBinder = new LogicBinder(logicManger);
         }
-        return new SlotContext(this);
+        return logicBinder;
     }
 }

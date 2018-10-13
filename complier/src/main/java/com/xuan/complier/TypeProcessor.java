@@ -51,6 +51,7 @@ public class TypeProcessor extends BaseProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         if (hasProcessor) {
+
             return true;
         }
         hasProcessor = true;
@@ -183,9 +184,9 @@ public class TypeProcessor extends BaseProcessor {
                 strBuilder.append(", false");
             }
             if (info.getComponentType() != ViewInfo.TYPE_VIEW) {
-                if (info.getParentClass() != null &&
-                        !info.getParentClass().getSimpleName()
-                                .equals(Object.class.getSimpleName())) {
+                if (info.getParentViewName() != null
+                        && info.getParentViewName().length() > 0
+                        && !info.getParentViewName().equals(Object.class.getName())) {
                     strBuilder.append(",").append(info.getParentViewName()).append(".class");
                 }
             }
@@ -285,8 +286,9 @@ public class TypeProcessor extends BaseProcessor {
             currentClass = (TypeElement) typeUtils.asElement(superClassType);
         }
         if (componentInfo.getComponentType() == ViewInfo.TYPE_VIEW) {
-            Class clazz = componentInfo.getParentClass();
-            if (clazz != null && !clazz.getSimpleName().equals(Object.class.getSimpleName())) {
+            if (componentInfo.getParentViewName() != null
+                    && componentInfo.getParentViewName().length() > 0
+                    && !componentInfo.getParentViewName().equals(Object.class.getName())) {
                 error(typeElement, "只有继承ViewHolder的类才能使用view属性",
                         typeElement.getQualifiedName().toString());
             }

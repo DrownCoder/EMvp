@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.BaseLogic;
 import com.xuan.eapi.IComponentBind;
-import com.xuan.eapi.adapter.MagicAdapter;
+import com.xuan.eapi.adaptercorlib.MagicAdapter;
 import com.xuan.eapi.factory.component.IViewComponentFactory;
 import com.xuan.eapi.factory.presenter.ReflectPresenterFactory;
 import com.xuan.eapi.helper.binder.ILogicBinder;

@@ -8,25 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.study.xuan.emvp.model.ImageInfo;
-import com.study.xuan.emvp.model.Product;
-import com.study.xuan.emvp.model.SingleImg;
 import com.study.xuan.emvp.model.Text;
-import com.study.xuan.emvp.model.UserInfo;
-import com.study.xuan.emvp.presenter.CommunityLogic;
 import com.study.xuan.emvp.presenter.MainLogic;
-import com.study.xuan.emvp.presenter.OtherLogic;
 import com.study.xuan.emvp.test.TestActivity;
-import com.study.xuan.emvp.widget.UserInfoLayout;
 import com.xuan.eapi.BaseLogic;
-import com.xuan.eapi.IComponentBind;
-import com.xuan.eapi.adapter.MagicAdapter;
 import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.context.ToolKitBuilder;
-import com.xuan.eapi.helper.binder.ModelBinder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {

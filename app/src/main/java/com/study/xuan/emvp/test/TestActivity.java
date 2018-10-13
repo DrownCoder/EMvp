@@ -11,10 +11,8 @@ import com.study.xuan.emvp.R;
 import com.study.xuan.emvp.model.ImageInfo;
 import com.study.xuan.emvp.model.ImageModel;
 import com.study.xuan.emvp.model.UserInfo;
-import com.study.xuan.emvp.presenter.MainLogic;
-import com.study.xuan.emvp.presenter.OtherLogic;
 import com.study.xuan.emvp.widget.TextImgLayout;
-import com.xuan.eapi.adapter.MagicAdapter;
+import com.xuan.eapi.adaptercorlib.MagicAdapter;
 import com.xuan.eapi.context.SlotContext;
 
 import java.util.ArrayList;

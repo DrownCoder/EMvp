@@ -1,4 +1,4 @@
-package com.xuan.eapi.adapter;
+package com.xuan.eapi.adaptercorlib;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;

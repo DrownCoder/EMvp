@@ -28,9 +28,9 @@ public class ViewInfo {
     //view的Presenter接口
     private Class<?> presenterClass;
 
-    public ViewInfo(int id, Class<?> viewClass, int viewType, boolean autoCreate, Class<?>
+    public ViewInfo(int id, Class<?> viewClass, int layoutId, int viewType , Class<?>
             parentClass, Class<?> presenterClass) {
-        this(id, viewClass, LAYOUT_NONE, viewType, autoCreate, parentClass, presenterClass);
+        this(id, viewClass, LAYOUT_NONE, viewType, true, parentClass, presenterClass);
     }
 
     public ViewInfo(int id, Class<?> viewClass, int viewType, Class<?> presenterClass) {

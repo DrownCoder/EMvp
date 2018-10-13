@@ -1,4 +1,4 @@
-package com.xuan.eapi.adapter;
+package com.xuan.eapi.adaptercorlib;
 
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.context.SlotContext;
