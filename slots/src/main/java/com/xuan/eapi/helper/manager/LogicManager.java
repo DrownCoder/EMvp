@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import com.xuan.eapi.BaseLogic;
 import com.xuan.eapi.Slots;
 import com.xuan.eapi.factory.presenter.ReflectPresenterFactory;
+import com.xuan.eapi.logic.IPresent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,15 +21,14 @@ import java.util.Map;
 public class LogicManager implements ILogicManger {
     private Context context;
     //Logic冗余，拆分Logic，一个Activity中可能存在多个Logic实例
-    private Map<Class<?>, BaseLogic> globalLogic;
-    private ReflectPresenterFactory reflectPresenterFactory;
+    private Map<Class<?>, IPresent> globalLogic;
 
     public LogicManager(Context context) {
         this.context = context;
     }
 
     @Override
-    public void registerLogic(BaseLogic presenter) {
+    public void registerLogic(IPresent presenter) {
         Class<?>[] inters = presenter.getClass().getInterfaces();
         for (Class clazz : inters) {
             obtainViewLogicPool().put(clazz, presenter);
@@ -36,7 +36,7 @@ public class LogicManager implements ILogicManger {
     }
 
     @Override
-    public Map<Class<?>, BaseLogic> obtainViewLogicPool() {
+    public Map<Class<?>, IPresent> obtainViewLogicPool() {
         if (globalLogic == null) {
             globalLogic = new HashMap<>();
         }
@@ -44,10 +44,7 @@ public class LogicManager implements ILogicManger {
     }
 
     @Override
-    public ReflectPresenterFactory obtainLogicFactory() {
-        if (reflectPresenterFactory == null) {
-            reflectPresenterFactory = new ReflectPresenterFactory(context);
-        }
-        return reflectPresenterFactory;
+    public IPresent obtainLogic(Class<?> clazz) {
+        return obtainViewLogicPool().get(clazz);
     }
 }

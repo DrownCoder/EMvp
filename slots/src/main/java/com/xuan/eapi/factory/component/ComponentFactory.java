@@ -69,7 +69,7 @@ public class ComponentFactory implements IComponentFactory {
         //组件mvp,注入Presenter到View中
         if (IPresenterBind.class.isAssignableFrom(viewInfo.getView())) {
             IPresenterBind presenterBind = (IPresenterBind) componentIml;
-            presenterBind.injectPresenter(tookContext.bindViewLogic(viewInfo.getPresenter()));
+            presenterBind.injectPresenter(tookContext.obtainLogic(viewInfo.getPresenter()));
         }
         if (viewInfo.getViewType() == ViewInfo.TYPE_COMPONENT) {
             return (Component) componentIml;

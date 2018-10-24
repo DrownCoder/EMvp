@@ -1,7 +1,6 @@
 package com.xuan.eapi.helper.manager;
 
-import com.xuan.eapi.BaseLogic;
-import com.xuan.eapi.factory.presenter.ReflectPresenterFactory;
+import com.xuan.eapi.logic.IPresent;
 
 import java.util.Map;
 
@@ -12,9 +11,9 @@ import java.util.Map;
  */
 
 public interface ILogicManger {
-    public void registerLogic(BaseLogic presenter);
+    void registerLogic(IPresent presenter);
 
-    public Map<Class<?>, BaseLogic> obtainViewLogicPool();
+    Map<Class<?>, IPresent> obtainViewLogicPool();
 
-    public ReflectPresenterFactory obtainLogicFactory();
+    IPresent obtainLogic(Class<?> clazz);
 }

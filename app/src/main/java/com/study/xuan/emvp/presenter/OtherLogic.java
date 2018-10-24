@@ -5,13 +5,14 @@ import android.widget.Toast;
 
 import com.study.xuan.emvp.model.UserInfo;
 import com.xuan.eapi.BaseLogic;
+import com.xuan.eapi.logic.IPresent;
 
 /**
  * Author : xuan.
  * Date : 2018/5/24.
  * Description :the description of this file
  */
-public class OtherLogic extends BaseLogic implements IUserInfoPresenter<UserInfo> {
+public class OtherLogic extends BaseLogic implements IUserInfoPresenter<UserInfo>,IPresent {
     public OtherLogic(Context context) {
         super(context);
     }

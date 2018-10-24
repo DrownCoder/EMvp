@@ -1,6 +1,7 @@
 package com.xuan.eapi.helper.binder;
 
 import com.xuan.eapi.BaseLogic;
+import com.xuan.eapi.logic.IPresent;
 
 /**
  * Author : xuan.
@@ -9,5 +10,5 @@ import com.xuan.eapi.BaseLogic;
  */
 
 public interface ILogicBinder {
-    public BaseLogic bindViewLogic(Class<?> clazz);
+    public IPresent bindViewLogic(Class<?> clazz);
 }

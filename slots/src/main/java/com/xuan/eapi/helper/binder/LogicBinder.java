@@ -1,7 +1,7 @@
 package com.xuan.eapi.helper.binder;
 
-import com.xuan.eapi.BaseLogic;
 import com.xuan.eapi.helper.manager.ILogicManger;
+import com.xuan.eapi.logic.IPresent;
 
 /**
  * Author : xuan.
@@ -21,7 +21,7 @@ public class LogicBinder implements ILogicBinder {
      * @return 返回用于处理该View类型的逻辑
      */
     @Override
-    public BaseLogic bindViewLogic(Class<?> clazz) {
+    public IPresent bindViewLogic(Class<?> clazz) {
         return logicManger.obtainViewLogicPool().get(clazz);
     }
 }

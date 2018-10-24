@@ -6,9 +6,7 @@ import android.view.View;
 import com.xuan.eapi.factory.component.IComponentFactory;
 import com.xuan.eapi.factory.component.IViewComponentFactory;
 import com.xuan.eapi.helper.binder.DefaultModelBinder;
-import com.xuan.eapi.helper.binder.ILogicBinder;
 import com.xuan.eapi.helper.binder.IModerBinder;
-import com.xuan.eapi.helper.binder.LogicBinder;
 import com.xuan.eapi.helper.manager.DefaultModelManager;
 import com.xuan.eapi.helper.manager.ILogicManger;
 import com.xuan.eapi.helper.manager.IModelManager;
@@ -27,7 +25,6 @@ public class ToolKitBuilder<T> {
     private Context context;
     private IModerBinder<T> moderBinder;
     private IModelManager<T> modelManager;
-    private ILogicBinder logicBinder;
     private ILogicManger logicManger;
     private IComponentFactory componentFactory;
     private IViewComponentFactory viewComponentFactory;
@@ -74,11 +71,6 @@ public class ToolKitBuilder<T> {
         return this;
     }
 
-    public ToolKitBuilder setLogicBinder(ILogicBinder logicBinder) {
-        this.logicBinder = logicBinder;
-        return this;
-    }
-
     public ToolKitBuilder setLogicManger(ILogicManger logicManger) {
         this.logicManger = logicManger;
         return this;
@@ -114,10 +106,6 @@ public class ToolKitBuilder<T> {
         return modelManager == null ? dfModelManager() : modelManager;
     }
 
-    public ILogicBinder getLogicBinder() {
-        return logicBinder == null ? dfLogicBinder() : logicBinder;
-    }
-
     public ILogicManger getLogicManger() {
         return logicManger == null ? dfLogicManager() : logicManger;
     }
@@ -142,7 +130,6 @@ public class ToolKitBuilder<T> {
         dfModelBinder();
         dfModelManager();
         dfLogicManager();
-        dfLogicBinder();
         return new SlotContext(this);
     }
 
@@ -165,13 +152,5 @@ public class ToolKitBuilder<T> {
             this.logicManger = new LogicManager(context);
         }
         return logicManger;
-    }
-
-    private ILogicBinder dfLogicBinder() {
-        if (logicBinder == null) {
-            dfLogicManager();
-            this.logicBinder = new LogicBinder(logicManger);
-        }
-        return logicBinder;
     }
 }

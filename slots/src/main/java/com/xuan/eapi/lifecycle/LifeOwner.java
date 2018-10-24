@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 public class LifeOwner implements ILifeRegistor {
     private static final String FRAGMENT_TAG = "SLOT_LIFE_FRAGMENT_OWNER";
-    private Context context;
     private ArrayList<ILifeCycle> lifes;
 
     public static LifeOwner init(Context context) {
@@ -30,7 +29,6 @@ public class LifeOwner implements ILifeRegistor {
     }
 
     private LifeOwner(Context context) {
-        this.context = context;
         if (context == null) {
             throw new IllegalArgumentException("You cannot start a load on a null Context");
         } else if (Util.isOnMainThread() && !(context instanceof Application)) {

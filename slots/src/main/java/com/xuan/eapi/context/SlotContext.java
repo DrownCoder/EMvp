@@ -6,12 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xuan.annotation.ViewInfo;
-import com.xuan.eapi.BaseLogic;
 import com.xuan.eapi.IComponentBind;
 import com.xuan.eapi.adaptercorlib.MagicAdapter;
 import com.xuan.eapi.factory.component.IViewComponentFactory;
-import com.xuan.eapi.factory.presenter.ReflectPresenterFactory;
-import com.xuan.eapi.helper.binder.ILogicBinder;
 import com.xuan.eapi.helper.manager.ILogicManger;
 import com.xuan.eapi.helper.manager.IModelManager;
 import com.xuan.eapi.component.Component;
@@ -23,6 +20,7 @@ import com.xuan.eapi.lifecycle.IGC;
 import com.xuan.eapi.lifecycle.ILifeCycle;
 import com.xuan.eapi.lifecycle.ILifeRegistor;
 import com.xuan.eapi.lifecycle.LifeOwner;
+import com.xuan.eapi.logic.IPresent;
 import com.xuan.eapi.viewmodel.IViewNotify;
 
 import java.util.List;
@@ -34,13 +32,12 @@ import java.util.Map;
  * Description :结耦后的全局代理
  */
 
-public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextService,
+public class SlotContext<T> implements ILogicManger, IContextService,
         ILifeRegistor, IModelManager<T>, IComponentFactory, IViewComponentFactory {
     private Context context;
     private ToolKitBuilder builder;
     private IModerBinder<T> moderBinder;
     private IModelManager<T> modelManager;
-    private ILogicBinder logicBinder;
     private ILogicManger logicManger;
     private IComponentFactory componentFactory;
 
@@ -59,7 +56,6 @@ public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextServi
         context = builder.getContext();
         moderBinder = builder.getModerBinder();
         modelManager = builder.getModelManager();
-        logicBinder = builder.getLogicBinder();
         logicManger = builder.getLogicManger();
         eventCenter = builder.getEventCenter();
     }
@@ -98,24 +94,21 @@ public class SlotContext<T> implements ILogicBinder, ILogicManger, IContextServi
      * 注册逻辑
      */
     @Override
-    public void registerLogic(BaseLogic logic) {
+    public void registerLogic(IPresent logic) {
         logicManger.registerLogic(logic);
-        pushLife(logic);
+        if (ILifeCycle.class.isAssignableFrom(logic.getClass())) {
+            pushLife((ILifeCycle) logic);
+        }
     }
 
     @Override
-    public Map<Class<?>, BaseLogic> obtainViewLogicPool() {
+    public Map<Class<?>, IPresent> obtainViewLogicPool() {
         return logicManger.obtainViewLogicPool();
     }
 
     @Override
-    public ReflectPresenterFactory obtainLogicFactory() {
-        return logicManger.obtainLogicFactory();
-    }
-
-    @Override
-    public BaseLogic bindViewLogic(Class<?> viewClass) {
-        return logicBinder.bindViewLogic(viewClass);
+    public IPresent obtainLogic(Class<?> clazz) {
+        return logicManger.obtainLogic(clazz);
     }
 
     public Component createComponent(int viewType, ViewGroup parent) {
