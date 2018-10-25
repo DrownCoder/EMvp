@@ -8,7 +8,8 @@ import android.webkit.WebViewClient;
 
 import com.study.xuan.emvp.ComponentId;
 import com.xuan.annotation.ComponentType;
-import com.xuan.eapi.IComponentBind;
+import com.xuan.eapi.component.Component;
+import com.xuan.eapi.component.IComponentBind;
 
 /**
  * Author : xuan.
@@ -16,7 +17,7 @@ import com.xuan.eapi.IComponentBind;
  * Description :the description of this file
  */
 @ComponentType(ComponentId.WEBVIEW)
-public class WebViewLayout extends WebView implements IComponentBind{
+public class WebViewLayout extends WebView implements IComponentBind {
     public WebViewLayout(Context context) {
         this(context, null);
     }

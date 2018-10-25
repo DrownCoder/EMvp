@@ -2,7 +2,7 @@ package com.study.xuan.emvp.model;
 
 import com.study.xuan.emvp.ComponentId;
 import com.xuan.annotation.BindType;
-import com.xuan.eapi.BaseLogic;
+import com.xuan.eapi.viewmodel.BaseLogic;
 
 /**
  * Author : xuan.

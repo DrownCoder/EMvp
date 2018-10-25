@@ -9,5 +9,5 @@ import android.view.View;
  */
 
 public interface IContextService {
-    public View.OnClickListener obtainEventCenter();
+    View.OnClickListener obtainEventCenter();
 }

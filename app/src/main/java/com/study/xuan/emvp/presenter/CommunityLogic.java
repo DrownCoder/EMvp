@@ -6,7 +6,7 @@ import android.widget.Toast;
 import com.study.xuan.emvp.PresenterId;
 import com.study.xuan.emvp.model.UserInfo;
 import com.xuan.annotation.RegisterLogic;
-import com.xuan.eapi.BaseLogic;
+import com.xuan.eapi.viewmodel.BaseLogic;
 
 /**
  * Author : xuan.

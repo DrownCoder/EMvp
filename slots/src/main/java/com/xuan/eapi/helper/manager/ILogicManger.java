@@ -1,6 +1,6 @@
 package com.xuan.eapi.helper.manager;
 
-import com.xuan.eapi.logic.IPresent;
+import com.xuan.eapi.viewmodel.IPresent;
 
 import java.util.Map;
 

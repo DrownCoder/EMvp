@@ -13,7 +13,8 @@ import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.model.ImageInfo;
 import com.xuan.annotation.ComponentType;
 import com.xuan.component.R;
-import com.xuan.eapi.IComponentBind;
+import com.xuan.eapi.component.Component;
+import com.xuan.eapi.component.IComponentBind;
 
 /**
  * Author : xuan.

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.study.xuan.emvp.test.TestActivity;
-import com.xuan.eapi.BaseLogic;
+import com.xuan.eapi.viewmodel.BaseLogic;
 
 
 /**

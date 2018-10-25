@@ -1,4 +1,4 @@
-package com.xuan.eapi.factory.component;
+package com.xuan.eapi.factory;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,11 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xuan.eapi.IComponentBind;
-import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.component.Component;
 import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.adapter.ComponentViewHolderAdapter;
+import com.xuan.eapi.component.IComponentBind;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

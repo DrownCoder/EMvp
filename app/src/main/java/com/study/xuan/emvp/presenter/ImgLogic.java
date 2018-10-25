@@ -2,7 +2,7 @@ package com.study.xuan.emvp.presenter;
 
 import android.util.Log;
 
-import com.xuan.eapi.logic.IPresent;
+import com.xuan.eapi.viewmodel.IPresent;
 
 /**
  * Author : xuan.

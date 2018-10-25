@@ -1,4 +1,4 @@
-package com.xuan.eapi.viewmodel;
+package com.xuan.eapi.helper.binder;
 
 /**
  * Author : xuan.

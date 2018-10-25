@@ -1,4 +1,4 @@
-package com.xuan.eapi.factory.component;
+package com.xuan.eapi.factory;
 
 import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.component.Component;

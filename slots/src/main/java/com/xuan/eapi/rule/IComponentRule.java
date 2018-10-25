@@ -9,7 +9,7 @@ import com.xuan.annotation.ViewInfo;
  */
 
 public interface IComponentRule {
-    public ViewInfo obtainViewInfo(int id);
+    ViewInfo obtainViewInfo(int id);
 
-    public int obtainComponentId(Class<?> clazz);
+    int obtainComponentId(Class<?> clazz);
 }

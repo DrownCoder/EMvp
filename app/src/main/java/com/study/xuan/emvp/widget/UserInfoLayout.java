@@ -16,9 +16,9 @@ import com.xuan.annotation.ILogic;
 import com.study.xuan.emvp.presenter.IUserInfoPresenter;
 import com.xuan.annotation.ComponentType;
 import com.xuan.component.R;
-import com.xuan.eapi.IComponentBind;
-import com.xuan.eapi.IPresenterBind;
-import com.xuan.eapi.LogUtil;
+import com.xuan.eapi.component.IComponentBind;
+import com.xuan.eapi.viewmodel.IPresenterBind;
+import com.xuan.eapi.component.Component;
 
 /**
  * Author : xuan.

@@ -1,7 +1,8 @@
-package com.xuan.eapi.factory.component;
+package com.xuan.eapi.factory;
 
 import com.xuan.annotation.ViewInfo;
-import com.xuan.eapi.IComponentBind;
+import com.xuan.eapi.component.Component;
+import com.xuan.eapi.component.IComponentBind;
 
 /**
  * Author : xuan.

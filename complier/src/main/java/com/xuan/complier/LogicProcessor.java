@@ -22,6 +22,7 @@ import javax.tools.JavaFileObject;
  * Description :逻辑注解解析器
  */
 @AutoService(Processor.class)
+@Deprecated
 public class LogicProcessor extends BaseProcessor {
     protected static boolean hasProcessor;
     private HashMap<Integer, String> presenterIds = new HashMap();

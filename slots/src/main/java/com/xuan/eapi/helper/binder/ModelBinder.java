@@ -2,8 +2,7 @@ package com.xuan.eapi.helper.binder;
 
 
 
-import com.xuan.eapi.Slots;
-import com.xuan.eapi.viewmodel.HandlerType;
+import com.xuan.eapi.helper.Slots;
 
 /**
  * Author : xuan.

@@ -8,11 +8,10 @@ import android.widget.ImageView;
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.R;
 import com.study.xuan.emvp.model.ImageModel;
-import com.study.xuan.emvp.model.Text;
 import com.study.xuan.emvp.presenter.IImgShow;
 import com.xuan.annotation.ComponentType;
 import com.xuan.annotation.ILogic;
-import com.xuan.eapi.IPresenterBind;
+import com.xuan.eapi.viewmodel.IPresenterBind;
 import com.xuan.eapi.component.Component;
 
 /**

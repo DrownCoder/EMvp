@@ -4,14 +4,14 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.xuan.eapi.IComponentBind;
 import com.xuan.eapi.component.Component;
+import com.xuan.eapi.component.IComponentBind;
 import com.xuan.eapi.helper.event.InjectCallback;
 
 /**
  * Author : xuan.
  * Date : 2018/9/1.
- * Description :the description of this file
+ * Description :Component类型的adapter，支持将自定义View和原生的ViewHolder转换成Component类型
  */
 
 public class ComponentAdapter extends Component implements InjectCallback {

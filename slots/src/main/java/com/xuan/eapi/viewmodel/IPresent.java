@@ -1,4 +1,4 @@
-package com.xuan.eapi.logic;
+package com.xuan.eapi.viewmodel;
 
 /**
  * Author : xuan.

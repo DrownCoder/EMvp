@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.xuan.eapi.IComponentBind;
-
 /**
  * Author : xuan.
  * Date : 2018/5/14.

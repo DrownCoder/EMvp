@@ -1,4 +1,4 @@
-package com.xuan.eapi;
+package com.xuan.eapi.utils;
 
 import android.util.Log;
 

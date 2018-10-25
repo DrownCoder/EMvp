@@ -1,4 +1,4 @@
-package com.xuan.eapi.factory.component;
+package com.xuan.eapi.factory;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xuan.annotation.ViewInfo;
-import com.xuan.eapi.IComponentBind;
 import com.xuan.eapi.component.Component;
+import com.xuan.eapi.component.IComponentBind;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

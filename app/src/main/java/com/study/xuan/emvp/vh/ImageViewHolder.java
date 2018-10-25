@@ -11,8 +11,9 @@ import com.study.xuan.emvp.presenter.Contract;
 import com.xuan.annotation.ComponentType;
 import com.xuan.annotation.ILogic;
 import com.xuan.component.R;
-import com.xuan.eapi.IComponentBind;
-import com.xuan.eapi.IPresenterBind;
+import com.xuan.eapi.component.IComponentBind;
+import com.xuan.eapi.viewmodel.IPresenterBind;
+import com.xuan.eapi.component.Component;
 
 /**
  * Author : xuan.

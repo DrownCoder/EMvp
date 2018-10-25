@@ -1,9 +1,10 @@
-package com.xuan.eapi;
+
+package com.xuan.eapi.component;
 
 /**
  * Author : xuan.
  * Date : 2018/5/14.
- * Description :the description of this file
+ * Description :楼层需要实现的接口
  */
 
 public interface IComponentBind<T> {

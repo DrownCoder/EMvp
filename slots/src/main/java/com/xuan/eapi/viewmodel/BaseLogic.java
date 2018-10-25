@@ -1,25 +1,26 @@
-package com.xuan.eapi.component;
+package com.xuan.eapi.viewmodel;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 
 import com.xuan.eapi.lifecycle.ILifeCycle;
 
 /**
  * Author : xuan.
- * Date : 2018/8/22.
- * Description :实现生命周期的Component
+ * Date : 2018/5/9.
+ * Description :the description of this file
  */
 
-public abstract class LifeComponent<T> extends Component<T> implements ILifeCycle {
-    public LifeComponent(Context context, View itemView) {
-        super(context, itemView);
+public abstract class BaseLogic implements ILifeCycle {
+    protected Context mContext;
+
+    public BaseLogic(Context context) {
+        this.mContext = context;
     }
 
     @Override
     public void onDestroy() {
-
+        mContext = null;
     }
 
     @Override

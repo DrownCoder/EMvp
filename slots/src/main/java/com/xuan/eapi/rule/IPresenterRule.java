@@ -5,7 +5,7 @@ package com.xuan.eapi.rule;
  * Date : 2018/6/1.
  * Description :逻辑映射规则
  */
-
+@Deprecated
 public interface IPresenterRule {
     int obtainPresenterId(Class<?> clazz);
 

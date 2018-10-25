@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.study.xuan.emvp.model.Text;
 import com.study.xuan.emvp.presenter.MainLogic;
 import com.study.xuan.emvp.test.TestActivity;
-import com.xuan.eapi.BaseLogic;
+import com.xuan.eapi.viewmodel.BaseLogic;
 import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.context.ToolKitBuilder;
 

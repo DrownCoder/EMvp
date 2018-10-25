@@ -1,7 +1,7 @@
-package com.xuan.eapi.factory.component;
+package com.xuan.eapi.factory;
 
-import com.xuan.eapi.IComponentBind;
 import com.xuan.eapi.component.Component;
+import com.xuan.eapi.component.IComponentBind;
 
 /**
  * Author : xuan.
@@ -10,5 +10,5 @@ import com.xuan.eapi.component.Component;
  */
 
 public interface AdapterComponent {
-    public Component adapterComponent(IComponentBind componentBind);
+    Component adapterComponent(IComponentBind componentBind);
 }

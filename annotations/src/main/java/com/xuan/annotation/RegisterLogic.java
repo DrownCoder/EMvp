@@ -16,6 +16,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 // 表示可以作用于成员变量，类、接口
 @Target(ElementType.TYPE)
+@Deprecated
 public @interface RegisterLogic {
     //presenterId，逻辑id，唯一
     int value() default -1;

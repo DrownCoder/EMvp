@@ -6,22 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xuan.annotation.ViewInfo;
-import com.xuan.eapi.IComponentBind;
 import com.xuan.eapi.adaptercorlib.MagicAdapter;
-import com.xuan.eapi.factory.component.IViewComponentFactory;
+import com.xuan.eapi.component.IComponentBind;
+import com.xuan.eapi.factory.IViewComponentFactory;
 import com.xuan.eapi.helper.manager.ILogicManger;
 import com.xuan.eapi.helper.manager.IModelManager;
 import com.xuan.eapi.component.Component;
-import com.xuan.eapi.factory.component.ComponentFactory;
-import com.xuan.eapi.factory.component.IComponentFactory;
+import com.xuan.eapi.factory.ComponentFactory;
+import com.xuan.eapi.factory.IComponentFactory;
 import com.xuan.eapi.helper.binder.IModerBinder;
 import com.xuan.eapi.lifecycle.GCAdapter;
 import com.xuan.eapi.lifecycle.IGC;
 import com.xuan.eapi.lifecycle.ILifeCycle;
 import com.xuan.eapi.lifecycle.ILifeRegistor;
 import com.xuan.eapi.lifecycle.LifeOwner;
-import com.xuan.eapi.logic.IPresent;
-import com.xuan.eapi.viewmodel.IViewNotify;
+import com.xuan.eapi.viewmodel.IPresent;
 
 import java.util.List;
 import java.util.Map;
@@ -35,7 +34,7 @@ import java.util.Map;
 public class SlotContext<T> implements ILogicManger, IContextService,
         ILifeRegistor, IModelManager<T>, IComponentFactory, IViewComponentFactory {
     private Context context;
-    private ToolKitBuilder builder;
+    private ToolKitBuilder<T> builder;
     private IModerBinder<T> moderBinder;
     private IModelManager<T> modelManager;
     private ILogicManger logicManger;
@@ -43,7 +42,6 @@ public class SlotContext<T> implements ILogicManger, IContextService,
 
     private View.OnClickListener eventCenter;
     private LifeOwner lifeOwner;
-    private IViewNotify viewNotify;
     private RecyclerView rcyRoot;
     private RecyclerView.Adapter mAdapter;
 
@@ -51,7 +49,7 @@ public class SlotContext<T> implements ILogicManger, IContextService,
         this(new ToolKitBuilder<>(context, data));
     }
 
-    public SlotContext(ToolKitBuilder builder) {
+    public SlotContext(ToolKitBuilder<T> builder) {
         this.builder = builder;
         context = builder.getContext();
         moderBinder = builder.getModerBinder();

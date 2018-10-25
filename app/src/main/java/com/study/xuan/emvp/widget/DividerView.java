@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.study.xuan.emvp.ComponentId;
 import com.xuan.annotation.ComponentType;
-import com.xuan.eapi.IComponentBind;
+import com.xuan.eapi.component.IComponentBind;
 
 /**
  * Author : xuan.
@@ -15,7 +15,7 @@ import com.xuan.eapi.IComponentBind;
  * Description :the description of this file
  */
 @ComponentType(ComponentId.DIVIDER)
-public class DividerView extends View implements IComponentBind{
+public class DividerView extends View implements IComponentBind {
     public DividerView(Context context) {
         this(context, null);
     }
@@ -37,4 +37,22 @@ public class DividerView extends View implements IComponentBind{
     public void onUnBind() {
 
     }
+
+    @ComponentType(ComponentId.INNERVIEW)
+    public static class InnerView extends View implements IComponentBind {
+        public InnerView(Context context) {
+            super(context);
+        }
+
+        @Override
+        public void onBind(int pos, Object item) {
+
+        }
+
+        @Override
+        public void onUnBind() {
+
+        }
+    }
+
 }

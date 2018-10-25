@@ -1,15 +1,8 @@
 package com.xuan.eapi.helper.manager;
 
-import android.content.Context;
-import android.util.SparseArray;
-
-import com.xuan.eapi.BaseLogic;
-import com.xuan.eapi.Slots;
-import com.xuan.eapi.factory.presenter.ReflectPresenterFactory;
-import com.xuan.eapi.logic.IPresent;
+import com.xuan.eapi.viewmodel.IPresent;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,12 +12,10 @@ import java.util.Map;
  */
 
 public class LogicManager implements ILogicManger {
-    private Context context;
     //Logic冗余，拆分Logic，一个Activity中可能存在多个Logic实例
     private Map<Class<?>, IPresent> globalLogic;
 
-    public LogicManager(Context context) {
-        this.context = context;
+    public LogicManager() {
     }
 
     @Override

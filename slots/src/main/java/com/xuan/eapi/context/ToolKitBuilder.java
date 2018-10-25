@@ -3,15 +3,14 @@ package com.xuan.eapi.context;
 import android.content.Context;
 import android.view.View;
 
-import com.xuan.eapi.factory.component.IComponentFactory;
-import com.xuan.eapi.factory.component.IViewComponentFactory;
+import com.xuan.eapi.factory.IComponentFactory;
+import com.xuan.eapi.factory.IViewComponentFactory;
 import com.xuan.eapi.helper.binder.DefaultModelBinder;
 import com.xuan.eapi.helper.binder.IModerBinder;
 import com.xuan.eapi.helper.manager.DefaultModelManager;
 import com.xuan.eapi.helper.manager.ILogicManger;
 import com.xuan.eapi.helper.manager.IModelManager;
 import com.xuan.eapi.helper.manager.LogicManager;
-import com.xuan.eapi.viewmodel.IViewNotify;
 
 import java.util.List;
 
@@ -29,7 +28,6 @@ public class ToolKitBuilder<T> {
     private IComponentFactory componentFactory;
     private IViewComponentFactory viewComponentFactory;
     private View.OnClickListener eventCenter;
-    private IViewNotify viewNotify;
     private List<T> mData;
 
     public ToolKitBuilder(Context context, List<T> data) {
@@ -86,14 +84,6 @@ public class ToolKitBuilder<T> {
         return this;
     }
 
-    public IViewNotify getViewNotify() {
-        return viewNotify;
-    }
-
-    public void setViewNotify(IViewNotify viewNotify) {
-        this.viewNotify = viewNotify;
-    }
-
     public Context getContext() {
         return context;
     }
@@ -102,7 +92,7 @@ public class ToolKitBuilder<T> {
         return moderBinder == null ? dfModelBinder() : moderBinder;
     }
 
-    public IModelManager getModelManager() {
+    public IModelManager<T> getModelManager() {
         return modelManager == null ? dfModelManager() : modelManager;
     }
 
@@ -149,7 +139,7 @@ public class ToolKitBuilder<T> {
 
     private ILogicManger dfLogicManager() {
         if (logicManger == null) {
-            this.logicManger = new LogicManager(context);
+            this.logicManger = new LogicManager();
         }
         return logicManger;
     }

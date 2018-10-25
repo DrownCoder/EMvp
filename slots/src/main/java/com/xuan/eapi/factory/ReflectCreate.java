@@ -1,4 +1,4 @@
-package com.xuan.eapi.factory.component;
+package com.xuan.eapi.factory;
 
 /**
  * Author : xuan.

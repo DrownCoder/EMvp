@@ -1,18 +1,17 @@
-package com.xuan.eapi;
+package com.xuan.eapi.helper;
 
 import com.xuan.eapi.rule.IComponentRule;
-import com.xuan.eapi.rule.IPresenterRule;
 
 /**
  * Author : xuan.
  * Date : 2018/5/31.
- * Description :the description of this file
+ * Description :获取注解的映射表
  */
 
 public class Slots {
     public static volatile Slots instance;
     private IComponentRule componentRule;
-    private IPresenterRule presenterRule;
+    //private IPresenterRule presenterRule;
 
     public static Slots getInstance() {
         if (instance == null) {
@@ -32,9 +31,9 @@ public class Slots {
     private void initRule() {
         try {
             Class componentRule = Class.forName("com.xuan.eapi.rule.ComponentRule");
-            Class presenterRule = Class.forName("com.xuan.eapi.rule.PresenterRule");
+            //Class presenterRule = Class.forName("com.xuan.eapi.rule.PresenterRule");
             this.componentRule = (IComponentRule) componentRule.newInstance();
-            this.presenterRule = (IPresenterRule) presenterRule.newInstance();
+            //this.presenterRule = (IPresenterRule) presenterRule.newInstance();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -46,9 +45,5 @@ public class Slots {
 
     public IComponentRule obtainRule() {
         return componentRule;
-    }
-
-    public IPresenterRule obtainPresenterRule() {
-        return presenterRule;
     }
 }

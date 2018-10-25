@@ -4,8 +4,8 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.study.xuan.emvp.model.UserInfo;
-import com.xuan.eapi.BaseLogic;
-import com.xuan.eapi.logic.IPresent;
+import com.xuan.eapi.viewmodel.BaseLogic;
+import com.xuan.eapi.viewmodel.IPresent;
 
 /**
  * Author : xuan.

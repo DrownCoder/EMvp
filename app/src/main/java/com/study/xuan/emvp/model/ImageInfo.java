@@ -1,6 +1,6 @@
 package com.study.xuan.emvp.model;
 
-import com.xuan.eapi.viewmodel.HandlerType;
+import com.xuan.eapi.helper.binder.HandlerType;
 
 import java.util.List;
 
