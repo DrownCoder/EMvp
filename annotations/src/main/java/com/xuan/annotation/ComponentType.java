@@ -27,4 +27,7 @@ public @interface ComponentType {
 
     //是否利用反射创建，默认打开的(复杂的，性能相关的，数量大的当然建议关闭咯)
     boolean autoCreate() default true;
+
+    //楼层绑定的类，通过类来寻找楼层的可用范围
+    Class attach() default Object.class;
 }

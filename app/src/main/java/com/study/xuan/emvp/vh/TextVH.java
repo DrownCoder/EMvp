@@ -19,7 +19,8 @@ import com.xuan.eapi.helper.event.InjectCallback;
 
 @ComponentType(
         value = ComponentId.SINGLE_TEXT,
-        layout = R.layout.single_text
+        layout = R.layout.single_text,
+        attach = Text.class
 )
 public class TextVH extends Component<Text> implements InjectCallback {
     private TextView tv;

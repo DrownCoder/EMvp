@@ -24,9 +24,14 @@ public class ComponentTypeClassInfo {
     private int componentType = ViewInfo.TYPE_NONE;
     //ViewHolder的布局文件
     private int layoutId;
+    //当不使用布局文件的时候，使用View注解的类名
     private String parentViewName;
+    //是否自动创建，利用反射
     private boolean autoCreate;
+    //注解需要获取的Presenter类名
     private String presenterName;
+    //使用attach注解的绑定的使用类，也就是可用范围
+    private String attachClassName;
 
     public ComponentTypeClassInfo(TypeElement classElement) {
         this.typeElement = classElement;
@@ -42,10 +47,19 @@ public class ComponentTypeClassInfo {
             TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
             parentViewName = classTypeElement.getQualifiedName().toString();
         }
+        try {
+            Class attachClass = annotation.attach();
+            attachClassName = attachClass.getName();
+        } catch (MirroredTypeException mte) {
+            DeclaredType classTypeMirror = (DeclaredType) mte.getTypeMirror();
+            TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
+            attachClassName = classTypeElement.getQualifiedName().toString();
+        }
         System.out.println("getQualifiedName = " + classElement.getQualifiedName());
         System.out.println("getSimpleName = " + classElement.getSimpleName());
         System.out.println("getSuperClass = " + classElement.getSuperclass());
         System.out.println("getClass = " + classElement.getClass());
+        System.out.println("xxxxxxxxxx" + attachClassName);
 
         className = classElement.getQualifiedName().toString();
         if (typeElement.getAnnotation(ILogic.class) != null) {
@@ -97,6 +111,10 @@ public class ComponentTypeClassInfo {
 
     public String getParentViewName() {
         return parentViewName;
+    }
+
+    public String getAttachClass() {
+        return attachClassName;
     }
 }
 

@@ -195,6 +195,11 @@ public class TypeProcessor extends BaseProcessor {
             } else {
                 strBuilder.append(", null");
             }
+            if (info.getAttachClass() != null
+                    && info.getAttachClass().length() > 0
+                    && !info.getAttachClass().equals(Object.class.getName())) {
+                strBuilder.append(",").append(info.getAttachClass()).append(".class");
+            }
             strBuilder.append("));\n");
             writer.write(strBuilder.toString());
             strBuilder.setLength(0);
