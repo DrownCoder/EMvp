@@ -29,6 +29,7 @@ public class ToolKitBuilder<T> {
     private IViewComponentFactory viewComponentFactory;
     private View.OnClickListener eventCenter;
     private List<T> mData;
+    private Class<?> attachClass;
 
     public ToolKitBuilder(Context context, List<T> data) {
         this.context = context;
@@ -114,6 +115,18 @@ public class ToolKitBuilder<T> {
 
     public View.OnClickListener getEventCenter() {
         return eventCenter;
+    }
+
+    public ToolKitBuilder<T> attachClass(Class<?> clazz) {
+        this.attachClass = clazz;
+        return this;
+    }
+
+    public Class<?> getAttachClass() {
+        if (attachClass == null) {
+            attachClass = Object.class;
+        }
+        return attachClass;
     }
 
     public SlotContext build() {

@@ -2,7 +2,7 @@ package com.xuan.eapi.helper.binder;
 
 
 
-import com.xuan.eapi.helper.Slots;
+import com.xuan.eapi.helper.SlotsMap;
 
 /**
  * Author : xuan.
@@ -22,7 +22,7 @@ public abstract class ModelBinder<T> implements IModerBinder<T> {
                 return ((HandlerType) obj).handlerType();
             } else {
                 //一对一
-                return Slots.getInstance().obtainRule().obtainComponentId(obj.getClass());
+                return SlotsMap.getInstance().obtainRule().obtainComponentId(obj.getClass());
             }
         }
         return type;

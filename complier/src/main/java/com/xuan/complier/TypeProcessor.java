@@ -120,10 +120,12 @@ public class TypeProcessor extends BaseProcessor {
             writer.write("public class " + FILE_NAME_RULE_COMPONENT + " implements IComponentRule" +
                     " " + " {\n");
             writer.write("    public static final SparseArray<ViewInfo> WIDGET_TYPE;\n\n");
+            writer.write("    public static final Map<Class<?>, SparseArray<ViewInfo>> ATTACH_TYPE;\n\n");
             writer.write("    public static final Map<Class<?>, Integer> MODEL_TYPE;\n\n");
             writer.write("    static {\n");
             writer.write("        WIDGET_TYPE = new SparseArray<>();\n");
             writer.write("        MODEL_TYPE = new HashMap();\n\n");
+            writer.write("        ATTACH_TYPE = new HashMap<>();\n\n");
             writePutWidgetLine(writer);
             writePutModelLine(writer);
             writer.write("    }\n\n");
@@ -140,6 +142,10 @@ public class TypeProcessor extends BaseProcessor {
             writer.write("    @Override\n");
             writer.write("    public int obtainComponentId(Class<?> clazz) {\n");
             writer.write("        return MODEL_TYPE.get(clazz);\n");
+            writer.write("    }\n\n");
+            writer.write("    @Override\n");
+            writer.write("    public ViewInfo obtainAttachViewInfo(Class<?> clazz, int id) {\n");
+            writer.write("        return ATTACH_TYPE.get(clazz).get(id);\n");
             writer.write("    }\n\n");
             writer.write("}\n");
         } catch (IOException e) {
@@ -168,6 +174,45 @@ public class TypeProcessor extends BaseProcessor {
     }
 
     private void writePutWidgetLine(BufferedWriter writer) throws IOException {
+        strBuilder.setLength(0);
+        for (ComponentTypeClassInfo info : typeWidget) {
+            strBuilder.append("        putWidget(").append(info.getComponentId()).append(",")
+                    .append("new ViewInfo(").append(info.getComponentId()).append(",\n           " +
+                    "     ")
+                    .append(info.getClassName()).append(".class").append(",");
+            if (info.getComponentType() == ViewInfo.TYPE_VIEW) {
+                strBuilder.append(info.getComponentType());
+            } else {
+                strBuilder.append(info.getLayoutId()).append(",")
+                        .append(info.getComponentType());
+            }
+            if (!info.isAutoCreate()) {
+                strBuilder.append(", false");
+            }
+            if (info.getComponentType() != ViewInfo.TYPE_VIEW) {
+                if (info.getParentViewName() != null
+                        && info.getParentViewName().length() > 0
+                        && !info.getParentViewName().equals(Object.class.getName())) {
+                    strBuilder.append(",").append(info.getParentViewName()).append(".class");
+                }
+            }
+            if (info.getPresenterClass() != null) {
+                strBuilder.append(", ").append(info.getPresenterClass()).append(".class");
+            } else {
+                strBuilder.append(", null");
+            }
+            if (info.getAttachClass() != null
+                    && info.getAttachClass().length() > 0
+                    && !info.getAttachClass().equals(Object.class.getName())) {
+                strBuilder.append(",").append(info.getAttachClass()).append(".class");
+            }
+            strBuilder.append("));\n");
+            writer.write(strBuilder.toString());
+            strBuilder.setLength(0);
+        }
+    }
+
+    private void writeAttachWidgetLine(BufferedWriter writer) throws IOException {
         strBuilder.setLength(0);
         for (ComponentTypeClassInfo info : typeWidget) {
             strBuilder.append("        putWidget(").append(info.getComponentId()).append(",")

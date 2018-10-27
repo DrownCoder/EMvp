@@ -12,4 +12,6 @@ public interface IComponentRule {
     ViewInfo obtainViewInfo(int id);
 
     int obtainComponentId(Class<?> clazz);
+
+    ViewInfo obtainAttachViewInfo(Class<?> clazz, int id);
 }

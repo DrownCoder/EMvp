@@ -39,6 +39,7 @@ public class SlotContext<T> implements ILogicManger, IContextService,
     private IModelManager<T> modelManager;
     private ILogicManger logicManger;
     private IComponentFactory componentFactory;
+    private Class<?> attachClass;
 
     private View.OnClickListener eventCenter;
     private LifeOwner lifeOwner;
@@ -55,6 +56,7 @@ public class SlotContext<T> implements ILogicManger, IContextService,
         moderBinder = builder.getModerBinder();
         modelManager = builder.getModelManager();
         logicManger = builder.getLogicManger();
+        attachClass = builder.getAttachClass();
         eventCenter = builder.getEventCenter();
     }
 
@@ -86,6 +88,27 @@ public class SlotContext<T> implements ILogicManger, IContextService,
 
     public int getItemType(int pos) {
         return moderBinder.getItemType(pos, modelManager.getItem(pos));
+    }
+
+    /**
+     * 是否绑定的有class
+     */
+    public boolean isAttaching() {
+        if (attachClass != Object.class) {
+            return true;
+        }
+        return false;
+    }
+
+    public void attach(Class<?> clazz) {
+        this.attachClass = clazz;
+    }
+
+    /**
+     * 获取绑定的class
+     */
+    public Class<?> attachClass() {
+        return attachClass;
     }
 
     /**

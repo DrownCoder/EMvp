@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 
 import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.viewmodel.IPresenterBind;
-import com.xuan.eapi.helper.Slots;
+import com.xuan.eapi.helper.SlotsMap;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.component.IComponentBind;
 import com.xuan.eapi.context.SlotContext;
@@ -41,7 +41,30 @@ public class ComponentFactory implements IComponentFactory {
         if (component != null) {
             return component;
         }
-        ViewInfo viewInfo = Slots.getInstance().obtainRule().obtainViewInfo(type);
+        ViewInfo viewInfo;
+        if (tookContext.isAttaching()) {
+            /**
+             * 绑定模式-对应与个人的楼层开发
+             */
+            //如果有绑定的类，则获取绑定类的映射表
+            viewInfo = SlotsMap.getInstance().obtainRule()
+                    .obtainAttachViewInfo(tookContext.attachClass(), type);
+            if (viewInfo == null) {
+                //没有绑定的类，则获取全局映射表
+                viewInfo = SlotsMap.getInstance().obtainRule().obtainViewInfo(type);
+            }
+        }else{
+            /**
+             * 全局模式-对应与楼层的全局打通
+             */
+            //没有绑定的类，则获取全局映射表
+            viewInfo = SlotsMap.getInstance().obtainRule().obtainViewInfo(type);
+            if (viewInfo == null) {
+                //如果有绑定的类，则获取绑定类的映射表
+                viewInfo = SlotsMap.getInstance().obtainRule()
+                        .obtainAttachViewInfo(tookContext.attachClass(), type);
+            }
+        }
         if (viewInfo == null) {
             return defaultViewHolder();
         }

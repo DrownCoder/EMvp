@@ -10,6 +10,7 @@ import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.R;
 import com.study.xuan.emvp.model.ImageInfo;
 import com.study.xuan.emvp.model.ImageModel;
+import com.study.xuan.emvp.model.Text;
 import com.study.xuan.emvp.model.UserInfo;
 import com.study.xuan.emvp.presenter.ImgLogic;
 import com.study.xuan.emvp.presenter.OtherLogic;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
     private DragRecyclerView dragRcy;
-    private List<Object> mData;
+    private List<Text> mData;
     private LinearSmoothScroller SmoothScroller;
     public static boolean canScroll;
 
@@ -32,55 +33,12 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         mData = new ArrayList<>();
-        mData.add(new ImageModel());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new ImageInfo(ComponentId.TEXT_IMG));
-        /*mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new Product(true));
-        mData.add(new SingleImg());
-        mData.add(new ImageInfo(ComponentId.IMAGE_TWO_VH));
-        mData.add(new UserInfo());
-        UserInfo userInfo = new UserInfo(true);
-        userInfo.injectPresenter(new CommunityLogic(this));
-        mData.add(userInfo);
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());*/
-        mData.add(new ImageInfo(ComponentId.TEXT_IMG));
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        mData.add(new UserInfo());
-        //mData.add(new ImageInfo(ComponentId.TEXT_IMG));
-        final SlotContext tookContext = new SlotContext(this, mData);
-        tookContext.registerLogic(new OtherLogic(this));
-        tookContext.registerLogic(new ImgLogic());
+        for (int i = 0; i < 100; i++) {
+            Text text = new Text("第"+i+"个");
+            mData.add(text);
+        }
+        final SlotContext<Text> tookContext = new SlotContext<>(this, mData);
+        tookContext.attach(Text.class);
         dragRcy = findViewById(R.id.drag_rcy);
         tookContext.bind(dragRcy);
         //final TestLayoutManager layoutManager = new TestLayoutManager(this);

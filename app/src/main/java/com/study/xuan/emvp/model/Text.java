@@ -17,4 +17,8 @@ public class Text {
         title = item;
         this.eventId = id;
     }
+
+    public Text(String title) {
+        this.title = title;
+    }
 }

@@ -1,5 +1,6 @@
 package com.xuan.eapi.helper;
 
+import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.rule.IComponentRule;
 
 /**
@@ -8,29 +9,30 @@ import com.xuan.eapi.rule.IComponentRule;
  * Description :获取注解的映射表
  */
 
-public class Slots {
-    public static volatile Slots instance;
+public class SlotsMap {
+    public static volatile SlotsMap instance;
     private IComponentRule componentRule;
     //private IPresenterRule presenterRule;
 
-    public static Slots getInstance() {
+    public static SlotsMap getInstance() {
         if (instance == null) {
-            synchronized (Slots.class) {
+            synchronized (SlotsMap.class) {
                 if (instance == null) {
-                    instance = new Slots();
+                    instance = new SlotsMap();
                 }
             }
         }
         return instance;
     }
 
-    private Slots() {
+    private SlotsMap() {
         initRule();
     }
 
     private void initRule() {
         try {
-            Class componentRule = Class.forName("com.xuan.eapi.rule.ComponentRule");
+            //Class componentRule = Class.forName("com.xuan.eapi.rule.ComponentRule");
+            Class componentRule = Class.forName("com.study.xuan.emvp.TempRule");
             //Class presenterRule = Class.forName("com.xuan.eapi.rule.PresenterRule");
             this.componentRule = (IComponentRule) componentRule.newInstance();
             //this.presenterRule = (IPresenterRule) presenterRule.newInstance();
