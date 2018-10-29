@@ -38,7 +38,6 @@ public class TestActivity extends AppCompatActivity {
             mData.add(text);
         }
         final SlotContext<Text> tookContext = new SlotContext<>(this, mData);
-        tookContext.attach(Text.class);
         dragRcy = findViewById(R.id.drag_rcy);
         tookContext.bind(dragRcy);
         //final TestLayoutManager layoutManager = new TestLayoutManager(this);

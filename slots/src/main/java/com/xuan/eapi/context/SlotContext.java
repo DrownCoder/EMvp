@@ -9,6 +9,8 @@ import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.adaptercorlib.MagicAdapter;
 import com.xuan.eapi.component.IComponentBind;
 import com.xuan.eapi.factory.IViewComponentFactory;
+import com.xuan.eapi.helper.binder.DefaultMapAttach;
+import com.xuan.eapi.helper.binder.IMapAttach;
 import com.xuan.eapi.helper.manager.ILogicManger;
 import com.xuan.eapi.helper.manager.IModelManager;
 import com.xuan.eapi.component.Component;
@@ -38,6 +40,7 @@ public class SlotContext<T> implements ILogicManger, IContextService,
     private IModerBinder<T> moderBinder;
     private IModelManager<T> modelManager;
     private ILogicManger logicManger;
+    private IMapAttach mapAttach;
     private IComponentFactory componentFactory;
     private Class<?> attachClass;
 
@@ -58,6 +61,7 @@ public class SlotContext<T> implements ILogicManger, IContextService,
         logicManger = builder.getLogicManger();
         attachClass = builder.getAttachClass();
         eventCenter = builder.getEventCenter();
+        mapAttach = builder.getMapAttach();
     }
 
     public Context getContext() {
@@ -90,25 +94,25 @@ public class SlotContext<T> implements ILogicManger, IContextService,
         return moderBinder.getItemType(pos, modelManager.getItem(pos));
     }
 
-    /**
-     * 是否绑定的有class
-     */
     public boolean isAttaching() {
-        if (attachClass != Object.class) {
-            return true;
+        if (getAttachMap() != null) {
+            return getAttachMap().attachClass() == Object.class;
         }
         return false;
     }
 
-    public void attach(Class<?> clazz) {
-        this.attachClass = clazz;
+    /**
+     * 绑定Map
+     */
+    public void attachClass(Class<?> clazz) {
+        mapAttach = new DefaultMapAttach(clazz);
     }
 
     /**
-     * 获取绑定的class
+     * 获取映射表
      */
-    public Class<?> attachClass() {
-        return attachClass;
+    public IMapAttach getAttachMap() {
+        return mapAttach;
     }
 
     /**

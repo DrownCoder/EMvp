@@ -1,6 +1,5 @@
 package com.xuan.eapi.helper;
 
-import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.rule.IComponentRule;
 
 /**

@@ -113,8 +113,14 @@ public class ComponentTypeClassInfo {
         return parentViewName;
     }
 
-    public String getAttachClass() {
+    public String getAttachClassName() {
         return attachClassName;
+    }
+
+    public boolean isAttaching() {
+        return getAttachClassName() != null
+                && getAttachClassName().length() > 0
+                && !getAttachClassName().equals(Object.class.getName());
     }
 }
 

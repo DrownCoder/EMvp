@@ -9,6 +9,7 @@ import com.xuan.annotation.ViewInfo;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,8 +35,12 @@ import static com.xuan.complier.Const.*;
 @AutoService(Processor.class)
 public class TypeProcessor extends BaseProcessor {
     private List<ModelTypeClassInfo> typeModel = new ArrayList<>();
-    private List<ComponentTypeClassInfo> typeWidget = new ArrayList<>();
-    private List<Integer> componentIds = new ArrayList<>();
+    //全局ComponentInfo
+    private List<ComponentTypeClassInfo> globalTypeWidget = new ArrayList<>();
+    //个人ComponentInfo
+    private List<ComponentTypeClassInfo> attachTypeWidget = new ArrayList<>();
+    private List<Integer> globalComponentIds = new ArrayList<>();
+    private HashMap<String, List<Integer>> attachComponentIds = new HashMap<>();
     protected static boolean hasProcessor;
 
     @Override
@@ -67,8 +72,13 @@ public class TypeProcessor extends BaseProcessor {
                 if (!isValidComponent(componentInfo)) {
                     return true;
                 }
-                componentIds.add(componentInfo.getComponentId());
-                typeWidget.add(componentInfo);
+                if (componentInfo.isAttaching()) {
+                    attachId(componentInfo.getAttachClassName(),componentInfo.getComponentId());
+                    attachTypeWidget.add(componentInfo);
+                }else{
+                    globalComponentIds.add(componentInfo.getComponentId());
+                    globalTypeWidget.add(componentInfo);
+                }
             } catch (Exception e) {
                 error(annotatedElement, e.getMessage());
                 return true;
@@ -92,17 +102,36 @@ public class TypeProcessor extends BaseProcessor {
             }
         }
 
-        if (typeWidget.size() > 0) {
+        if (globalTypeWidget.size() > 0) {
             writeFile();
         }
         clear();
         return true;
     }
 
+    private void attachId(String clazz, int componentId) {
+        List<Integer> ids = attachComponentIds.get(clazz);
+        if (ids == null) {
+            ids = new ArrayList<>();
+            attachComponentIds.put(clazz, ids);
+        }
+        ids.add(componentId);
+    }
+
+    private boolean containAttachId(String clazz, int componentId) {
+        List<Integer> ids = attachComponentIds.get(clazz);
+        if (ids == null||ids.size() == 0) {
+            return false;
+        }
+        return ids.contains(componentId);
+    }
+
     private void clear() {
         typeModel.clear();
-        typeWidget.clear();
-        componentIds.clear();
+        globalTypeWidget.clear();
+        globalComponentIds.clear();
+        attachComponentIds.clear();
+        attachTypeWidget.clear();
         strBuilder.setLength(0);
     }
 
@@ -120,13 +149,15 @@ public class TypeProcessor extends BaseProcessor {
             writer.write("public class " + FILE_NAME_RULE_COMPONENT + " implements IComponentRule" +
                     " " + " {\n");
             writer.write("    public static final SparseArray<ViewInfo> WIDGET_TYPE;\n\n");
-            writer.write("    public static final Map<Class<?>, SparseArray<ViewInfo>> ATTACH_TYPE;\n\n");
+            writer.write("    public static final Map<Class<?>, SparseArray<ViewInfo>> " +
+                    "ATTACH_TYPE;\n\n");
             writer.write("    public static final Map<Class<?>, Integer> MODEL_TYPE;\n\n");
             writer.write("    static {\n");
             writer.write("        WIDGET_TYPE = new SparseArray<>();\n");
             writer.write("        MODEL_TYPE = new HashMap();\n\n");
             writer.write("        ATTACH_TYPE = new HashMap<>();\n\n");
             writePutWidgetLine(writer);
+            writeAttachWidgetLine(writer);
             writePutModelLine(writer);
             writer.write("    }\n\n");
             writer.write("    private static void putWidget(int id,ViewInfo info) {\n");
@@ -134,6 +165,15 @@ public class TypeProcessor extends BaseProcessor {
             writer.write("    }\n\n");
             writer.write("    private static void putModel(Class<?> clazz, int id) {\n");
             writer.write("        MODEL_TYPE.put(clazz, id);;\n");
+            writer.write("    }\n\n");
+            writer.write("    private static void attachWidget(Class<?> clazz,int id,ViewInfo " +
+                    "info){\n");
+            writer.write("        SparseArray attachArray = ATTACH_TYPE.get(clazz);\n");
+            writer.write("        if (attachArray == null) {\n");
+            writer.write("            attachArray = new SparseArray();\n");
+            writer.write("            ATTACH_TYPE.put(clazz, attachArray);\n");
+            writer.write("        }\n");
+            writer.write("        attachArray.put(id, info);\n");
             writer.write("    }\n\n");
             writer.write("    @Override\n");
             writer.write("    public ViewInfo obtainViewInfo(int id) {\n");
@@ -175,7 +215,7 @@ public class TypeProcessor extends BaseProcessor {
 
     private void writePutWidgetLine(BufferedWriter writer) throws IOException {
         strBuilder.setLength(0);
-        for (ComponentTypeClassInfo info : typeWidget) {
+        for (ComponentTypeClassInfo info : globalTypeWidget) {
             strBuilder.append("        putWidget(").append(info.getComponentId()).append(",")
                     .append("new ViewInfo(").append(info.getComponentId()).append(",\n           " +
                     "     ")
@@ -200,11 +240,6 @@ public class TypeProcessor extends BaseProcessor {
                 strBuilder.append(", ").append(info.getPresenterClass()).append(".class");
             } else {
                 strBuilder.append(", null");
-            }
-            if (info.getAttachClass() != null
-                    && info.getAttachClass().length() > 0
-                    && !info.getAttachClass().equals(Object.class.getName())) {
-                strBuilder.append(",").append(info.getAttachClass()).append(".class");
             }
             strBuilder.append("));\n");
             writer.write(strBuilder.toString());
@@ -212,10 +247,13 @@ public class TypeProcessor extends BaseProcessor {
         }
     }
 
-    private void writeAttachWidgetLine(BufferedWriter writer) throws IOException {
+    private void writeAttachWidgetLine(BufferedWriter writer) throws
+            IOException {
         strBuilder.setLength(0);
-        for (ComponentTypeClassInfo info : typeWidget) {
-            strBuilder.append("        putWidget(").append(info.getComponentId()).append(",")
+        for (ComponentTypeClassInfo info : attachTypeWidget) {
+            strBuilder.append("        attachWidget(")
+                    .append(info.getAttachClassName()).append(".class").append(",")
+                    .append(info.getComponentId()).append(",")
                     .append("new ViewInfo(").append(info.getComponentId()).append(",\n           " +
                     "     ")
                     .append(info.getClassName()).append(".class").append(",");
@@ -239,11 +277,6 @@ public class TypeProcessor extends BaseProcessor {
                 strBuilder.append(", ").append(info.getPresenterClass()).append(".class");
             } else {
                 strBuilder.append(", null");
-            }
-            if (info.getAttachClass() != null
-                    && info.getAttachClass().length() > 0
-                    && !info.getAttachClass().equals(Object.class.getName())) {
-                strBuilder.append(",").append(info.getAttachClass()).append(".class");
             }
             strBuilder.append("));\n");
             writer.write(strBuilder.toString());
@@ -292,11 +325,22 @@ public class TypeProcessor extends BaseProcessor {
             return false;
         }*/
         //组件id唯一
-        if (componentIds.contains(componentInfo.getComponentId())) {
-            error(typeElement, "The ComponentId %s has been used\n该组件id已经被使用过", componentInfo
-                    .getComponentId());
-            return false;
+        if (componentInfo.isAttaching()) {
+            //绑定模式
+            if (containAttachId(componentInfo.getAttachClassName(), componentInfo.getComponentId())) {
+                error(typeElement, "The ComponentId %s has been used\n该组件id已经被使用过", componentInfo
+                        .getComponentId());
+                return false;
+            }
+        }else{
+            //全局模式
+            if (globalComponentIds.contains(componentInfo.getComponentId())) {
+                error(typeElement, "The ComponentId %s has been used\n该组件id已经被使用过", componentInfo
+                        .getComponentId());
+                return false;
+            }
         }
+
         //检查继承是否符合要求
         TypeElement currentClass = typeElement;
         while (true) {

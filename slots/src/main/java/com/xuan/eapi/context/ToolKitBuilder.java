@@ -5,7 +5,9 @@ import android.view.View;
 
 import com.xuan.eapi.factory.IComponentFactory;
 import com.xuan.eapi.factory.IViewComponentFactory;
+import com.xuan.eapi.helper.binder.DefaultMapAttach;
 import com.xuan.eapi.helper.binder.DefaultModelBinder;
+import com.xuan.eapi.helper.binder.IMapAttach;
 import com.xuan.eapi.helper.binder.IModerBinder;
 import com.xuan.eapi.helper.manager.DefaultModelManager;
 import com.xuan.eapi.helper.manager.ILogicManger;
@@ -26,10 +28,10 @@ public class ToolKitBuilder<T> {
     private IModelManager<T> modelManager;
     private ILogicManger logicManger;
     private IComponentFactory componentFactory;
+    private IMapAttach mapAttach;
     private IViewComponentFactory viewComponentFactory;
     private View.OnClickListener eventCenter;
     private List<T> mData;
-    private Class<?> attachClass;
 
     public ToolKitBuilder(Context context, List<T> data) {
         this.context = context;
@@ -72,6 +74,15 @@ public class ToolKitBuilder<T> {
 
     public ToolKitBuilder setLogicManger(ILogicManger logicManger) {
         this.logicManger = logicManger;
+        return this;
+    }
+
+    public IMapAttach getMapAttach() {
+        return mapAttach == null ? dfMapAttach() : mapAttach;
+    }
+
+    public ToolKitBuilder setMapAttach(IMapAttach mapAttach) {
+        this.mapAttach = mapAttach;
         return this;
     }
 
@@ -118,22 +129,22 @@ public class ToolKitBuilder<T> {
     }
 
     public ToolKitBuilder<T> attachClass(Class<?> clazz) {
-        this.attachClass = clazz;
+        this.mapAttach = new DefaultMapAttach(clazz);
         return this;
     }
 
     public Class<?> getAttachClass() {
-        if (attachClass == null) {
-            attachClass = Object.class;
+        if (mapAttach == null) {
+            mapAttach = dfMapAttach();
         }
-        return attachClass;
+        return mapAttach.attachClass();
     }
 
-    public SlotContext build() {
+    public SlotContext<T> build() {
         dfModelBinder();
         dfModelManager();
         dfLogicManager();
-        return new SlotContext(this);
+        return new SlotContext<>(this);
     }
 
     private IModelManager<T> dfModelManager() {
@@ -145,7 +156,7 @@ public class ToolKitBuilder<T> {
 
     private IModerBinder<T> dfModelBinder() {
         if (moderBinder == null) {
-            this.moderBinder = new DefaultModelBinder();
+            this.moderBinder = new DefaultModelBinder<>();
         }
         return moderBinder;
     }
@@ -155,5 +166,12 @@ public class ToolKitBuilder<T> {
             this.logicManger = new LogicManager();
         }
         return logicManger;
+    }
+
+    private IMapAttach dfMapAttach() {
+        if (mapAttach == null) {
+            this.mapAttach = new DefaultMapAttach(Object.class);
+        }
+        return mapAttach;
     }
 }

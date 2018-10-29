@@ -6,9 +6,9 @@ package com.xuan.eapi.helper.binder;
  * Description :处理Model和Type、size的关系
  */
 
-public class DefaultModelBinder extends ModelBinder {
+public class DefaultModelBinder<T> extends ModelBinder<T> {
     @Override
-    protected int bindItemType(int pos, Object obj) {
+    protected int bindItemType(int pos, T obj) {
         return 0;
     }
 }

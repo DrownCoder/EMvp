@@ -42,28 +42,28 @@ public class ComponentFactory implements IComponentFactory {
             return component;
         }
         ViewInfo viewInfo;
+        if (tookContext.getAttachMap() == null) {
+            return defaultViewHolder();
+        }
+        int componentId = tookContext.getAttachMap().getComponentType(type);
         if (tookContext.isAttaching()) {
             /**
              * 绑定模式-对应与个人的楼层开发
              */
             //如果有绑定的类，则获取绑定类的映射表
             viewInfo = SlotsMap.getInstance().obtainRule()
-                    .obtainAttachViewInfo(tookContext.attachClass(), type);
+                    .obtainAttachViewInfo(tookContext.getAttachMap().attachClass(),
+                            componentId);
             if (viewInfo == null) {
                 //没有绑定的类，则获取全局映射表
-                viewInfo = SlotsMap.getInstance().obtainRule().obtainViewInfo(type);
+                viewInfo = SlotsMap.getInstance().obtainRule().obtainViewInfo(componentId);
             }
-        }else{
+        } else {
             /**
              * 全局模式-对应与楼层的全局打通
              */
             //没有绑定的类，则获取全局映射表
-            viewInfo = SlotsMap.getInstance().obtainRule().obtainViewInfo(type);
-            if (viewInfo == null) {
-                //如果有绑定的类，则获取绑定类的映射表
-                viewInfo = SlotsMap.getInstance().obtainRule()
-                        .obtainAttachViewInfo(tookContext.attachClass(), type);
-            }
+            viewInfo = SlotsMap.getInstance().obtainRule().obtainViewInfo(componentId);
         }
         if (viewInfo == null) {
             return defaultViewHolder();
