@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.study.xuan.emvp.activity.PersonModelActivity;
 import com.study.xuan.emvp.model.Text;
 import com.study.xuan.emvp.presenter.MainLogic;
 import com.study.xuan.emvp.test.TestActivity;
@@ -22,9 +23,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public static final String TITLE[] = new String[]{
             "简单列表",
             "多种样式",
+            "个人模式"
     };
     public static final int EVENT[] = new int[]{
-            0, 1
+            0, 1, 2
     };
     protected BaseLogic mPresenter;
     RecyclerView mRcy;
@@ -41,7 +43,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mData.add(new Text(TITLE[i], EVENT[i]));
         }
         ToolKitBuilder<Text> builder = new ToolKitBuilder<>(this);
-        SlotContext slot = builder.setData(mData).setEventCenter(this).build();
+        SlotContext slot = builder.attachRule(Text.class).setData(mData).setEventCenter(this).build();
         slot.bind(mRcy);
     }
 
@@ -54,9 +56,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
             case 1:
                 Toast.makeText(MainActivity.this, "点击多种样式", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, TestActivity.class);
-                startActivity(intent);
+                startActivity(TestActivity.class);
+                break;
+            case 2:
+                startActivity(PersonModelActivity.class);
                 break;
         }
+    }
+
+    private void startActivity(Class activity) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
     }
 }

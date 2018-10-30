@@ -6,7 +6,7 @@ package com.xuan.eapi.helper.binder;
  * Description :组件映射表绑定
  */
 public interface IMapAttach {
-    Class<?> attachClass();
+    Class<?> attachClass(int type);
 
     int getComponentType(int type);
 }

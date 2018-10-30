@@ -52,7 +52,7 @@ public class ComponentFactory implements IComponentFactory {
              */
             //如果有绑定的类，则获取绑定类的映射表
             viewInfo = SlotsMap.getInstance().obtainRule()
-                    .obtainAttachViewInfo(tookContext.getAttachMap().attachClass(),
+                    .obtainAttachViewInfo(tookContext.getAttachMap().attachClass(type),
                             componentId);
             if (viewInfo == null) {
                 //没有绑定的类，则获取全局映射表

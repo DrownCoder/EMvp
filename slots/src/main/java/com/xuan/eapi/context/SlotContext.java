@@ -9,7 +9,6 @@ import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.adaptercorlib.MagicAdapter;
 import com.xuan.eapi.component.IComponentBind;
 import com.xuan.eapi.factory.IViewComponentFactory;
-import com.xuan.eapi.helper.binder.DefaultMapAttach;
 import com.xuan.eapi.helper.binder.IMapAttach;
 import com.xuan.eapi.helper.manager.ILogicManger;
 import com.xuan.eapi.helper.manager.IModelManager;
@@ -22,6 +21,8 @@ import com.xuan.eapi.lifecycle.IGC;
 import com.xuan.eapi.lifecycle.ILifeCycle;
 import com.xuan.eapi.lifecycle.ILifeRegistor;
 import com.xuan.eapi.lifecycle.LifeOwner;
+import com.xuan.eapi.rule.IRuleRegister;
+import com.xuan.eapi.rule.RuleRegister;
 import com.xuan.eapi.viewmodel.IPresent;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class SlotContext<T> implements ILogicManger, IContextService,
     private ILogicManger logicManger;
     private IMapAttach mapAttach;
     private IComponentFactory componentFactory;
-    private Class<?> attachClass;
+    private IRuleRegister ruleRegister;
 
     private View.OnClickListener eventCenter;
     private LifeOwner lifeOwner;
@@ -59,7 +60,7 @@ public class SlotContext<T> implements ILogicManger, IContextService,
         moderBinder = builder.getModerBinder();
         modelManager = builder.getModelManager();
         logicManger = builder.getLogicManger();
-        attachClass = builder.getAttachClass();
+        ruleRegister = builder.getRuleRegister();
         eventCenter = builder.getEventCenter();
         mapAttach = builder.getMapAttach();
     }
@@ -95,8 +96,8 @@ public class SlotContext<T> implements ILogicManger, IContextService,
     }
 
     public boolean isAttaching() {
-        if (getAttachMap() != null) {
-            return getAttachMap().attachClass() == Object.class;
+        if (ruleRegister != null) {
+            return ruleRegister.obtainRules() != null && ruleRegister.obtainRules().size() > 0;
         }
         return false;
     }
@@ -104,8 +105,11 @@ public class SlotContext<T> implements ILogicManger, IContextService,
     /**
      * 绑定Map
      */
-    public void attachClass(Class<?> clazz) {
-        mapAttach = new DefaultMapAttach(clazz);
+    public void attachRule(Class<?> clazz) {
+        if (ruleRegister == null) {
+            ruleRegister = new RuleRegister();
+        }
+        ruleRegister.registerRule(clazz);
     }
 
     /**

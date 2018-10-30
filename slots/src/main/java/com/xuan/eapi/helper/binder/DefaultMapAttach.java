@@ -15,7 +15,7 @@ public class DefaultMapAttach implements IMapAttach {
     }
 
     @Override
-    public Class<?> attachClass() {
+    public Class<?> attachClass(int type) {
         return attachClass;
     }
 
