@@ -34,13 +34,18 @@ public class PersonModelActivity extends AppCompatActivity {
             mData.add(model);
         }
         mRcy.setLayoutManager(new LinearLayoutManager(this));
-        SlotContext slotContext = new ToolKitBuilder<PersonModel>(this)
-                .setData(mData)
-                .attachRule(PersonModel.class).build();
+        SlotContext slotContext =
+                new ToolKitBuilder<PersonModel>(this)
+                        .setData(mData)
+                        .attachRule(PersonModel.class).build();
         slotContext.bind(mRcy);
     }
 
-    @ComponentType(value = 1, layout = R.layout.person_item_layout, attach = PersonModel.class)
+    @ComponentType(
+            value = 1,
+            layout = R.layout.person_item_layout,
+            attach = PersonModel.class
+    )
     public static class PersonVH extends Component<PersonModel> {
         private TextView tvName;
 

@@ -292,6 +292,7 @@ public class TypeProcessor extends BaseProcessor {
      * 4.类需要继承View.class(自定义View)或者ViewHolder(RecyclerView.ViewHolder)
      * 5.其中注解了AutoCreate为true的自定义类需要提供默认构造函数View(Context context)
      * 6.类需要实现IComponentBind接口
+     * 7.如果被注解的类是内部类，需要为静态内部类，不然没办法反射构造函数
      */
     private boolean isValidComponent(ComponentTypeClassInfo componentInfo) {
         TypeElement typeElement = componentInfo.getTypeElement();
@@ -305,14 +306,25 @@ public class TypeProcessor extends BaseProcessor {
         //类是抽象的
         if (typeElement.getModifiers().contains(Modifier.ABSTRACT)) {
             error(typeElement, "The class %s is abstract. You can't annotate abstract classes " +
-                            "with @%" +
+                            "with %s" +
                             "\n被注解的组件不能是抽象类",
                     typeElement.getQualifiedName().toString(), ComponentTypeClassInfo.class
                             .getSimpleName());
             return false;
         }
+
+        if (typeElement.getNestingKind().isNested() && !typeElement.getModifiers().contains
+                (Modifier.STATIC)) {
+            error(typeElement, "The class %s is inner but not a static class. You can't annotate abstract classes " +
+                            "with %s" +
+                            "\n被注解的类是内部类，需要声明为静态内部类",
+                    typeElement.getQualifiedName().toString(), ComponentTypeClassInfo.class
+                            .getSimpleName());
+            return false;
+        }
+
         if (componentInfo.getComponentId() == -1) {
-            error(typeElement, "The Class %s annotated with @%s must set value()" +
+            error(typeElement, "The Class %s annotated with %s must set value()" +
                             "\n 被注解的的类必须赋值ComponentId给value",
                     typeElement.getQualifiedName().toString(), ComponentType.class.getSimpleName());
             return false;
@@ -347,7 +359,7 @@ public class TypeProcessor extends BaseProcessor {
             TypeMirror superClassType = currentClass.getSuperclass();
             if (superClassType.getKind() == TypeKind.NONE) {
                 // 到达了基本类型(java.lang.Object), 所以退出
-                error(typeElement, "The Class %s annotated with @%s must extend from %s" +
+                error(typeElement, "The Class %s annotated with %s must extend from %s" +
                                 "\n 被注解的的类必须是ViewHolder或者自定义View",
                         typeElement.getQualifiedName().toString(), ComponentType.class
                                 .getSimpleName(),
@@ -421,7 +433,7 @@ public class TypeProcessor extends BaseProcessor {
                         // 找到了默认构造函数
                         return true;
                     } else {
-                        error(typeElement, "The Class %s annotated with @%s must have a " +
+                        error(typeElement, "The Class %s annotated with %s must have a " +
                                         "Constructor(Context context)" +
                                         "\n被注解的类当autoCreate为true时需要有一个以Context为参数的默认构造函数，因为可能需要使用反射创建对象",
                                 typeElement.getQualifiedName().toString(), ComponentType.class
