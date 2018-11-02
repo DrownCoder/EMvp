@@ -8,6 +8,7 @@ import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.adapter.ComponentViewAdapter;
 import com.xuan.eapi.component.IComponentBind;
+import com.xuan.eapi.helper.SlotsMap;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -37,7 +38,11 @@ public class ViewComponentFactory implements IViewComponentFactory, ReflectCreat
     public IComponentBind reflectCreate(Class<?> clazz) {
         IComponentBind view = null;
         try {
-            Constructor c = clazz.getConstructor(Context.class);
+            Constructor c = SlotsMap.getInstance().obtainConstructor(clazz);
+            if (c == null) {
+                c = clazz.getConstructor(Context.class);
+                SlotsMap.getInstance().cacheConstructor(clazz, c);
+            }
             view = (IComponentBind) c.newInstance(mContext);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();

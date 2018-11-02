@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".test.TestActivity" />
-        <activity android:name=".activity.PersonModelActivity"></activity>
+        <activity android:name=".activity.person.PersonModelActivity"></activity>
     </application>
 
 </manifest>

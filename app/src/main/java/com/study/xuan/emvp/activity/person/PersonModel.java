@@ -1,4 +1,4 @@
-package com.study.xuan.emvp.activity;
+package com.study.xuan.emvp.activity.person;
 
 import com.xuan.annotation.BindType;
 import com.xuan.eapi.helper.binder.HandlerType;

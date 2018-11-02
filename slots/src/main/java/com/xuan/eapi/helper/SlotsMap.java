@@ -1,6 +1,10 @@
 package com.xuan.eapi.helper;
 
+import android.support.v4.util.LruCache;
+
 import com.xuan.eapi.rule.IComponentRule;
+
+import java.lang.reflect.Constructor;
 
 /**
  * Author : xuan.
@@ -9,8 +13,11 @@ import com.xuan.eapi.rule.IComponentRule;
  */
 
 public class SlotsMap {
+    private static final int CONSTRUCTOR_CACHE = 10;
     public static volatile SlotsMap instance;
     private IComponentRule componentRule;
+    private static final LruCache<Class<?>, Constructor> constructorMap =
+            new LruCache<Class<?>,Constructor>(CONSTRUCTOR_CACHE);
     //private IPresenterRule presenterRule;
 
     public static SlotsMap getInstance() {
@@ -41,6 +48,14 @@ public class SlotsMap {
         } catch (InstantiationException e) {
             e.printStackTrace();
         }
+    }
+
+    public Constructor obtainConstructor(Class<?> clazz) {
+        return  constructorMap.get(clazz);
+    }
+
+    public void cacheConstructor(Class<?> clazz, Constructor constructor) {
+        constructorMap.put(clazz, constructor);
     }
 
     public IComponentRule obtainRule() {

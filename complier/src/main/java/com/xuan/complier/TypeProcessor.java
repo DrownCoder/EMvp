@@ -403,6 +403,7 @@ public class TypeProcessor extends BaseProcessor {
                     && !componentInfo.getParentViewName().equals(Object.class.getName())) {
                 error(typeElement, "只有继承ViewHolder的类才能使用view属性",
                         typeElement.getQualifiedName().toString());
+                return false;
             }
         }
         //必须实现IComponentBind接口
@@ -410,11 +411,14 @@ public class TypeProcessor extends BaseProcessor {
             //继承Component的类不需要实现IComponent接口，因为Component类实现类IComponentBind接口
             int i = 0;
             List<TypeMirror> interfaces = (List<TypeMirror>) typeElement.getInterfaces();
+            if (interfaces == null || interfaces.size() == 0) {
+                error(typeElement, "The class %s must implement IComponentBind" +
+                                "\n被注解的组件必须实现IComponentBind接口",
+                        typeElement.getQualifiedName().toString());
+                return false;
+            }
             TypeMirror currentInterface = interfaces.get(i);
-            while (true) {
-                if (currentInterface.toString().contains(IML_INTERFACE)) {
-                    break;
-                }
+            while (!currentInterface.toString().contains(IML_INTERFACE)) {
                 if (i < interfaces.size()) {
                     currentInterface = interfaces.get(i++);
                 } else {

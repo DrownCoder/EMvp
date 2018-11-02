@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.study.xuan.emvp.activity.PersonModelActivity;
+import com.study.xuan.emvp.activity.person.PersonModelActivity;
 import com.study.xuan.emvp.model.Text;
 import com.study.xuan.emvp.presenter.MainLogic;
 import com.study.xuan.emvp.test.TestActivity;

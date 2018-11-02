@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.component.IComponentBind;
+import com.xuan.eapi.helper.SlotsMap;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -34,7 +35,11 @@ public class DFComponentFactory extends BaseViewFactory implements IDFComponentF
     public Component reflectCreate(Class<?> clazz) {
         Component component = null;
         try {
-            Constructor c = clazz.getConstructor(Context.class, View.class);
+            Constructor c = SlotsMap.getInstance().obtainConstructor(clazz);
+            if (c == null) {
+                c = clazz.getConstructor(Context.class, View.class);
+                SlotsMap.getInstance().cacheConstructor(clazz, c);
+            }
             component = (Component) c.newInstance(context, rootView);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
