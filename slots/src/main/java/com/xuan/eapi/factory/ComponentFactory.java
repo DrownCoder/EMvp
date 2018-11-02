@@ -66,7 +66,18 @@ public class ComponentFactory implements IComponentFactory {
             viewInfo = SlotsMap.getInstance().obtainRule().obtainViewInfo(componentId);
         }
         if (viewInfo == null) {
-            return defaultViewHolder();
+            StringBuilder errorTips = new StringBuilder(String.format("Type 【%s】 " +
+                    "没有找到对应的ViewHolder，当前的模式是", String.valueOf(type)));
+            if (tookContext.isAttaching()) {
+                errorTips.append("个人模式")
+                        .append("\n")
+                        .append("建议检测：\n")
+                        .append("(1)ViewHolder是否注解attach\n")
+                        .append("(2)SlotContext是否调用attachRule()方法绑定Class");
+            }else{
+                errorTips.append("全局模式");
+            }
+            throw new IllegalStateException(errorTips.toString());
         }
         IComponentBind componentIml = null;
         initFactory(viewInfo);

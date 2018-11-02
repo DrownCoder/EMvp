@@ -11,12 +11,12 @@ import com.xuan.eapi.helper.SlotsMap;
  */
 
 public abstract class ModelBinder<T> implements IModerBinder<T> {
-
+    public int DF_BINDER_TYPE = Integer.MIN_VALUE;
     @Override
     public final int getItemType(int pos, T obj) {
         int type;
         type = bindItemType(pos, obj);
-        if (type == 0) {
+        if (type == DF_BINDER_TYPE) {
             if (HandlerType.class.isAssignableFrom(obj.getClass())) {
                 //多样式
                 return ((HandlerType) obj).handlerType();

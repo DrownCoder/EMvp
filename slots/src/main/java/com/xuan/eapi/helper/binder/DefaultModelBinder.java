@@ -9,6 +9,6 @@ package com.xuan.eapi.helper.binder;
 public class DefaultModelBinder<T> extends ModelBinder<T> {
     @Override
     protected int bindItemType(int pos, T obj) {
-        return 0;
+        return DF_BINDER_TYPE;
     }
 }

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.study.xuan.emvp.R;
@@ -16,6 +18,7 @@ import com.xuan.eapi.context.ToolKitBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PersonModelActivity extends AppCompatActivity {
     private RecyclerView mRcy;
@@ -31,6 +34,11 @@ public class PersonModelActivity extends AppCompatActivity {
         for (int i = 0; i < 100; i++) {
             PersonModel model = new PersonModel();
             model.name = "名字" + i;
+            if (i % 2 == 0) {
+                model.type = 1;
+            }else{
+                model.type = 2;
+            }
             mData.add(model);
         }
         mRcy.setLayoutManager(new LinearLayoutManager(this));
@@ -58,6 +66,27 @@ public class PersonModelActivity extends AppCompatActivity {
         public void onBind(int pos, PersonModel item) {
             //tvName.findViewById(R.id.tv_name);
             tvName.setText(item.name);
+        }
+    }
+
+    @ComponentType(
+            value = 2,
+            view = ImageView.class,
+            attach = PersonModel.class
+    )
+    public static class PersonBacVH extends Component<PersonModel> {
+        private ImageView ivBac;
+
+        public PersonBacVH(Context context, View itemView) {
+            super(context, itemView);
+            ivBac = (ImageView) itemView;
+            ivBac.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            ivBac.setBackgroundResource(R.drawable.ic_launcher_background);
+        }
+
+        @Override
+        public void onBind(int pos, PersonModel item) {
         }
     }
 

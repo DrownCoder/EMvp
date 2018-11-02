@@ -39,8 +39,8 @@ public class TypeProcessor extends BaseProcessor {
     private List<ComponentTypeClassInfo> globalTypeWidget = new ArrayList<>();
     //个人ComponentInfo
     private List<ComponentTypeClassInfo> attachTypeWidget = new ArrayList<>();
-    private List<Integer> globalComponentIds = new ArrayList<>();
-    private HashMap<String, List<Integer>> attachComponentIds = new HashMap<>();
+    private HashMap<Integer, Boolean> globalComponentIds = new HashMap<>();
+    private HashMap<String, HashMap<Integer, Boolean>> attachComponentIds = new HashMap<>();
     protected static boolean hasProcessor;
 
     @Override
@@ -73,10 +73,10 @@ public class TypeProcessor extends BaseProcessor {
                     return true;
                 }
                 if (componentInfo.isAttaching()) {
-                    attachId(componentInfo.getAttachClassName(),componentInfo.getComponentId());
+                    attachId(componentInfo.getAttachClassName(), componentInfo.getComponentId());
                     attachTypeWidget.add(componentInfo);
-                }else{
-                    globalComponentIds.add(componentInfo.getComponentId());
+                } else {
+                    globalComponentIds.put(componentInfo.getComponentId(), true);
                     globalTypeWidget.add(componentInfo);
                 }
             } catch (Exception e) {
@@ -110,20 +110,21 @@ public class TypeProcessor extends BaseProcessor {
     }
 
     private void attachId(String clazz, int componentId) {
-        List<Integer> ids = attachComponentIds.get(clazz);
+        HashMap<Integer, Boolean> ids = attachComponentIds.get(clazz);
         if (ids == null) {
-            ids = new ArrayList<>();
+            ids = new HashMap<>();
             attachComponentIds.put(clazz, ids);
         }
-        ids.add(componentId);
+        ids.put(componentId, true);
     }
 
     private boolean containAttachId(String clazz, int componentId) {
-        List<Integer> ids = attachComponentIds.get(clazz);
-        if (ids == null||ids.size() == 0) {
+        HashMap<Integer, Boolean> ids = attachComponentIds.get(clazz);
+        if (ids == null || ids.size() == 0) {
             return false;
         }
-        return ids.contains(componentId);
+        Boolean contain = ids.get(componentId);
+        return contain != null && contain;
     }
 
     private void clear() {
@@ -315,7 +316,8 @@ public class TypeProcessor extends BaseProcessor {
 
         if (typeElement.getNestingKind().isNested() && !typeElement.getModifiers().contains
                 (Modifier.STATIC)) {
-            error(typeElement, "The class %s is inner but not a static class. You can't annotate abstract classes " +
+            error(typeElement, "The class %s is inner but not a static class. You can't annotate " +
+                            "abstract classes " +
                             "with %s" +
                             "\n被注解的类是内部类，需要声明为静态内部类",
                     typeElement.getQualifiedName().toString(), ComponentTypeClassInfo.class
@@ -339,15 +341,19 @@ public class TypeProcessor extends BaseProcessor {
         //组件id唯一
         if (componentInfo.isAttaching()) {
             //绑定模式
-            if (containAttachId(componentInfo.getAttachClassName(), componentInfo.getComponentId())) {
-                error(typeElement, "The ComponentId %s has been used\n该组件id已经被使用过", componentInfo
-                        .getComponentId());
+            if (containAttachId(componentInfo.getAttachClassName(), componentInfo.getComponentId
+                    ())) {
+                error(typeElement, "The ComponentId %s has been used in Attach Model " +
+                        "%s\n该组件id已经被绑定到%s类了", componentInfo
+                        .getComponentId(), componentInfo.getAttachClassName(), componentInfo
+                        .getAttachClassName());
                 return false;
             }
-        }else{
+        } else {
             //全局模式
-            if (globalComponentIds.contains(componentInfo.getComponentId())) {
-                error(typeElement, "The ComponentId %s has been used\n该组件id已经被使用过", componentInfo
+            Boolean contain = globalComponentIds.get(componentInfo.getComponentId());
+            if (contain != null && contain) {
+                error(typeElement, "The ComponentId %s has been used\n该组件id已经被全局使用过", componentInfo
                         .getComponentId());
                 return false;
             }
