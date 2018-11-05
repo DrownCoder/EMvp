@@ -3,9 +3,7 @@ package com.xuan.eapi.context;
 import android.content.Context;
 import android.view.View;
 
-import com.xuan.eapi.factory.IComponentFactory;
-import com.xuan.eapi.factory.IViewComponentFactory;
-import com.xuan.eapi.helper.binder.DefaultMapAttach;
+import com.xuan.eapi.factory.custom.CustomFactory;
 import com.xuan.eapi.helper.binder.DefaultModelBinder;
 import com.xuan.eapi.helper.binder.IMapAttach;
 import com.xuan.eapi.helper.binder.IModerBinder;
@@ -29,10 +27,9 @@ public class ToolKitBuilder<T> {
     private IModerBinder<T> moderBinder;
     private IModelManager<T> modelManager;
     private ILogicManger logicManger;
-    private IComponentFactory componentFactory;
+    private CustomFactory componentFactory;
     private IMapAttach mapAttach;
     private IRuleRegister ruleRegister;
-    private IViewComponentFactory viewComponentFactory;
     private View.OnClickListener eventCenter;
     private List<T> mData;
 
@@ -89,10 +86,6 @@ public class ToolKitBuilder<T> {
         return this;
     }
 
-    public ToolKitBuilder<T> setComponentFactory(IComponentFactory componentFactory) {
-        this.componentFactory = componentFactory;
-        return this;
-    }
 
     public ToolKitBuilder<T> setEventCenter(View.OnClickListener onClickListener) {
         this.eventCenter = onClickListener;
@@ -115,16 +108,13 @@ public class ToolKitBuilder<T> {
         return logicManger == null ? dfLogicManager() : logicManger;
     }
 
-    public IComponentFactory getComponentFactory() {
+    public ToolKitBuilder<T> setComponentFactory(CustomFactory componentFactory) {
+        this.componentFactory = componentFactory;
+        return this;
+    }
+
+    public CustomFactory getComponentFactory() {
         return componentFactory;
-    }
-
-    public IViewComponentFactory getViewComponentFactory() {
-        return viewComponentFactory;
-    }
-
-    public void setViewComponentFactory(IViewComponentFactory viewComponentFactory) {
-        this.viewComponentFactory = viewComponentFactory;
     }
 
     public View.OnClickListener getEventCenter() {

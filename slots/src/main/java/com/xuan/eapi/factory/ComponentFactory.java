@@ -74,7 +74,7 @@ public class ComponentFactory implements IComponentFactory {
                         .append("建议检测：\n")
                         .append("(1)ViewHolder是否注解attach\n")
                         .append("(2)SlotContext是否调用attachRule()方法绑定Class");
-            }else{
+            } else {
                 errorTips.append("全局模式");
             }
             throw new IllegalStateException(errorTips.toString());
@@ -82,9 +82,9 @@ public class ComponentFactory implements IComponentFactory {
         IComponentBind componentIml = null;
         initFactory(viewInfo);
         if (!viewInfo.isAutoCreate()) {
-            //如果不需要自动创建
-            //自定义映射关系，实现IComponentBind就行
-            componentIml = selfCreateComponent(viewInfo);
+            //如果不需要自动创建,需要自定义映射关系
+            throw new IllegalStateException("autoCreate=false,但是没有自定义创建过程!\n" +
+                    "调用ToolKitBuilder.setComponentFactory()方法");
         } else {
             int viewType = viewInfo.getViewType();
             switch (viewType) {
@@ -98,7 +98,13 @@ public class ComponentFactory implements IComponentFactory {
                     componentIml = dfComponentFactory.createViewHolder(viewInfo);
                     break;
             }
+            if (componentIml == null) {
+                throw new IllegalStateException("反射没有找到对应的默认构造器！Tips:\n(1)检查是否重写了构造函数" +
+                        "\n(2)autoCreate=false,但是没有自定义创建过程，" +
+                        "调用ToolKitBuilder.setComponentFactory()方法");
+            }
         }
+
         //组件mvp,注入Presenter到View中
         if (IPresenterBind.class.isAssignableFrom(viewInfo.getView())) {
             IPresenterBind presenterBind = (IPresenterBind) componentIml;
@@ -137,10 +143,6 @@ public class ComponentFactory implements IComponentFactory {
             dfComponentFactory = new DFComponentFactory(context, parent);
         }
         return (AdapterComponent) dfComponentFactory;
-    }
-
-    private IComponentBind selfCreateComponent(ViewInfo viewInfo) {
-        return tookContext.createViewComponent(viewInfo);
     }
 
     private AdapterComponent createViewFactory() {

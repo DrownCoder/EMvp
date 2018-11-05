@@ -27,12 +27,10 @@ public class ViewInfo {
     private Class<?> parentClass;
     //view的Presenter接口
     private Class<?> presenterClass;
-    //绑定的可用使用类
-    private Class attachClass;
 
     public ViewInfo(int id, Class<?> viewClass, int layoutId, int viewType, Class<?>
             parentClass, Class<?> presenterClass) {
-        this(id, viewClass, LAYOUT_NONE, viewType, true, parentClass, presenterClass, Object.class);
+        this(id, viewClass, LAYOUT_NONE, viewType, true, parentClass, presenterClass);
     }
 
     public ViewInfo(int id, Class<?> viewClass, int viewType, Class<?> presenterClass) {
@@ -41,16 +39,16 @@ public class ViewInfo {
 
     public ViewInfo(int id, Class<?> viewClazz, int layoutId, int viewType, Class<?>
             presenterClass) {
-        this(id, viewClazz, layoutId, viewType, true, null, presenterClass, Object.class);
+        this(id, viewClazz, layoutId, viewType, true, null, presenterClass);
     }
 
     public ViewInfo(int id, Class<?> viewClazz, int viewType, boolean autoCreate, Class<?>
             presenterClass) {
-        this(id, viewClazz, LAYOUT_NONE, viewType, autoCreate, null, presenterClass, Object.class);
+        this(id, viewClazz, LAYOUT_NONE, viewType, autoCreate, null, presenterClass);
     }
 
     public ViewInfo(int id, Class<?> viewClazz, int layoutId, int viewType, boolean autoCreate,
-                    Class<?> parentClass, Class<?> presenterClass, Class<?> attachClass) {
+                    Class<?> parentClass, Class<?> presenterClass) {
         this.id = id;
         this.viewClass = viewClazz;
         this.layoutId = layoutId;
@@ -58,7 +56,6 @@ public class ViewInfo {
         this.autoCreate = autoCreate;
         this.parentClass = parentClass;
         this.presenterClass = presenterClass;
-        this.attachClass = attachClass;
     }
 
     public Class<?> getView() {

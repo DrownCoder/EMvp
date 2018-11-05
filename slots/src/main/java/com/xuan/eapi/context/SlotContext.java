@@ -5,10 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xuan.annotation.ViewInfo;
 import com.xuan.eapi.adaptercorlib.MagicAdapter;
-import com.xuan.eapi.component.IComponentBind;
-import com.xuan.eapi.factory.IViewComponentFactory;
+import com.xuan.eapi.factory.custom.CustomFactory;
 import com.xuan.eapi.helper.binder.IMapAttach;
 import com.xuan.eapi.helper.manager.ILogicManger;
 import com.xuan.eapi.helper.manager.IModelManager;
@@ -35,12 +33,14 @@ import java.util.Map;
  */
 
 public class SlotContext<T> implements ILogicManger, IContextService,
-        ILifeRegistor, IModelManager<T>, IComponentFactory, IViewComponentFactory {
+        ILifeRegistor, IModelManager<T>, IComponentFactory {
     private Context context;
     private ToolKitBuilder<T> builder;
     private IModerBinder<T> moderBinder;
     private IModelManager<T> modelManager;
+    private CustomFactory customFactory;
     private ILogicManger logicManger;
+
     private IMapAttach mapAttach;
     private IComponentFactory componentFactory;
     private IRuleRegister ruleRegister;
@@ -62,6 +62,7 @@ public class SlotContext<T> implements ILogicManger, IContextService,
         logicManger = builder.getLogicManger();
         ruleRegister = builder.getRuleRegister();
         eventCenter = builder.getEventCenter();
+        customFactory = builder.getComponentFactory();
         mapAttach = builder.getMapAttach();
     }
 
@@ -185,17 +186,10 @@ public class SlotContext<T> implements ILogicManger, IContextService,
 
     @Override
     public Component createViewHolder(Context context, ViewGroup parent, int type) {
-        if (builder != null && builder.getComponentFactory() != null) {
-            return builder.getComponentFactory().createViewHolder(context, parent, type);
+        if (builder != null && customFactory != null) {
+            return customFactory.create(context, parent, type);
         }
         return null;
     }
 
-    @Override
-    public IComponentBind createViewComponent(ViewInfo type) {
-        if (builder != null && builder.getViewComponentFactory() != null) {
-            return builder.getViewComponentFactory().createViewComponent(type);
-        }
-        return null;
-    }
 }
