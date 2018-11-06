@@ -83,8 +83,10 @@ public class ComponentFactory implements IComponentFactory {
         initFactory(viewInfo);
         if (!viewInfo.isAutoCreate()) {
             //如果不需要自动创建,需要自定义映射关系
-            throw new IllegalStateException("autoCreate=false,但是没有自定义创建过程!\n" +
-                    "调用ToolKitBuilder.setComponentFactory()方法");
+            String errorTips = String.format("报错的Type 【%s】 \n" +
+                    "使用了注解autoCreate=false，但是没有自定义创建过程!\n", String.valueOf(type)) + "建议：\n" +
+                    "调用ToolKitBuilder.setComponentFactory()方法自定义创建过程";
+            throw new IllegalStateException(errorTips);
         } else {
             int viewType = viewInfo.getViewType();
             switch (viewType) {
@@ -99,7 +101,7 @@ public class ComponentFactory implements IComponentFactory {
                     break;
             }
             if (componentIml == null) {
-                throw new IllegalStateException("反射没有找到对应的默认构造器！Tips:\n(1)检查是否重写了构造函数" +
+                throw new IllegalStateException("反射没有找到对应的默认构造器！建议:\n(1)检查是否重写了构造函数" +
                         "\n(2)autoCreate=false,但是没有自定义创建过程，" +
                         "调用ToolKitBuilder.setComponentFactory()方法");
             }

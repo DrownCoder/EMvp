@@ -32,7 +32,6 @@ public abstract class CustomFactory {
             //自定义View转换成Component
             component = new ComponentViewAdapter(context, (View) component);
         }
-
         if (component != null) {
             //原生ViewHolder转换成Component
             component = new ComponentViewHolderAdapter(context, (RecyclerView.ViewHolder)

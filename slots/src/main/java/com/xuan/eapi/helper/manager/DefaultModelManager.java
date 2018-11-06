@@ -8,7 +8,7 @@ import java.util.List;
  * Description :默认数据，没header和footer
  */
 
-public class DefaultModelManager<T> implements IModelManager<T> {
+public abstract class DefaultModelManager<T> implements IModelManager<T> {
     private List<T> mData;
 
     public DefaultModelManager(List<T> data) {

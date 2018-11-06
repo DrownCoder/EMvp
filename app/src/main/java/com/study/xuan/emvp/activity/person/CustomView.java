@@ -1,9 +1,13 @@
 package com.study.xuan.emvp.activity.person;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.study.xuan.emvp.R;
 import com.xuan.annotation.ComponentType;
@@ -15,12 +19,14 @@ import com.xuan.eapi.component.IComponentBind;
  * Description :the description of this file
  */
 @ComponentType(
-        value = 4,
+        value = PersonId.CUSTOM,
         attach = PersonModel.class
 )
-public class CustomView extends ImageView implements IComponentBind<PersonModel> {
+public class CustomView extends LinearLayout implements IComponentBind<PersonModel> {
     public CustomView(Context context) {
         super(context);
+        LayoutInflater.from(context).inflate(R.layout.cutom_view_vh, this, true);
+        setBackgroundColor(Color.BLACK);
     }
 
     public CustomView(Context context, @Nullable AttributeSet attrs) {
@@ -33,7 +39,6 @@ public class CustomView extends ImageView implements IComponentBind<PersonModel>
 
     @Override
     public void onBind(int pos, PersonModel item) {
-        setImageResource(R.drawable.ic_launcher_foreground);
     }
 
     @Override

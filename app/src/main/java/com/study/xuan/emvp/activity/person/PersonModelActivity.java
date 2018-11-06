@@ -18,6 +18,9 @@ import com.xuan.eapi.component.IComponentBind;
 import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.context.ToolKitBuilder;
 import com.xuan.eapi.factory.custom.CustomFactory;
+import com.xuan.eapi.helper.binder.IModerBinder;
+import com.xuan.eapi.helper.manager.IModelManager;
+import com.xuan.eapi.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,13 +37,10 @@ public class PersonModelActivity extends AppCompatActivity {
         mRcy = findViewById(R.id.rcy_user);
         mData = new ArrayList<>();
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 1; i < 5; i++) {
             PersonModel model = new PersonModel();
             model.name = "名字" + i;
-            model.type = new Random().nextInt(4);
-            if (model.type == 0) {
-                model.type = 1;
-            }
+            model.type = i;
             mData.add(model);
         }
         mRcy.setLayoutManager(new LinearLayoutManager(this));
@@ -50,8 +50,34 @@ public class PersonModelActivity extends AppCompatActivity {
                         .attachRule(PersonModel.class)
                         .setComponentFactory(new CustomFactory() {
                             @Override
-                            public Component createViewHolder(Context context, ViewGroup parent, int type) {
-                                return null;
+                            protected IComponentBind createViewHolder(Context context, ViewGroup
+                                    parent, int type) {
+                                if (type == PersonId.INNER) {
+                                    LogUtil.Log("自定义创建");
+                                    return new InnerVH(new TextView(PersonModelActivity.this));
+                                }
+                                return super.createViewHolder(context, parent, type);
+                            }
+                        })
+                        .setModerManager(new IModelManager<PersonModel>() {
+                            @Override
+                            public int getItemCount() {
+                                return 2;
+                            }
+
+                            @Override
+                            public PersonModel getItem(int pos) {
+                                return mData.get(pos);
+                            }
+
+                            @Override
+                            public void addAll(List<PersonModel> data) {
+
+                            }
+
+                            @Override
+                            public void setData(List<PersonModel> data) {
+
                             }
                         })
                         .build();
@@ -59,7 +85,7 @@ public class PersonModelActivity extends AppCompatActivity {
     }
 
     @ComponentType(
-            value = 3,
+            value = PersonId.INNER,
             view = TextView.class,
             attach = PersonModel.class,
             autoCreate = false
@@ -76,7 +102,7 @@ public class PersonModelActivity extends AppCompatActivity {
 
         @Override
         public void onBind(int pos, PersonModel item) {
-            tv.setText("这是内部类的ViewHolder");
+            tv.setText("这是内部类的注解");
         }
 
         @Override
