@@ -43,8 +43,7 @@ public class TypeProcessor extends BaseProcessor {
     private List<ComponentTypeClassInfo> attachTypeWidget = new ArrayList<>();
     private HashMap<Integer, Boolean> globalComponentIds = new HashMap<>();
     private HashMap<String, HashMap<Integer, Boolean>> attachComponentIds = new HashMap<>();
-    public int lineNum = 0;
-    public List<String> splitMethods;
+    public List<String> splitMethods = new ArrayList<>();
 
     protected static boolean hasProcessor;
 
@@ -110,9 +109,6 @@ public class TypeProcessor extends BaseProcessor {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    if (globalTypeWidget.size() > LINE_LIMIT) {
-                        splitMethods = new ArrayList<>();
-                    }
                     writeFile();
                     clear();
                 }
@@ -248,15 +244,16 @@ public class TypeProcessor extends BaseProcessor {
                 } else {
                     end = (int) ((i + 1) * LINE_LIMIT);
                 }
-                splitMethods.add(String.format(FileCreator.GLOBAL_METHOD_T, i, writeWidget(start, end)));
+                splitMethods.add(String.format(FileCreator.GLOBAL_METHOD_T, i, writeWidget(start,
+                        end)));
                 writer.write(String.format(FileCreator.GLOBAL_METHOD_INVOKE, i));
             }
         }
     }
 
-    private String writeWidget(int start, int end) throws IOException {
+    private String writeWidget(int start, int end) {
         ComponentTypeClassInfo info;
-        strBuilder = new StringBuilder();
+        strBuilder.setLength(0);
         for (; start < end; start++) {
             info = globalTypeWidget.get(start);
             strBuilder.append("        putWidget(").append(info.getComponentId()).append(",")
@@ -292,7 +289,32 @@ public class TypeProcessor extends BaseProcessor {
     private void writeAttachWidgetLine(BufferedWriter writer) throws
             IOException {
         strBuilder.setLength(0);
-        for (ComponentTypeClassInfo info : attachTypeWidget) {
+        if (attachTypeWidget.size() < LINE_LIMIT) {
+            writer.write(attachComponent(0,attachTypeWidget.size()));
+        }else{
+            //分割方法，防止64K异常
+            double splitNum = Math.ceil(attachTypeWidget.size() / LINE_LIMIT);
+            for (int i = 0; i < splitNum; i++) {
+                int start = (int) (i * LINE_LIMIT);
+                int end;
+                if (i == splitNum - 1) {
+                    end = attachTypeWidget.size();
+                } else {
+                    end = (int) ((i + 1) * LINE_LIMIT);
+                }
+                //System.out.println("start:" + start + "---" + "end:" + end);
+                splitMethods.add(String.format(FileCreator.ATTACH_METHOD_T, i, attachComponent(start,
+                        end)));
+                writer.write(String.format(FileCreator.ATTACH_METHOD_INVOKE, i));
+            }
+        }
+    }
+
+    private String attachComponent(int start, int end) throws IOException {
+        ComponentTypeClassInfo info;
+        strBuilder.setLength(0);
+        for (; start < end; start++) {
+            info = attachTypeWidget.get(start);
             strBuilder.append("        attachWidget(")
                     .append(info.getAttachClassName()).append(".class").append(",")
                     .append(info.getComponentId()).append(",")
@@ -321,9 +343,8 @@ public class TypeProcessor extends BaseProcessor {
                 strBuilder.append(", null");
             }
             strBuilder.append("));\n");
-            writer.write(strBuilder.toString());
-            strBuilder.setLength(0);
         }
+        return strBuilder.toString();
     }
 
     /**

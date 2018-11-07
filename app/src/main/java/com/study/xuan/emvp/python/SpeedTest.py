@@ -21,9 +21,11 @@ contentCode = "package com.study.xuan.emvp.python;\n" \
 "import android.widget.TextView;\n" \
 "import com.xuan.annotation.ComponentType;\n" \
 "import com.xuan.eapi.component.Component;\n" \
+"import com.study.xuan.emvp.model.Text;\n" \
 "@ComponentType(\n" \
 "        value = %s,\n" \
-"        view = TextView.class\n" \
+"        view = TextView.class,\n" \
+"        attach = Text.class" \
 ")\n" \
 "public class PyThonVH%s extends Component {\n" \
 "    public PyThonVH%s(Context context, View itemView) {\n" \
@@ -37,5 +39,5 @@ contentCode = "package com.study.xuan.emvp.python;\n" \
 fileName = 'PyThonVH%s'
 
 
-for i in range(1,10000):
+for i in range(1,2000):
 	createViewHolder(contentCode%((100+i),i,i),fileName%i)
