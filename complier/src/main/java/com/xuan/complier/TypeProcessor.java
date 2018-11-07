@@ -34,6 +34,8 @@ import static com.xuan.complier.Const.*;
  */
 @AutoService(Processor.class)
 public class TypeProcessor extends BaseProcessor {
+    //方法行数限制
+    public static final float LINE_LIMIT = 500.0f;
     private List<ModelTypeClassInfo> typeModel = new ArrayList<>();
     //全局ComponentInfo
     private List<ComponentTypeClassInfo> globalTypeWidget = new ArrayList<>();
@@ -41,6 +43,9 @@ public class TypeProcessor extends BaseProcessor {
     private List<ComponentTypeClassInfo> attachTypeWidget = new ArrayList<>();
     private HashMap<Integer, Boolean> globalComponentIds = new HashMap<>();
     private HashMap<String, HashMap<Integer, Boolean>> attachComponentIds = new HashMap<>();
+    public int lineNum = 0;
+    public List<String> splitMethods;
+
     protected static boolean hasProcessor;
 
     @Override
@@ -56,7 +61,6 @@ public class TypeProcessor extends BaseProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         if (hasProcessor) {
-
             return true;
         }
         hasProcessor = true;
@@ -103,9 +107,17 @@ public class TypeProcessor extends BaseProcessor {
         }
 
         if (globalTypeWidget.size() > 0) {
-            writeFile();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (globalTypeWidget.size() > LINE_LIMIT) {
+                        splitMethods = new ArrayList<>();
+                    }
+                    writeFile();
+                    clear();
+                }
+            }).start();
         }
-        clear();
         return true;
     }
 
@@ -155,7 +167,7 @@ public class TypeProcessor extends BaseProcessor {
             writer.write("    public static final Map<Class<?>, Integer> MODEL_TYPE;\n\n");
             writer.write("    static {\n");
             writer.write("        WIDGET_TYPE = new SparseArray<>();\n");
-            writer.write("        MODEL_TYPE = new HashMap();\n\n");
+            writer.write("        MODEL_TYPE = new HashMap();\n");
             writer.write("        ATTACH_TYPE = new HashMap<>();\n\n");
             writePutWidgetLine(writer);
             writeAttachWidgetLine(writer);
@@ -188,6 +200,12 @@ public class TypeProcessor extends BaseProcessor {
             writer.write("    public ViewInfo obtainAttachViewInfo(Class<?> clazz, int id) {\n");
             writer.write("        return ATTACH_TYPE.get(clazz).get(id);\n");
             writer.write("    }\n\n");
+            if (splitMethods != null) {
+                for (String split : splitMethods) {
+                    writer.write(split);
+                }
+            }
+
             writer.write("}\n");
         } catch (IOException e) {
             throw new RuntimeException("Could not write source for " + FILE_NAME_RULE_COMPONENT, e);
@@ -216,7 +234,31 @@ public class TypeProcessor extends BaseProcessor {
 
     private void writePutWidgetLine(BufferedWriter writer) throws IOException {
         strBuilder.setLength(0);
-        for (ComponentTypeClassInfo info : globalTypeWidget) {
+        if (globalTypeWidget.size() < LINE_LIMIT) {
+            //未超限，不用分割
+            writer.write(writeWidget(0, globalTypeWidget.size()));
+        } else {
+            //分割方法，防止too large code异常
+            double splitNum = Math.ceil(globalTypeWidget.size() / LINE_LIMIT);
+            for (int i = 0; i < splitNum; i++) {
+                int start = (int) (i * LINE_LIMIT);
+                int end;
+                if (i == splitNum - 1) {
+                    end = globalTypeWidget.size();
+                } else {
+                    end = (int) ((i + 1) * LINE_LIMIT);
+                }
+                splitMethods.add(String.format(FileCreator.GLOBAL_METHOD_T, i, writeWidget(start, end)));
+                writer.write(String.format(FileCreator.GLOBAL_METHOD_INVOKE, i));
+            }
+        }
+    }
+
+    private String writeWidget(int start, int end) throws IOException {
+        ComponentTypeClassInfo info;
+        strBuilder = new StringBuilder();
+        for (; start < end; start++) {
+            info = globalTypeWidget.get(start);
             strBuilder.append("        putWidget(").append(info.getComponentId()).append(",")
                     .append("new ViewInfo(").append(info.getComponentId()).append(",\n           " +
                     "     ")
@@ -243,9 +285,8 @@ public class TypeProcessor extends BaseProcessor {
                 strBuilder.append(", null");
             }
             strBuilder.append("));\n");
-            writer.write(strBuilder.toString());
-            strBuilder.setLength(0);
         }
+        return strBuilder.toString();
     }
 
     private void writeAttachWidgetLine(BufferedWriter writer) throws
