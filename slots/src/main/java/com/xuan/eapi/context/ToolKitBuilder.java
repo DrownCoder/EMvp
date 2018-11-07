@@ -7,9 +7,7 @@ import com.xuan.eapi.factory.custom.CustomFactory;
 import com.xuan.eapi.helper.binder.DefaultModelBinder;
 import com.xuan.eapi.helper.binder.IMapAttach;
 import com.xuan.eapi.helper.binder.IModerBinder;
-import com.xuan.eapi.helper.manager.DefaultModelManager;
 import com.xuan.eapi.helper.manager.ILogicManger;
-import com.xuan.eapi.helper.manager.IModelManager;
 import com.xuan.eapi.helper.manager.LogicManager;
 import com.xuan.eapi.rule.IRuleRegister;
 import com.xuan.eapi.rule.RuleRegister;
@@ -25,7 +23,6 @@ import java.util.List;
 public class ToolKitBuilder<T> {
     private Context context;
     private IModerBinder<T> moderBinder;
-    private IModelManager<T> modelManager;
     private ILogicManger logicManger;
     private CustomFactory componentFactory;
     private IMapAttach mapAttach;
@@ -44,31 +41,15 @@ public class ToolKitBuilder<T> {
 
     public ToolKitBuilder<T> setData(List<T> data) {
         mData = data;
-        if (modelManager != null) {
-            modelManager.setData(mData);
-        }
         return this;
     }
 
-    public ToolKitBuilder<T> addAll(List<T> data) {
-        if (mData != null) {
-            mData.addAll(data);
-        } else {
-            mData = data;
-        }
-        if (modelManager != null) {
-            modelManager.addAll(mData);
-        }
-        return this;
+    public List<T> getData() {
+        return mData;
     }
 
     public ToolKitBuilder<T> setModerBinder(IModerBinder<T> moderBinder) {
         this.moderBinder = moderBinder;
-        return this;
-    }
-
-    public ToolKitBuilder<T> setModerManager(IModelManager<T> moderManager) {
-        this.modelManager = moderManager;
         return this;
     }
 
@@ -98,10 +79,6 @@ public class ToolKitBuilder<T> {
 
     public IModerBinder<T> getModerBinder() {
         return moderBinder == null ? dfModelBinder() : moderBinder;
-    }
-
-    public IModelManager<T> getModelManager() {
-        return modelManager == null ? dfModelManager() : modelManager;
     }
 
     public ILogicManger getLogicManger() {
@@ -143,16 +120,8 @@ public class ToolKitBuilder<T> {
 
     public SlotContext<T> build() {
         dfModelBinder();
-        dfModelManager();
         dfLogicManager();
         return new SlotContext<>(this);
-    }
-
-    private IModelManager<T> dfModelManager() {
-        if (modelManager == null) {
-            this.modelManager = new DefaultModelManager<>(mData);
-        }
-        return modelManager;
     }
 
     private IModerBinder<T> dfModelBinder() {

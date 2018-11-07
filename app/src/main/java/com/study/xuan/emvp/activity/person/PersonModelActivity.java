@@ -13,18 +13,14 @@ import android.widget.TextView;
 
 import com.study.xuan.emvp.R;
 import com.xuan.annotation.ComponentType;
-import com.xuan.eapi.component.Component;
 import com.xuan.eapi.component.IComponentBind;
 import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.context.ToolKitBuilder;
 import com.xuan.eapi.factory.custom.CustomFactory;
-import com.xuan.eapi.helper.binder.IModerBinder;
-import com.xuan.eapi.helper.manager.IModelManager;
 import com.xuan.eapi.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class PersonModelActivity extends AppCompatActivity {
     private RecyclerView mRcy;
@@ -58,29 +54,7 @@ public class PersonModelActivity extends AppCompatActivity {
                                 }
                                 return super.createViewHolder(context, parent, type);
                             }
-                        })
-                        .setModerManager(new IModelManager<PersonModel>() {
-                            @Override
-                            public int getItemCount() {
-                                return 2;
-                            }
-
-                            @Override
-                            public PersonModel getItem(int pos) {
-                                return mData.get(pos);
-                            }
-
-                            @Override
-                            public void addAll(List<PersonModel> data) {
-
-                            }
-
-                            @Override
-                            public void setData(List<PersonModel> data) {
-
-                            }
-                        })
-                        .build();
+                        }).build();
         slotContext.bind(mRcy);
     }
 

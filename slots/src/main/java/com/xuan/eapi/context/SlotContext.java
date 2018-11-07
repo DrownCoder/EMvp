@@ -9,7 +9,6 @@ import com.xuan.eapi.adaptercorlib.MagicAdapter;
 import com.xuan.eapi.factory.custom.CustomFactory;
 import com.xuan.eapi.helper.binder.IMapAttach;
 import com.xuan.eapi.helper.manager.ILogicManger;
-import com.xuan.eapi.helper.manager.IModelManager;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.factory.ComponentFactory;
 import com.xuan.eapi.factory.IComponentFactory;
@@ -33,11 +32,10 @@ import java.util.Map;
  */
 
 public class SlotContext<T> implements ILogicManger, IContextService,
-        ILifeRegistor, IModelManager<T>, IComponentFactory {
+        ILifeRegistor, IComponentFactory {
     private Context context;
     private ToolKitBuilder<T> builder;
     private IModerBinder<T> moderBinder;
-    private IModelManager<T> modelManager;
     private CustomFactory customFactory;
     private ILogicManger logicManger;
 
@@ -45,6 +43,7 @@ public class SlotContext<T> implements ILogicManger, IContextService,
     private IComponentFactory componentFactory;
     private IRuleRegister ruleRegister;
 
+    private List<T> mData;
     private View.OnClickListener eventCenter;
     private LifeOwner lifeOwner;
     private RecyclerView rcyRoot;
@@ -57,8 +56,8 @@ public class SlotContext<T> implements ILogicManger, IContextService,
     public SlotContext(ToolKitBuilder<T> builder) {
         this.builder = builder;
         context = builder.getContext();
+        mData = builder.getData();
         moderBinder = builder.getModerBinder();
-        modelManager = builder.getModelManager();
         logicManger = builder.getLogicManger();
         ruleRegister = builder.getRuleRegister();
         eventCenter = builder.getEventCenter();
@@ -75,25 +74,32 @@ public class SlotContext<T> implements ILogicManger, IContextService,
     }
 
     public T getItem(int pos) {
-        return modelManager.getItem(pos);
+        if (mData == null) {
+            return null;
+        }
+        if (pos < 0 || pos >= mData.size()) {
+            return null;
+        }
+        return mData.get(pos);
     }
 
-    @Override
-    public void addAll(List<T> data) {
-        modelManager.addAll(data);
-    }
-
-    @Override
     public void setData(List<T> data) {
-        modelManager.setData(data);
+        this.mData = data;
+    }
+
+    public void notifyDataSetChanged() {
+        if (mAdapter == null) {
+            return;
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
     public int getItemCount() {
-        return modelManager.getItemCount();
+        return mData == null ? 0 : mData.size();
     }
 
     public int getItemType(int pos) {
-        return moderBinder.getItemType(pos, modelManager.getItem(pos));
+        return moderBinder.getItemType(pos, getItem(pos));
     }
 
     public boolean isAttaching() {

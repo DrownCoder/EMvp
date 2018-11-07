@@ -40,11 +40,6 @@ public class MagicAdapter extends RecyclerView.Adapter<Component> {
     public void onBindViewHolder(Component holder, int position) {
         Object item = slotContext.getItem(position);
         holder.onBind(position, item);
-        onBind(holder, position);
-    }
-
-    protected void onBind(Component holder, int position) {
-
     }
 
     @Override
