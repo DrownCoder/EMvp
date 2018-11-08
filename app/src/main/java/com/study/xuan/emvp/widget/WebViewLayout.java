@@ -36,7 +36,7 @@ public class WebViewLayout extends WebView implements IComponentBind {
                 return true;
             }
         });
-        loadUrl("http://www.dangdang.com/");
+        loadUrl("http://www.baidu.com/");
     }
 
     @Override

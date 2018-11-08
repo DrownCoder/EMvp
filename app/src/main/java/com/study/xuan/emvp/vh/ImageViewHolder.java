@@ -6,14 +6,13 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.study.xuan.emvp.ComponentId;
-import com.study.xuan.emvp.model.SingleImg;
+import com.study.xuan.emvp.activity.common.CommonModel;
 import com.study.xuan.emvp.presenter.Contract;
 import com.xuan.annotation.ComponentType;
 import com.xuan.annotation.ILogic;
 import com.xuan.component.R;
 import com.xuan.eapi.component.IComponentBind;
 import com.xuan.eapi.viewmodel.IPresenterBind;
-import com.xuan.eapi.component.Component;
 
 /**
  * Author : xuan.
@@ -25,7 +24,7 @@ import com.xuan.eapi.component.Component;
         layout = R.layout.single_img
 )
 @ILogic(Contract.ImagePresenter.class)
-public class ImageViewHolder extends RecyclerView.ViewHolder implements IComponentBind<SingleImg>,IPresenterBind<Contract.ImagePresenter> {
+public class ImageViewHolder extends RecyclerView.ViewHolder implements IComponentBind<CommonModel>,IPresenterBind<Contract.ImagePresenter> {
     private ImageView iv;
     private Contract.ImagePresenter presenter;
     public ImageViewHolder(View itemView) {
@@ -40,7 +39,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements ICompone
     }
 
     @Override
-    public void onBind(int pos, SingleImg item) {
+    public void onBind(int pos, CommonModel item) {
         iv.setBackgroundColor(Color.BLUE);
 
     }

@@ -7,11 +7,8 @@ import android.widget.ImageView;
 
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.R;
-import com.study.xuan.emvp.model.ImageModel;
-import com.study.xuan.emvp.presenter.IImgShow;
+import com.study.xuan.emvp.activity.common.CommonModel;
 import com.xuan.annotation.ComponentType;
-import com.xuan.annotation.ILogic;
-import com.xuan.eapi.viewmodel.IPresenterBind;
 import com.xuan.eapi.component.Component;
 
 /**
@@ -23,10 +20,8 @@ import com.xuan.eapi.component.Component;
         value = ComponentId.VRCY,
         view = ImageView.class
 )
-@ILogic(IImgShow.class)
-public class ImgVH extends Component<ImageModel> implements IPresenterBind<IImgShow> {
+public class ImgVH extends Component<CommonModel> {
     private ImageView iv;
-    private IImgShow show;
     public ImgVH(Context context, View itemView) {
         super(context, itemView);
         iv = (ImageView) itemView;
@@ -36,18 +31,12 @@ public class ImgVH extends Component<ImageModel> implements IPresenterBind<IImgS
     }
 
     @Override
-    public void onBind(int pos, ImageModel item) {
+    public void onBind(int pos, CommonModel item) {
         iv.setImageResource(R.drawable.ic_launcher_background);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                show.show();
             }
         });
-    }
-
-    @Override
-    public void injectPresenter(IImgShow iImgShow) {
-        this.show = iImgShow;
     }
 }

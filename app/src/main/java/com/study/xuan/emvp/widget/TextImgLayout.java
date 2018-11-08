@@ -10,10 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.study.xuan.emvp.ComponentId;
-import com.study.xuan.emvp.model.ImageInfo;
+import com.study.xuan.emvp.activity.common.CommonModel;
 import com.xuan.annotation.ComponentType;
 import com.xuan.component.R;
-import com.xuan.eapi.component.Component;
 import com.xuan.eapi.component.IComponentBind;
 
 /**
@@ -22,7 +21,7 @@ import com.xuan.eapi.component.IComponentBind;
  * Description :the description of this file
  */
 @ComponentType(value = ComponentId.TEXT_IMG)
-public class TextImgLayout extends LinearLayout implements IComponentBind<ImageInfo> {
+public class TextImgLayout extends LinearLayout implements IComponentBind<CommonModel> {
     private View root;
     private TextView tvInfo;
 
@@ -47,7 +46,7 @@ public class TextImgLayout extends LinearLayout implements IComponentBind<ImageI
     }
 
     @Override
-    public void onBind(int pos, ImageInfo item) {
+    public void onBind(int pos, CommonModel item) {
 
     }
 

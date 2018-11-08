@@ -18,7 +18,7 @@ import com.xuan.eapi.helper.event.InjectCallback;
  */
 
 @ComponentType(
-        value = ComponentId.SINGLE_TEXT,
+        value = 0,
         layout = R.layout.single_text,
         attach = Text.class
 )

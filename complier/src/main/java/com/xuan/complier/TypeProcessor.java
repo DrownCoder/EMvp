@@ -38,10 +38,10 @@ public class TypeProcessor extends BaseProcessor {
     public static final float LINE_LIMIT = 500.0f;
     private List<ModelTypeClassInfo> typeModel = new ArrayList<>();
     //全局ComponentInfo
-    private List<ComponentTypeClassInfo> globalTypeWidget = new ArrayList<>();
+    private List<ComponentTypeClassInfo> commonTypeWidget = new ArrayList<>();
     //个人ComponentInfo
     private List<ComponentTypeClassInfo> attachTypeWidget = new ArrayList<>();
-    private HashMap<Integer, Boolean> globalComponentIds = new HashMap<>();
+    private HashMap<Integer, Boolean> commonComponentIds = new HashMap<>();
     private HashMap<String, HashMap<Integer, Boolean>> attachComponentIds = new HashMap<>();
     public List<String> splitMethods = new ArrayList<>();
 
@@ -79,8 +79,8 @@ public class TypeProcessor extends BaseProcessor {
                     attachId(componentInfo.getAttachClassName(), componentInfo.getComponentId());
                     attachTypeWidget.add(componentInfo);
                 } else {
-                    globalComponentIds.put(componentInfo.getComponentId(), true);
-                    globalTypeWidget.add(componentInfo);
+                    commonComponentIds.put(componentInfo.getComponentId(), true);
+                    commonTypeWidget.add(componentInfo);
                 }
             } catch (Exception e) {
                 error(annotatedElement, e.getMessage());
@@ -96,7 +96,7 @@ public class TypeProcessor extends BaseProcessor {
                 /*if (!isValidComponent(componentInfo)) {
                     return true;
                 }*/
-                if (componentInfo.getComponentId() > 0) {
+                if (componentInfo.getComponentId() >= 0) {
                     typeModel.add(componentInfo);
                 }
             } catch (Exception e) {
@@ -105,7 +105,7 @@ public class TypeProcessor extends BaseProcessor {
             }
         }
 
-        if (globalTypeWidget.size() > 0) {
+        if (commonTypeWidget.size() > 0) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -137,8 +137,8 @@ public class TypeProcessor extends BaseProcessor {
 
     private void clear() {
         typeModel.clear();
-        globalTypeWidget.clear();
-        globalComponentIds.clear();
+        commonTypeWidget.clear();
+        commonComponentIds.clear();
         attachComponentIds.clear();
         attachTypeWidget.clear();
         strBuilder.setLength(0);
@@ -230,23 +230,23 @@ public class TypeProcessor extends BaseProcessor {
 
     private void writePutWidgetLine(BufferedWriter writer) throws IOException {
         strBuilder.setLength(0);
-        if (globalTypeWidget.size() < LINE_LIMIT) {
+        if (commonTypeWidget.size() < LINE_LIMIT) {
             //未超限，不用分割
-            writer.write(writeWidget(0, globalTypeWidget.size()));
+            writer.write(writeWidget(0, commonTypeWidget.size()));
         } else {
             //分割方法，防止too large code异常
-            double splitNum = Math.ceil(globalTypeWidget.size() / LINE_LIMIT);
+            double splitNum = Math.ceil(commonTypeWidget.size() / LINE_LIMIT);
             for (int i = 0; i < splitNum; i++) {
                 int start = (int) (i * LINE_LIMIT);
                 int end;
                 if (i == splitNum - 1) {
-                    end = globalTypeWidget.size();
+                    end = commonTypeWidget.size();
                 } else {
                     end = (int) ((i + 1) * LINE_LIMIT);
                 }
-                splitMethods.add(String.format(FileCreator.GLOBAL_METHOD_T, i, writeWidget(start,
+                splitMethods.add(String.format(FileCreator.COMMON_METHOD_T, i, writeWidget(start,
                         end)));
-                writer.write(String.format(FileCreator.GLOBAL_METHOD_INVOKE, i));
+                writer.write(String.format(FileCreator.COMMON_METHOD_INVOKE, i));
             }
         }
     }
@@ -255,7 +255,7 @@ public class TypeProcessor extends BaseProcessor {
         ComponentTypeClassInfo info;
         strBuilder.setLength(0);
         for (; start < end; start++) {
-            info = globalTypeWidget.get(start);
+            info = commonTypeWidget.get(start);
             strBuilder.append("        putWidget(").append(info.getComponentId()).append(",")
                     .append("new ViewInfo(").append(info.getComponentId()).append(",\n           " +
                     "     ")
@@ -290,8 +290,8 @@ public class TypeProcessor extends BaseProcessor {
             IOException {
         strBuilder.setLength(0);
         if (attachTypeWidget.size() < LINE_LIMIT) {
-            writer.write(attachComponent(0,attachTypeWidget.size()));
-        }else{
+            writer.write(attachComponent(0, attachTypeWidget.size()));
+        } else {
             //分割方法，防止64K异常
             double splitNum = Math.ceil(attachTypeWidget.size() / LINE_LIMIT);
             for (int i = 0; i < splitNum; i++) {
@@ -303,7 +303,8 @@ public class TypeProcessor extends BaseProcessor {
                     end = (int) ((i + 1) * LINE_LIMIT);
                 }
                 //System.out.println("start:" + start + "---" + "end:" + end);
-                splitMethods.add(String.format(FileCreator.ATTACH_METHOD_T, i, attachComponent(start,
+                splitMethods.add(String.format(FileCreator.ATTACH_METHOD_T, i, attachComponent
+                        (start,
                         end)));
                 writer.write(String.format(FileCreator.ATTACH_METHOD_INVOKE, i));
             }
@@ -413,10 +414,17 @@ public class TypeProcessor extends BaseProcessor {
             }
         } else {
             //全局模式
-            Boolean contain = globalComponentIds.get(componentInfo.getComponentId());
+            Boolean contain = commonComponentIds.get(componentInfo.getComponentId());
             if (contain != null && contain) {
-                error(typeElement, "The ComponentId %s has been used\n该组件id已经被全局使用过", componentInfo
-                        .getComponentId());
+                String existName = null;
+                for (ComponentTypeClassInfo info : commonTypeWidget) {
+                    if (info.getComponentId() == componentInfo.getComponentId()) {
+                        existName = info.getClassName();
+                    }
+                }
+                error(typeElement, "The ComponentId %s has been " +
+                        "used\n该组件id已经被全局使用过\n使用过该id的类是：%s", componentInfo
+                        .getComponentId(), existName);
                 return false;
             }
         }

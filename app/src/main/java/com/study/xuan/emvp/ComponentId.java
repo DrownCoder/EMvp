@@ -15,5 +15,5 @@ public class ComponentId {
     public static final int DIVIDER = 6;
     public static final int SINGLE_TEXT = 7;
     public static final int VRCY = 8;
-    public static final int INNERVIEW = 9;
+    public static final int SIMPLE = 9;
 }

@@ -83,8 +83,9 @@ public class SlotContext<T> implements ILogicManger, IContextService,
         return mData.get(pos);
     }
 
-    public void setData(List<T> data) {
+    public SlotContext<T> setData(List<T> data) {
         this.mData = data;
+        return this;
     }
 
     public void notifyDataSetChanged() {

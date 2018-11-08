@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.study.xuan.emvp.activity.common.CommonActivity;
+import com.study.xuan.emvp.activity.common.CommonModel;
 import com.study.xuan.emvp.activity.person.PersonModelActivity;
 import com.study.xuan.emvp.model.Text;
 import com.study.xuan.emvp.presenter.MainLogic;
@@ -21,7 +23,7 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
     public static final String TITLE[] = new String[]{
-            "简单列表",
+            "全局模式",
             "多种样式",
             "个人模式"
     };
@@ -53,6 +55,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         switch (integer) {
             case 0:
                 Toast.makeText(MainActivity.this, "点击简单列表", Toast.LENGTH_SHORT).show();
+                startActivity(CommonActivity.class);
                 break;
             case 1:
                 Toast.makeText(MainActivity.this, "点击多种样式", Toast.LENGTH_SHORT).show();

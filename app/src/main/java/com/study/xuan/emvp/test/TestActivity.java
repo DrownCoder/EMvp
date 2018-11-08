@@ -6,18 +6,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 
-import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.R;
-import com.study.xuan.emvp.model.ImageInfo;
-import com.study.xuan.emvp.model.ImageModel;
 import com.study.xuan.emvp.model.Text;
-import com.study.xuan.emvp.model.UserInfo;
-import com.study.xuan.emvp.presenter.ImgLogic;
-import com.study.xuan.emvp.presenter.OtherLogic;
-import com.study.xuan.emvp.widget.TextImgLayout;
 import com.xuan.eapi.adaptercorlib.MagicAdapter;
 import com.xuan.eapi.context.SlotContext;
-import com.xuan.eapi.context.ToolKitBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

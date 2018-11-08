@@ -1,6 +1,5 @@
 package com.study.xuan.emvp.model;
 
-import com.study.xuan.emvp.ComponentId;
 import com.xuan.annotation.BindType;
 
 /**
@@ -8,7 +7,7 @@ import com.xuan.annotation.BindType;
  * Date : 2018/9/1.
  * Description :the description of this file
  */
-@BindType(ComponentId.SINGLE_TEXT)
+@BindType(0)
 public class Text {
     public String title;
     public int eventId;

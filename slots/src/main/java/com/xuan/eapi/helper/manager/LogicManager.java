@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class LogicManager implements ILogicManger {
     //Logic冗余，拆分Logic，一个Activity中可能存在多个Logic实例
-    private Map<Class<?>, IPresent> globalLogic;
+    private Map<Class<?>, IPresent> commonLogic;
 
     public LogicManager() {
     }
@@ -28,10 +28,10 @@ public class LogicManager implements ILogicManger {
 
     @Override
     public Map<Class<?>, IPresent> obtainViewLogicPool() {
-        if (globalLogic == null) {
-            globalLogic = new HashMap<>();
+        if (commonLogic == null) {
+            commonLogic = new HashMap<>();
         }
-        return globalLogic;
+        return commonLogic;
     }
 
     @Override

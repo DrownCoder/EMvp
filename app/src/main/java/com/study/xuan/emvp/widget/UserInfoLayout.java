@@ -11,14 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.study.xuan.emvp.ComponentId;
-import com.study.xuan.emvp.model.IUserInfo;
+import com.study.xuan.emvp.activity.common.CommonModel;
 import com.xuan.annotation.ILogic;
 import com.study.xuan.emvp.presenter.IUserInfoPresenter;
 import com.xuan.annotation.ComponentType;
 import com.xuan.component.R;
 import com.xuan.eapi.component.IComponentBind;
 import com.xuan.eapi.viewmodel.IPresenterBind;
-import com.xuan.eapi.component.Component;
 
 /**
  * Author : xuan.
@@ -27,13 +26,13 @@ import com.xuan.eapi.component.Component;
  */
 @ComponentType(value = ComponentId.USER_INFO_LAYOUT)
 @ILogic(IUserInfoPresenter.class)
-public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserInfo>,
-        IPresenterBind<IUserInfoPresenter<IUserInfo>> {
+public class UserInfoLayout extends FrameLayout implements IComponentBind<CommonModel>,
+        IPresenterBind<IUserInfoPresenter<CommonModel>> {
     private ImageView ivImg;
     private TextView tvText;
     private View root;
-    private IUserInfo info;
-    private IUserInfoPresenter<IUserInfo> presenter;
+    private CommonModel info;
+    private IUserInfoPresenter<CommonModel> presenter;
 
     public UserInfoLayout(@NonNull Context context) {
         this(context, null);
@@ -66,10 +65,10 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserI
     }
 
     @Override
-    public void onBind(int pos, IUserInfo item) {
+    public void onBind(int pos, CommonModel item) {
         info = item;
         //ivImg.setImageResource(R.drawable.ic_launcher_foreground);
-        tvText.setText(item.getText());
+        tvText.setText(item.tips);
     }
 
     @Override
@@ -78,7 +77,7 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<IUserI
     }
 
     @Override
-    public void injectPresenter(IUserInfoPresenter<IUserInfo> userInfoIUserInfoPresenter) {
+    public void injectPresenter(IUserInfoPresenter<CommonModel> userInfoIUserInfoPresenter) {
         presenter = userInfoIUserInfoPresenter;
     }
 }

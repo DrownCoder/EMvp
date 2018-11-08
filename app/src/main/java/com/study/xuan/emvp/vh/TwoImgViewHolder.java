@@ -4,14 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.study.xuan.emvp.ComponentId;
-import com.study.xuan.emvp.model.ImageInfo;
+import com.study.xuan.emvp.activity.common.CommonModel;
 import com.study.xuan.emvp.presenter.Contract;
 import com.xuan.annotation.ComponentType;
 import com.xuan.annotation.ILogic;
 import com.xuan.component.R;
 import com.xuan.eapi.component.IComponentBind;
 import com.xuan.eapi.viewmodel.IPresenterBind;
-import com.xuan.eapi.component.Component;
 
 /**
  * Author : xuan.
@@ -23,7 +22,7 @@ import com.xuan.eapi.component.Component;
         layout = R.layout.two_img
 )
 @ILogic(Contract.TwoImgPresenter.class)
-public class TwoImgViewHolder extends RecyclerView.ViewHolder implements IComponentBind<ImageInfo>,IPresenterBind<Contract.TwoImgPresenter> {
+public class TwoImgViewHolder extends RecyclerView.ViewHolder implements IComponentBind<CommonModel>,IPresenterBind<Contract.TwoImgPresenter> {
     private Contract.TwoImgPresenter presenter;
     public TwoImgViewHolder(View itemView) {
         super(itemView);
@@ -43,7 +42,7 @@ public class TwoImgViewHolder extends RecyclerView.ViewHolder implements ICompon
     }
 
     @Override
-    public void onBind(int pos, ImageInfo item) {
+    public void onBind(int pos, CommonModel item) {
 
     }
 
