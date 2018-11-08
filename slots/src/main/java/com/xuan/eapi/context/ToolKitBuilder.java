@@ -12,6 +12,7 @@ import com.xuan.eapi.helper.manager.LogicManager;
 import com.xuan.eapi.rule.IRuleRegister;
 import com.xuan.eapi.rule.RuleRegister;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
  */
 
 public class ToolKitBuilder<T> {
-    private Context context;
+    private WeakReference<Context> context;
     private IModerBinder<T> moderBinder;
     private ILogicManger logicManger;
     private CustomFactory componentFactory;
@@ -31,12 +32,15 @@ public class ToolKitBuilder<T> {
     private List<T> mData;
 
     public ToolKitBuilder(Context context, List<T> data) {
-        this.context = context;
+        if (context == null) {
+            throw new IllegalArgumentException("the context can't be null!!!");
+        }
+        this.context = new WeakReference<>(context);
         this.mData = data;
     }
 
     public ToolKitBuilder(Context context) {
-        this.context = context;
+        this.context = new WeakReference<>(context);
     }
 
     public ToolKitBuilder<T> setData(List<T> data) {
@@ -73,7 +77,7 @@ public class ToolKitBuilder<T> {
         return this;
     }
 
-    public Context getContext() {
+    public WeakReference<Context> getContext() {
         return context;
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.study.xuan.emvp.activity.common.CommonModel;
+import com.study.xuan.emvp.activity.common.userinfo.IUserInfoPresenter;
 import com.xuan.eapi.viewmodel.BaseLogic;
 import com.xuan.eapi.viewmodel.IPresent;
 

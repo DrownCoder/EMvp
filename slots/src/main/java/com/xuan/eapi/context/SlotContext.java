@@ -22,6 +22,7 @@ import com.xuan.eapi.rule.IRuleRegister;
 import com.xuan.eapi.rule.RuleRegister;
 import com.xuan.eapi.viewmodel.IPresent;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Map;
 
@@ -31,9 +32,9 @@ import java.util.Map;
  * Description :结耦后的全局代理
  */
 
-public class SlotContext<T> implements ILogicManger, IContextService,
-        ILifeRegistor, IComponentFactory {
-    private Context context;
+public class SlotContext<T> implements IContextService,
+        ILifeRegistor, IComponentFactory,IGC {
+    private WeakReference<Context> context;
     private ToolKitBuilder<T> builder;
     private IModerBinder<T> moderBinder;
     private CustomFactory customFactory;
@@ -63,10 +64,14 @@ public class SlotContext<T> implements ILogicManger, IContextService,
         eventCenter = builder.getEventCenter();
         customFactory = builder.getComponentFactory();
         mapAttach = builder.getMapAttach();
+        pushGC(this);
     }
 
     public Context getContext() {
-        return context;
+        if (context == null) {
+            throw new IllegalArgumentException("the Context has been null!!!");
+        }
+        return context.get();
     }
 
     public ViewGroup getParentRoot() {
@@ -130,20 +135,18 @@ public class SlotContext<T> implements ILogicManger, IContextService,
     /**
      * 注册逻辑
      */
-    @Override
-    public void registerLogic(IPresent logic) {
+    public SlotContext<T> registerLogic(IPresent logic) {
         logicManger.registerLogic(logic);
         if (ILifeCycle.class.isAssignableFrom(logic.getClass())) {
             pushLife((ILifeCycle) logic);
         }
+        return this;
     }
 
-    @Override
     public Map<Class<?>, IPresent> obtainViewLogicPool() {
         return logicManger.obtainViewLogicPool();
     }
 
-    @Override
     public IPresent obtainLogic(Class<?> clazz) {
         return logicManger.obtainLogic(clazz);
     }
@@ -153,7 +156,7 @@ public class SlotContext<T> implements ILogicManger, IContextService,
         if (componentFactory == null) {
             componentFactory = new ComponentFactory(this);
         }
-        return componentFactory.createViewHolder(context, parent, viewType);
+        return componentFactory.createViewHolder(getContext(), parent, viewType);
     }
 
     @Override
@@ -176,7 +179,7 @@ public class SlotContext<T> implements ILogicManger, IContextService,
      */
     public void pushLife(ILifeCycle lifeCycle) {
         if (lifeOwner == null) {
-            lifeOwner = LifeOwner.init(context);
+            lifeOwner = LifeOwner.init(getContext());
         }
         lifeOwner.pushLife(lifeCycle);
     }
@@ -186,7 +189,7 @@ public class SlotContext<T> implements ILogicManger, IContextService,
      */
     public void pushGC(IGC gc) {
         if (lifeOwner == null) {
-            lifeOwner = LifeOwner.init(context);
+            lifeOwner = LifeOwner.init(getContext());
         }
         pushLife(new GCAdapter(gc));
     }
@@ -199,4 +202,28 @@ public class SlotContext<T> implements ILogicManger, IContextService,
         return null;
     }
 
+    @Override
+    public void onDestroy() {
+        if (context != null) {
+            context.clear();
+            context = null;
+        }
+        if (rcyRoot != null) {
+            rcyRoot = null;
+        }
+        if (mAdapter != null) {
+            mAdapter = null;
+        }
+        if (lifeOwner != null) {
+            lifeOwner.onDestroy();
+            lifeOwner = null;
+        }
+        if (mData != null) {
+            mData.clear();
+            mData = null;
+        }
+        if (eventCenter != null) {
+            eventCenter = null;
+        }
+    }
 }

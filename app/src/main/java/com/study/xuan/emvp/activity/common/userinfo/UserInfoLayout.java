@@ -1,4 +1,4 @@
-package com.study.xuan.emvp.widget;
+package com.study.xuan.emvp.activity.common.userinfo;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.study.xuan.emvp.ComponentId;
 import com.study.xuan.emvp.activity.common.CommonModel;
 import com.xuan.annotation.ILogic;
-import com.study.xuan.emvp.presenter.IUserInfoPresenter;
 import com.xuan.annotation.ComponentType;
 import com.xuan.component.R;
 import com.xuan.eapi.component.IComponentBind;
@@ -68,7 +67,7 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<Common
     public void onBind(int pos, CommonModel item) {
         info = item;
         //ivImg.setImageResource(R.drawable.ic_launcher_foreground);
-        tvText.setText(item.tips);
+        //tvText.setText(item.tips);
     }
 
     @Override

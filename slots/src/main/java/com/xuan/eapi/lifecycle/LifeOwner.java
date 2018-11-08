@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * Description :生命周期观察者
  */
 
-public class LifeOwner implements ILifeRegistor {
+public class LifeOwner implements ILifeRegistor, IGC {
     private static final String FRAGMENT_TAG = "SLOT_LIFE_FRAGMENT_OWNER";
     private ArrayList<ILifeCycle> lifes;
 
@@ -99,6 +99,8 @@ public class LifeOwner implements ILifeRegistor {
                 for (ILifeCycle life : lifes) {
                     life.onDestroy();
                 }
+                lifes.clear();
+                lifes = null;
             }
         }
 
@@ -174,4 +176,9 @@ public class LifeOwner implements ILifeRegistor {
             }
         }
     };
+
+    @Override
+    public void onDestroy() {
+        lifeCycleNotify = null;
+    }
 }

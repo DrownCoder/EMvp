@@ -20,9 +20,13 @@ public class LogicManager implements ILogicManger {
 
     @Override
     public void registerLogic(IPresent presenter) {
+        obtainViewLogicPool().put(presenter.getClass(), presenter);
+        //todo 没必要以接口作为key，后期可以考虑删除，如果注册ViewHolder以接口注册，则需要作为key,但是太少了
         Class<?>[] inters = presenter.getClass().getInterfaces();
-        for (Class clazz : inters) {
-            obtainViewLogicPool().put(clazz, presenter);
+        if (inters != null) {
+            for (Class clazz : inters) {
+                obtainViewLogicPool().put(clazz, presenter);
+            }
         }
     }
 

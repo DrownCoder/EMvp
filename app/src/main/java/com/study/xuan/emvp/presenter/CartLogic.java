@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.study.xuan.emvp.PresenterId;
 import com.study.xuan.emvp.activity.common.CommonModel;
+import com.study.xuan.emvp.activity.common.userinfo.IUserInfoPresenter;
 import com.xuan.annotation.RegisterLogic;
 import com.xuan.eapi.viewmodel.BaseLogic;
 

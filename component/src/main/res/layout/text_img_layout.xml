@@ -13,7 +13,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:src="@drawable/ic_launcher_background"
+        android:background="@android:color/holo_orange_light"
         android:scaleType="fitXY"
         />
 
