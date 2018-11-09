@@ -194,6 +194,9 @@ public class TypeProcessor extends BaseProcessor {
             writer.write("    }\n\n");
             writer.write("    @Override\n");
             writer.write("    public ViewInfo obtainAttachViewInfo(Class<?> clazz, int id) {\n");
+            writer.write("        if (ATTACH_TYPE.get(clazz) == null) {");
+            writer.write("            return null;");
+            writer.write("        }");
             writer.write("        return ATTACH_TYPE.get(clazz).get(id);\n");
             writer.write("    }\n\n");
             if (splitMethods != null) {

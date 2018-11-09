@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.study.xuan.emvp.ComponentId;
+import com.study.xuan.emvp.R;
+import com.study.xuan.emvp.activity.common.SimpleModel;
 import com.xuan.annotation.ComponentType;
 import com.xuan.eapi.component.Component;
 
@@ -15,15 +17,17 @@ import com.xuan.eapi.component.Component;
  */
 @ComponentType(
         value = ComponentId.SIMPLE,
-        view = TextView.class
+        layout = R.layout.single_text
 )
-public class SimpleVH extends Component {
+public class SimpleVH extends Component<SimpleModel> {
+    private TextView tvList;
     public SimpleVH(Context context, View itemView) {
         super(context, itemView);
+        tvList = itemView.findViewById(R.id.tv_simple);
     }
 
     @Override
-    public void onBind(int pos, Object item) {
-
+    public void onBind(int pos, SimpleModel item) {
+        tvList.setText(item.name);
     }
 }

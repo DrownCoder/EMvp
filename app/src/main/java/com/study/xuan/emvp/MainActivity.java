@@ -10,7 +10,9 @@ import android.widget.Toast;
 
 import com.study.xuan.emvp.activity.common.CommonActivity;
 import com.study.xuan.emvp.activity.common.CommonModel;
+import com.study.xuan.emvp.activity.mix.MixActivity;
 import com.study.xuan.emvp.activity.person.PersonModelActivity;
+import com.study.xuan.emvp.activity.simple.SimpleActivity;
 import com.study.xuan.emvp.model.Text;
 import com.study.xuan.emvp.presenter.MainLogic;
 import com.study.xuan.emvp.test.TestActivity;
@@ -25,10 +27,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public static final String TITLE[] = new String[]{
             "全局模式",
             "多种样式",
-            "个人模式"
+            "个人模式",
+            "简单模式",
+            "MIX模式"
     };
     public static final int EVENT[] = new int[]{
-            0, 1, 2
+            0, 1, 2, 3, 4
     };
     protected BaseLogic mPresenter;
     RecyclerView mRcy;
@@ -45,7 +49,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mData.add(new Text(TITLE[i], EVENT[i]));
         }
         ToolKitBuilder<Text> builder = new ToolKitBuilder<>(this);
-        SlotContext slot = builder.attachRule(Text.class).setData(mData).setEventCenter(this).build();
+        SlotContext slot = builder.attachRule(Text.class).setData(mData).setEventCenter(this)
+                .build();
         slot.bind(mRcy);
     }
 
@@ -63,6 +68,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
             case 2:
                 startActivity(PersonModelActivity.class);
+                break;
+            case 3:
+                startActivity(SimpleActivity.class);
+                break;
+            case 4:
+                startActivity(MixActivity.class);
                 break;
         }
     }

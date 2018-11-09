@@ -13,6 +13,7 @@ import com.xuan.eapi.component.Component;
 import com.xuan.eapi.factory.ComponentFactory;
 import com.xuan.eapi.factory.IComponentFactory;
 import com.xuan.eapi.helper.binder.IModerBinder;
+import com.xuan.eapi.helper.manager.IModelManger;
 import com.xuan.eapi.lifecycle.GCAdapter;
 import com.xuan.eapi.lifecycle.IGC;
 import com.xuan.eapi.lifecycle.ILifeCycle;
@@ -33,12 +34,13 @@ import java.util.Map;
  */
 
 public class SlotContext<T> implements IContextService,
-        ILifeRegistor, IComponentFactory,IGC {
+        ILifeRegistor, IComponentFactory, IGC {
     private WeakReference<Context> context;
     private ToolKitBuilder<T> builder;
     private IModerBinder<T> moderBinder;
     private CustomFactory customFactory;
     private ILogicManger logicManger;
+    private IModelManger modelManger;
 
     private IMapAttach mapAttach;
     private IComponentFactory componentFactory;
@@ -64,6 +66,7 @@ public class SlotContext<T> implements IContextService,
         eventCenter = builder.getEventCenter();
         customFactory = builder.getComponentFactory();
         mapAttach = builder.getMapAttach();
+        modelManger = builder.getModelManger();
         pushGC(this);
     }
 
@@ -86,6 +89,13 @@ public class SlotContext<T> implements IContextService,
             return null;
         }
         return mData.get(pos);
+    }
+
+    public Object getBindItem(int pos) {
+        if (modelManger != null) {
+            return modelManger.getBindItem(pos, getItem(pos));
+        }
+        return getItem(pos);
     }
 
     public SlotContext<T> setData(List<T> data) {

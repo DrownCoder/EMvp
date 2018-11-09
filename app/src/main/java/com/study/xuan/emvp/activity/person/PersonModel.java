@@ -1,6 +1,6 @@
 package com.study.xuan.emvp.activity.person;
 
-import com.xuan.annotation.BindType;
+import com.study.xuan.emvp.activity.common.CommonModel;
 import com.xuan.eapi.helper.binder.HandlerType;
 
 /**
@@ -8,10 +8,10 @@ import com.xuan.eapi.helper.binder.HandlerType;
  * Date : 2018/10/30.
  * Description :the description of this file
  */
-@BindType(1)
 public class PersonModel implements HandlerType {
     public String name;
     public int type;
+    public CommonModel model;
 
     @Override
     public int handlerType() {

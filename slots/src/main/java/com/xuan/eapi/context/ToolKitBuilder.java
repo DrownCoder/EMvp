@@ -8,6 +8,7 @@ import com.xuan.eapi.helper.binder.DefaultModelBinder;
 import com.xuan.eapi.helper.binder.IMapAttach;
 import com.xuan.eapi.helper.binder.IModerBinder;
 import com.xuan.eapi.helper.manager.ILogicManger;
+import com.xuan.eapi.helper.manager.IModelManger;
 import com.xuan.eapi.helper.manager.LogicManager;
 import com.xuan.eapi.rule.IRuleRegister;
 import com.xuan.eapi.rule.RuleRegister;
@@ -24,6 +25,7 @@ import java.util.List;
 public class ToolKitBuilder<T> {
     private WeakReference<Context> context;
     private IModerBinder<T> moderBinder;
+    private IModelManger<T> modelManger;
     private ILogicManger logicManger;
     private CustomFactory componentFactory;
     private IMapAttach mapAttach;
@@ -74,6 +76,15 @@ public class ToolKitBuilder<T> {
 
     public ToolKitBuilder<T> setEventCenter(View.OnClickListener onClickListener) {
         this.eventCenter = onClickListener;
+        return this;
+    }
+
+    public IModelManger getModelManger() {
+        return modelManger;
+    }
+
+    public ToolKitBuilder<T> setModelManger(IModelManger<T> modelManger) {
+        this.modelManger = modelManger;
         return this;
     }
 

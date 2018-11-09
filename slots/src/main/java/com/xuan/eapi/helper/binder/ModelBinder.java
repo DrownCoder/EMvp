@@ -29,5 +29,4 @@ public abstract class ModelBinder<T> implements IModerBinder<T> {
     }
 
     protected abstract int bindItemType(int pos, T obj);
-
 }
