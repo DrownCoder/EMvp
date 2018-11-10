@@ -7,6 +7,4 @@ package com.xuan.eapi.helper.binder;
  */
 public interface IMapAttach {
     Class<?> attachClass(int type);
-
-    int getComponentType(int type);
 }

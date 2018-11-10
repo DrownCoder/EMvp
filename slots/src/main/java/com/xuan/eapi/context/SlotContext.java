@@ -125,14 +125,22 @@ public class SlotContext<T> implements IContextService,
         return false;
     }
 
+    public int getComponentId(int type) {
+        if (moderBinder != null) {
+            return moderBinder.getComponentId(type);
+        }
+        return type;
+    }
+
     /**
      * 绑定Map
      */
-    public void attachRule(Class<?> clazz) {
+    public SlotContext<T> attachRule(Class<?> clazz) {
         if (ruleRegister == null) {
             ruleRegister = new RuleRegister();
         }
         ruleRegister.registerRule(clazz);
+        return this;
     }
 
     /**
@@ -151,10 +159,6 @@ public class SlotContext<T> implements IContextService,
             pushLife((ILifeCycle) logic);
         }
         return this;
-    }
-
-    public Map<Class<?>, IPresent> obtainViewLogicPool() {
-        return logicManger.obtainViewLogicPool();
     }
 
     public IPresent obtainLogic(Class<?> clazz) {

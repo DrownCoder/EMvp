@@ -45,7 +45,8 @@ public class ComponentFactory implements IComponentFactory {
         if (tookContext.getAttachMap() == null) {
             return defaultViewHolder();
         }
-        int componentId = tookContext.getAttachMap().getComponentType(type);
+        //type转换成真正的映射表中的id
+        int componentId = tookContext.getComponentId(type);
         if (tookContext.isAttaching()) {
             /**
              * 绑定模式-对应与个人的楼层开发

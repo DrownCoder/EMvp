@@ -8,4 +8,6 @@ package com.xuan.eapi.helper.binder;
 
 public interface IModerBinder<T> {
     int getItemType(int pos, T t);
+
+    int getComponentId(int type);
 }

@@ -28,5 +28,10 @@ public abstract class ModelBinder<T> implements IModerBinder<T> {
         return type;
     }
 
+    @Override
+    public int getComponentId(int type) {
+        return type;
+    }
+
     protected abstract int bindItemType(int pos, T obj);
 }

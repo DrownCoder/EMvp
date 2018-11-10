@@ -6,5 +6,5 @@ package com.xuan.eapi.helper.manager;
  * Description :the description of this file
  */
 public interface IModelManger<T> {
-    Object getBindItem(int pos,T t);
+    Object getBindItem(int pos, T t);
 }

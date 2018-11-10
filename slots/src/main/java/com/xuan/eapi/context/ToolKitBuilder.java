@@ -59,11 +59,6 @@ public class ToolKitBuilder<T> {
         return this;
     }
 
-    public ToolKitBuilder<T> setLogicManger(ILogicManger logicManger) {
-        this.logicManger = logicManger;
-        return this;
-    }
-
     public IMapAttach getMapAttach() {
         return mapAttach == null ? dfMapAttach() : mapAttach;
     }
@@ -115,11 +110,6 @@ public class ToolKitBuilder<T> {
 
     public IRuleRegister getRuleRegister() {
         return ruleRegister;
-    }
-
-    public ToolKitBuilder<T> setRuleRegister(IRuleRegister ruleRegister) {
-        this.ruleRegister = ruleRegister;
-        return this;
     }
 
     /**
@@ -177,11 +167,6 @@ public class ToolKitBuilder<T> {
                 return getRuleRegister().obtainRules().get(0);
             }
             return Object.class;
-        }
-
-        @Override
-        public int getComponentType(int type) {
-            return type;
         }
     }
 }

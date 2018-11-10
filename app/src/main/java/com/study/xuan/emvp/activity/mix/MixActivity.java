@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.study.xuan.emvp.R;
+import com.study.xuan.emvp.activity.common.CommonLogic;
 import com.study.xuan.emvp.activity.common.CommonModel;
 import com.study.xuan.emvp.activity.person.PersonModel;
 import com.study.xuan.emvp.activity.person.PersonModelActivity;
+import com.study.xuan.emvp.presenter.CommunityLogic;
 import com.xuan.eapi.component.IComponentBind;
 import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.context.ToolKitBuilder;
@@ -45,7 +47,6 @@ public class MixActivity extends AppCompatActivity {
             mData.add(model);
         }
         SlotContext<PersonModel> slotContext = new ToolKitBuilder<PersonModel>(this)
-                .attachRule(PersonModel.class)
                 .setData(mData)
                 .setComponentFactory(new CustomFactory() {
                     @Override
@@ -65,6 +66,14 @@ public class MixActivity extends AppCompatActivity {
                         }
                         return obj.type;
                     }
+
+                    @Override
+                    public int getComponentId(int type) {
+                        if (type > 4) {
+                            type -= 4;
+                        }
+                        return type;
+                    }
                 }).setMapAttach(new IMapAttach() {
                     @Override
                     public Class<?> attachClass(int type) {
@@ -72,14 +81,6 @@ public class MixActivity extends AppCompatActivity {
                             return PersonModel.class;
                         }
                         return null;
-                    }
-
-                    @Override
-                    public int getComponentType(int type) {
-                        if (type > 4) {
-                            type -= 4;
-                        }
-                        return type;
                     }
                 })
                 .setModelManger(new IModelManger<PersonModel>() {
@@ -92,6 +93,7 @@ public class MixActivity extends AppCompatActivity {
                     }
                 })
                 .build();
-        slotContext.bind(mRcy);
+        slotContext.attachRule(PersonModel.class).registerLogic(new CommunityLogic(this))
+                .registerLogic(new CommonLogic(slotContext)).bind(mRcy);
     }
 }
