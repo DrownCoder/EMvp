@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 /**
  * Author : xuan.
  * Date : 2018/8/23.
- * Description :the description of this file
+ * Description :v4包下的Fragment，向下兼容
  */
 
 public class LifeV4Fragment extends Fragment implements InjectLifeListener {

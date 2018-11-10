@@ -8,7 +8,7 @@ import com.xuan.eapi.lifecycle.ILifeCycle;
 /**
  * Author : xuan.
  * Date : 2018/5/9.
- * Description :the description of this file
+ * Description :基础逻辑
  */
 
 public abstract class BaseLogic implements ILifeCycle {

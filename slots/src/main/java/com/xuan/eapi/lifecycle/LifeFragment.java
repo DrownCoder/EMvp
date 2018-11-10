@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 /**
  * Author : xuan.
  * Date : 2018/8/23.
- * Description :the description of this file
+ * Description :监听什么周期的空Fragment
  */
 
 public class LifeFragment extends Fragment implements InjectLifeListener {

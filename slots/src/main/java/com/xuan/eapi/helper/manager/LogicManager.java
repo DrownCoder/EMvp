@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Author : xuan.
  * Date : 2018/6/11.
- * Description :the description of this file
+ * Description :逻辑池，保存逻辑实例
  */
 
 public class LogicManager implements ILogicManger {

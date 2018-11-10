@@ -14,7 +14,7 @@ import javax.tools.Diagnostic;
 /**
  * Author : xuan.
  * Date : 2018/6/4.
- * Description :the description of this file
+ * Description :基础解析器
  */
 
 public abstract class BaseProcessor extends AbstractProcessor {

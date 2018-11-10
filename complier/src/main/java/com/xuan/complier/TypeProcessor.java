@@ -542,7 +542,6 @@ public class TypeProcessor extends BaseProcessor {
         }
         return type;
     }
-
     private String getSupportClass() {
         StringBuilder builder = new StringBuilder(128);
         for (String spStr : SUPPORT_CLASS) {

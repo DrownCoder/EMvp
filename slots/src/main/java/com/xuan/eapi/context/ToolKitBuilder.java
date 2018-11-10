@@ -24,13 +24,23 @@ import java.util.List;
 
 public class ToolKitBuilder<T> {
     private WeakReference<Context> context;
+    //可以拓展API
+    //处理Model对应的ViewType
     private IModerBinder<T> moderBinder;
-    private ILogicManger logicManger;
+    //处理组件的创建工厂
     private CustomFactory componentFactory;
-    private IMapAttach mapAttach;
-    private IRuleRegister ruleRegister;
+    //处理Mix混合打通类型的策略
     private IMixStrategy<T> mixStrategy;
+    //全局的事件中心
     private View.OnClickListener eventCenter;
+    //内部的API不可修改
+    //逻辑池，逻辑管理类
+    private ILogicManger logicManger;
+    //映射表，处理Model和Type的映射关系
+    private IMapAttach mapAttach;
+    //映射表注册类，处理支持的多映射表
+    private IRuleRegister ruleRegister;
+
     private List<T> mData;
 
     public ToolKitBuilder(Context context, List<T> data) {

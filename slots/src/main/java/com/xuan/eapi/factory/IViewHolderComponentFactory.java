@@ -7,7 +7,7 @@ import com.xuan.eapi.component.IComponentBind;
 /**
  * Author : xuan.
  * Date : 2018/5/18.
- * Description :the description of this file
+ * Description :继承原生的ViewHolder的工厂，需要继承IComponentBind
  */
 
 public interface IViewHolderComponentFactory {

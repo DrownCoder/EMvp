@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Author : xuan.
  * Date : 2018/6/4.
- * Description :the description of this file
+ * Description :解析器的常量
  */
 
 public class Const {

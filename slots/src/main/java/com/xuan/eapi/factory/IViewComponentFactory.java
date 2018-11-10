@@ -7,7 +7,7 @@ import com.xuan.eapi.component.IComponentBind;
 /**
  * Author : xuan.
  * Date : 2018/5/14.
- * Description :the description of this file
+ * Description :自定义View，继承IComponentBind接口的工厂
  */
 
 public interface IViewComponentFactory {

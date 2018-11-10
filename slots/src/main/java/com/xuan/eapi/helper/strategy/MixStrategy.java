@@ -3,7 +3,7 @@ package com.xuan.eapi.helper.strategy;
 /**
  * Author : xuan.
  * Date : 2018/11/10.
- * Description :the description of this file
+ * Description :默认的混合策略
  */
 public abstract class MixStrategy<T> implements IMixStrategy<T> {
     @Override
