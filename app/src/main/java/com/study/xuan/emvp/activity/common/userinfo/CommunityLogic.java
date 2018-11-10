@@ -1,4 +1,4 @@
-package com.study.xuan.emvp.presenter;
+package com.study.xuan.emvp.activity.common.userinfo;
 
 import android.content.Context;
 import android.util.Log;

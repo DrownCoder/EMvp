@@ -1,6 +1,7 @@
 package com.study.xuan.emvp.activity.person;
 
 import com.study.xuan.emvp.activity.common.CommonModel;
+import com.study.xuan.emvp.activity.product.Product;
 import com.xuan.eapi.helper.binder.HandlerType;
 
 /**
@@ -12,6 +13,7 @@ public class PersonModel implements HandlerType {
     public String name;
     public int type;
     public CommonModel model;
+    public Product product;
 
     @Override
     public int handlerType() {

@@ -7,13 +7,13 @@ import android.view.ViewGroup;
 
 import com.xuan.eapi.adaptercorlib.MagicAdapter;
 import com.xuan.eapi.factory.custom.CustomFactory;
-import com.xuan.eapi.helper.binder.IMapAttach;
+import com.xuan.eapi.helper.map.IMapAttach;
 import com.xuan.eapi.helper.manager.ILogicManger;
 import com.xuan.eapi.component.Component;
 import com.xuan.eapi.factory.ComponentFactory;
 import com.xuan.eapi.factory.IComponentFactory;
 import com.xuan.eapi.helper.binder.IModerBinder;
-import com.xuan.eapi.helper.manager.IModelManger;
+import com.xuan.eapi.helper.strategy.IMixStrategy;
 import com.xuan.eapi.lifecycle.GCAdapter;
 import com.xuan.eapi.lifecycle.IGC;
 import com.xuan.eapi.lifecycle.ILifeCycle;
@@ -25,7 +25,6 @@ import com.xuan.eapi.viewmodel.IPresent;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Author : xuan.
@@ -40,7 +39,7 @@ public class SlotContext<T> implements IContextService,
     private IModerBinder<T> moderBinder;
     private CustomFactory customFactory;
     private ILogicManger logicManger;
-    private IModelManger modelManger;
+    private IMixStrategy<T> mixStrategy;
 
     private IMapAttach mapAttach;
     private IComponentFactory componentFactory;
@@ -66,7 +65,7 @@ public class SlotContext<T> implements IContextService,
         eventCenter = builder.getEventCenter();
         customFactory = builder.getComponentFactory();
         mapAttach = builder.getMapAttach();
-        modelManger = builder.getModelManger();
+        mixStrategy = builder.getMixStrategy();
         pushGC(this);
     }
 
@@ -92,8 +91,8 @@ public class SlotContext<T> implements IContextService,
     }
 
     public Object getBindItem(int pos) {
-        if (modelManger != null) {
-            return modelManger.getBindItem(pos, getItem(pos));
+        if (mixStrategy != null) {
+            return mixStrategy.getBindItem(pos, getItem(pos));
         }
         return getItem(pos);
     }
@@ -126,8 +125,8 @@ public class SlotContext<T> implements IContextService,
     }
 
     public int getComponentId(int type) {
-        if (moderBinder != null) {
-            return moderBinder.getComponentId(type);
+        if (mixStrategy != null) {
+            return mixStrategy.getComponentId(type);
         }
         return type;
     }

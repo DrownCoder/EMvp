@@ -14,10 +14,10 @@ public abstract class Component<T> extends RecyclerView.ViewHolder implements IC
     protected Context context;
     private View root;
 
-    public Component(Context context, View itemView) {
-        super(itemView);
+    public Component(Context context, View root) {
+        super(root);
         this.context = context;
-        this.root = itemView;
+        this.root = root;
     }
 
     public abstract void onBind(int pos, T item);

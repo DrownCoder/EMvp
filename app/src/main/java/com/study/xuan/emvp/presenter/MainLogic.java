@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.study.xuan.emvp.test.TestActivity;
 import com.xuan.eapi.viewmodel.BaseLogic;
 
 
@@ -23,8 +22,6 @@ public class MainLogic extends BaseLogic
 
     @Override
     public void onImgClick() {
-        Intent intent = new Intent(mContext, TestActivity.class);
-        mContext.startActivity(intent);
         Toast.makeText(mContext, "一行一图，一张图片的点击逻辑，这是Activity的默认逻辑1", Toast.LENGTH_SHORT).show();
     }
 

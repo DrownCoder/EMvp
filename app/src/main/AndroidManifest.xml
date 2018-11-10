@@ -18,7 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".test.TestActivity" />
         <activity android:name=".activity.person.PersonModelActivity" />
         <activity android:name=".activity.common.CommonActivity" />
         <activity android:name=".activity.simple.SimpleActivity" />

@@ -13,14 +13,15 @@ import com.study.xuan.emvp.activity.common.CommonLogic;
 import com.study.xuan.emvp.activity.common.CommonModel;
 import com.study.xuan.emvp.activity.person.PersonModel;
 import com.study.xuan.emvp.activity.person.PersonModelActivity;
-import com.study.xuan.emvp.presenter.CommunityLogic;
+import com.study.xuan.emvp.activity.common.userinfo.CommunityLogic;
+import com.study.xuan.emvp.activity.product.Product;
 import com.xuan.eapi.component.IComponentBind;
 import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.context.ToolKitBuilder;
 import com.xuan.eapi.factory.custom.CustomFactory;
-import com.xuan.eapi.helper.binder.IMapAttach;
+import com.xuan.eapi.helper.map.IMapAttach;
 import com.xuan.eapi.helper.binder.ModelBinder;
-import com.xuan.eapi.helper.manager.IModelManger;
+import com.xuan.eapi.helper.strategy.IMixStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,11 @@ public class MixActivity extends AppCompatActivity {
             PersonModel model = new PersonModel();
             if (i < 5) {
                 model.type = i;
+            } else if (i <= 8) {
+                Product product = new Product();
+                product.pName = "第" + i + "个" + "商品";
+                product.price = "¥" + i * 100;
+                model.product = product;
             } else {
                 model.model = new CommonModel();
                 model.model.pos = i;
@@ -62,36 +68,48 @@ public class MixActivity extends AppCompatActivity {
                     @Override
                     protected int bindItemType(int pos, PersonModel obj) {
                         if (obj.model != null) {
-                            return obj.model.handlerType() + 4;
+                            return obj.model.handlerType() + 6;
+                        }
+                        if (obj.product != null) {
+                            return Product.PRODUCT + 5;
                         }
                         return obj.type;
                     }
-
+                }).setMixStrategy(new IMixStrategy<PersonModel>() {
                     @Override
                     public int getComponentId(int type) {
-                        if (type > 4) {
-                            type -= 4;
+                        if (type == 5) {
+                            return Product.PRODUCT;
+                        }
+                        if (type > 6) {
+                            type -= 6;
                         }
                         return type;
                     }
-                }).setMapAttach(new IMapAttach() {
+
                     @Override
                     public Class<?> attachClass(int type) {
+                        if (type == 5) {
+                            return Product.class;
+                        }
                         if (type <= 4) {
                             return PersonModel.class;
                         }
                         return null;
                     }
-                })
-                .setModelManger(new IModelManger<PersonModel>() {
+
                     @Override
                     public Object getBindItem(int pos, PersonModel model) {
-                        if (pos >= 4) {
+                        if (model.model != null) {
                             return model.model;
+                        }
+                        if (model.product != null) {
+                            return model.product;
                         }
                         return model;
                     }
                 })
+                .attachRule(Product.class)
                 .build();
         slotContext.attachRule(PersonModel.class).registerLogic(new CommunityLogic(this))
                 .registerLogic(new CommonLogic(slotContext)).bind(mRcy);

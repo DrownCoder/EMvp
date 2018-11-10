@@ -1,4 +1,4 @@
-package com.study.xuan.emvp.presenter;
+package com.study.xuan.emvp.activity.common.userinfo;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -14,7 +14,6 @@ import com.xuan.eapi.viewmodel.BaseLogic;
  * Date : 2018/5/31.
  * Description :the description of this file
  */
-@RegisterLogic(PresenterId.CART_PRESENTER)
 public class CartLogic extends BaseLogic implements IUserInfoPresenter<CommonModel> {
     public CartLogic(Context context) {
         super(context);

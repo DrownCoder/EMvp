@@ -9,13 +9,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.study.xuan.emvp.activity.common.CommonActivity;
-import com.study.xuan.emvp.activity.common.CommonModel;
 import com.study.xuan.emvp.activity.mix.MixActivity;
 import com.study.xuan.emvp.activity.person.PersonModelActivity;
 import com.study.xuan.emvp.activity.simple.SimpleActivity;
 import com.study.xuan.emvp.model.Text;
 import com.study.xuan.emvp.presenter.MainLogic;
-import com.study.xuan.emvp.test.TestActivity;
 import com.xuan.eapi.viewmodel.BaseLogic;
 import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.context.ToolKitBuilder;
@@ -26,13 +24,12 @@ import java.util.List;
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
     public static final String TITLE[] = new String[]{
             "全局模式",
-            "多种样式",
             "个人模式",
             "简单模式",
             "MIX模式"
     };
     public static final int EVENT[] = new int[]{
-            0, 1, 2, 3, 4
+            0, 1, 2, 3
     };
     protected BaseLogic mPresenter;
     RecyclerView mRcy;
@@ -63,16 +60,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 startActivity(CommonActivity.class);
                 break;
             case 1:
-                Toast.makeText(MainActivity.this, "点击多种样式", Toast.LENGTH_SHORT).show();
-                startActivity(TestActivity.class);
-                break;
-            case 2:
                 startActivity(PersonModelActivity.class);
                 break;
-            case 3:
+            case 2:
                 startActivity(SimpleActivity.class);
                 break;
-            case 4:
+            case 3:
                 startActivity(MixActivity.class);
                 break;
         }

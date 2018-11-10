@@ -1,4 +1,4 @@
-package com.xuan.eapi.helper.binder;
+package com.xuan.eapi.helper.map;
 
 /**
  * Author : xuan.

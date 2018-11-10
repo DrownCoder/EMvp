@@ -10,7 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.study.xuan.emvp.R;
-import com.study.xuan.emvp.presenter.CommunityLogic;
+import com.study.xuan.emvp.activity.common.userinfo.CommunityLogic;
 import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.context.ToolKitBuilder;
 
