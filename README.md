@@ -206,9 +206,10 @@ public SlotContext(ToolKitBuilder<T> builder)
 | RecyclerView.Adapter getAdapter() | 获取Adapter |  |
 | pushLife(ILifeCycle lifeCycle) | 注册任何对象监听生命周期 | 实现ILifeCycler接口 |
 | pushGC(IGC gc) | 监听Destroy生命周期 |  |
-### 详细使用方式
+### 详细使用方式  
 详细使用方式->[Wiki]()  
-特殊问题：
+
+**特殊问题：**  
 1.组件化时注解R文件不是常量的解决方案  
 2.ComponentId定义冲突对应的个人开发模式  
 3.个人模式和全局模式的楼层打通方式  
