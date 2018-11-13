@@ -97,11 +97,17 @@ public class SlotContext<T> implements IContextService,
         return getItem(pos);
     }
 
+    /**
+     * 设置数据集
+     */
     public SlotContext<T> setData(List<T> data) {
         this.mData = data;
         return this;
     }
 
+    /**
+     * 刷新页面
+     */
     public void notifyDataSetChanged() {
         if (mAdapter == null) {
             return;
@@ -117,6 +123,9 @@ public class SlotContext<T> implements IContextService,
         return moderBinder.getItemType(pos, getItem(pos));
     }
 
+    /**
+     * 判断是否绑定了页面
+     */
     public boolean isAttaching() {
         if (ruleRegister != null) {
             return ruleRegister.obtainRules() != null && ruleRegister.obtainRules().size() > 0;
@@ -160,6 +169,9 @@ public class SlotContext<T> implements IContextService,
         return this;
     }
 
+    /**
+     * 获取逻辑对象
+     */
     public IPresent obtainLogic(Class<?> clazz) {
         return logicManger.obtainLogic(clazz);
     }
@@ -172,17 +184,26 @@ public class SlotContext<T> implements IContextService,
         return componentFactory.createViewHolder(getContext(), parent, viewType);
     }
 
+    /**
+     * 获取事件中心
+     */
     @Override
     public View.OnClickListener obtainEventCenter() {
         return eventCenter;
     }
 
+    /**
+     * 给RecyclerView绑定Adapter
+     */
     public void bind(RecyclerView rcy) {
         this.rcyRoot = rcy;
         mAdapter = new MagicAdapter(this);
         rcyRoot.setAdapter(mAdapter);
     }
 
+    /**
+     * 获取Adapter
+     */
     public RecyclerView.Adapter getAdapter() {
         return mAdapter;
     }
