@@ -1,4 +1,10 @@
+
 ### 前言
+基于AOP的适用于RecyclerView多楼层开发的开源框架，使用方便，拓展性强，代码侵入性低，楼层耦合度低。  
+
+![continuousphp](https://img.shields.io/continuousphp/git-hub/doctrine/dbal/master.svg)
+![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)
+### 项目介绍
 RecyclerView作为Google替代ListView的一个组件，其强大的拓展性和性能，现在已经成为无数App核心页面的主体框架。RecyclerView的开发模式一般来说都是多Type类型的ViewHolder——后面就称为楼层(感觉很形象)。但是使用多了，许多问题就暴露出来了，经常考虑有这么几个问题：  
 
 * 如何更便捷的使用Adapter和ViewHolder的开发模式？  
@@ -187,6 +193,43 @@ public interface IModerBinder<T> {
                     }
                 })
 ```
+### 个人模式
+当涉及到大型项目时，多人协作往往是一个问题，当所有人都维护一套ComponentId，合并代码时解决冲突往往是很大的问题，并且不可能所有的楼层都是全局打通的类型，所以这里提供一种个人开发模式。
+* 1.使用attach注解，绑定对应class
+```
+@ComponentType(
+        value = PersonId.VIEWHOLDER,
+        layout = R.layout.person_item_layout,
+        //class类型，对应到映射表的key
+        attach = PersonModel.class
+)
+public class PersonVH extends RecyclerView.ViewHolder implements IComponentBind<PersonModel> {
+    private TextView tvName;
+
+    public PersonVH(View itemView) {
+        super(itemView);
+        tvName = itemView.findViewById(R.id.tv_name);
+    }
+
+    @Override
+    public void onBind(int pos, PersonModel item) {
+        //tvName.findViewById(R.id.tv_name);
+        tvName.setText(item.name);
+    }
+
+    @Override
+    public void onUnBind() {
+
+    }
+}
+```
+* 2.调用SlotContext.attachRule绑定对应的Class
+```
+SlotContext slotContext =
+                new ToolKitBuilder<PersonModel>(this)
+                        //注册绑定的类型，对应获取映射表
+                        .attachRule(PersonModel.class).build();
+```
 ### 进阶使用
 项目利用Build模式构建SlotContext实体，SlotContext原理基于Android中的Context思想，作为一个全局代理的上下文对象，通过SlotContext，我们可以获取对应的类，进而实现对应类的获取和通信。
 #### ToolKitBuilder的构造函数
@@ -226,12 +269,12 @@ public SlotContext(ToolKitBuilder<T> builder)
 ### 详细使用方式  
 详细使用方式->[Wiki](https://github.com/DrownCoder/EMvp/wiki)  
 
-**特殊问题：**  
-1.组件化时注解R文件不是常量的解决方案  
-2.ComponentId定义冲突对应的个人开发模式  
-3.个人模式和全局模式的楼层打通方式  
-4.多MVP的使用方式  
-5.更多问题欢迎提issue～
+**:mag_right:Wiki相关：**  
+1.[MVP模式的使用](https://github.com/DrownCoder/EMvp/wiki/MVP%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%BD%BF%E7%94%A8)  
+2.[组件化项目中R文件无法使用](https://github.com/DrownCoder/EMvp/wiki/%E7%BB%84%E4%BB%B6%E5%8C%96%E9%A1%B9%E7%9B%AE%E4%B8%ADR%E6%96%87%E4%BB%B6%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8)  
+3.[优化反射创建](https://github.com/DrownCoder/EMvp/wiki/%E4%BC%98%E5%8C%96%E5%8F%8D%E5%B0%84%E5%88%9B%E5%BB%BA)  
+4.[多人楼层打通](https://github.com/DrownCoder/EMvp/wiki/%E5%A4%9A%E4%BA%BAMIX%E6%A8%A1%E5%BC%8F)   
+5.更多问题欢迎提issue:blush:	～
 
 ### License
 ```
