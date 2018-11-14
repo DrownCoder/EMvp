@@ -102,12 +102,12 @@ public class CustomView extends LinearLayout implements IComponentBind<PersonMod
     }
 }
 ```
-很清晰，不用再每次在复杂的`if else`中寻找自己楼层对应的布局文件。(熟悉的人应该都懂)
+很清晰，不用再每次在复杂的`if else`中寻找自己楼层对应的布局文件。(熟悉的人应该都懂)  
 **注意：**
->1. value:楼层的唯一标示，int型  
->2. layout:楼层的布局文件
->3. 继承ViewHolder和自定义View类型需要实现`IComponentBind`接口即可
->4. 对于R文件不是常量在组件化时遇到的问题的[解决方案](https://github.com/DrownCoder/EMvp/wiki/%E7%BB%84%E4%BB%B6%E5%8C%96%E9%A1%B9%E7%9B%AE%E4%B8%ADR%E6%96%87%E4%BB%B6%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8)
+* 1.value:楼层的唯一标示，int型  
+* 2.layout:楼层的布局文件
+* 3.继承ViewHolder和自定义View类型需要实现`IComponentBind`接口即可
+* 4.对于R文件不是常量在组件化时遇到的问题的[解决方案](https://github.com/DrownCoder/EMvp/wiki/%E7%BB%84%E4%BB%B6%E5%8C%96%E9%A1%B9%E7%9B%AE%E4%B8%ADR%E6%96%87%E4%BB%B6%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8)
 
 ##### 2.定义Model
 ```
@@ -116,7 +116,7 @@ public class SimpleModel {
     
 }
 ```
->BindType:当是单样式时，model直接注解对应的楼层的唯一标示，int型
+**BindType**:当是单样式时，model直接注解对应的楼层的唯一标示，int型
 
 ##### 3.绑定RecyclerView
 ```
