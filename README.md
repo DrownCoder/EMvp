@@ -37,7 +37,7 @@ dependencies {
 这里就介绍一下基于自己对于RecyclerView的理解，开发的一款基于AOP的，适用于多楼层模式的RecyclerView的开发框架。
 #### 一.单样式列表
 ##### 1.定义楼层（支持三种模式）
-* 1.1 继承Component类型
+* 继承Component类型
 ```
 @ComponentType(
         value = ComponentId.SIMPLE,
@@ -58,7 +58,7 @@ public class SimpleVH extends Component {
 }
 
 ```
-* 1.2 继承原生ViewHolder类型
+* 继承原生ViewHolder类型
 ```
 @ComponentType(
         value = PersonId.VIEWHOLDER,
@@ -82,7 +82,7 @@ public class PersonVH extends RecyclerView.ViewHolder implements IComponentBind<
     }
 }
 ```
-* 1.3 自定义View类型
+* 自定义View类型
 ```
 @ComponentType(PersonId.CUSTOM)
 public class CustomView extends LinearLayout implements IComponentBind<PersonModel> {
@@ -109,7 +109,7 @@ public class CustomView extends LinearLayout implements IComponentBind<PersonMod
 >3. 继承ViewHolder和自定义View类型需要实现`IComponentBind`接口即可
 >4. 对于R文件不是常量在组件化时遇到的问题的[解决方案](https://github.com/DrownCoder/EMvp/wiki/%E7%BB%84%E4%BB%B6%E5%8C%96%E9%A1%B9%E7%9B%AE%E4%B8%ADR%E6%96%87%E4%BB%B6%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8)
 
-2.定义Model
+##### 2.定义Model
 ```
 @BindType(ComponentId.SIMPLE)
 public class SimpleModel {
@@ -118,7 +118,7 @@ public class SimpleModel {
 ```
 >BindType:当是单样式时，model直接注解对应的楼层的唯一标示，int型
 
-3.绑定RecyclerView
+##### 3.绑定RecyclerView
 ```
 @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
