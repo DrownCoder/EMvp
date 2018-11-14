@@ -107,7 +107,7 @@ public class CustomView extends LinearLayout implements IComponentBind<PersonMod
 >1. value:楼层的唯一标示，int型  
 >2. layout:楼层的布局文件
 >3. 继承ViewHolder和自定义View类型需要实现`IComponentBind`接口即可
->4. 对于R文件不是常量在组件化时遇到的问题的[解决方案]()
+>4. 对于R文件不是常量在组件化时遇到的问题的[解决方案](https://github.com/DrownCoder/EMvp/wiki/%E7%BB%84%E4%BB%B6%E5%8C%96%E9%A1%B9%E7%9B%AE%E4%B8%ADR%E6%96%87%E4%BB%B6%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8)
 
 2.定义Model
 ```
@@ -224,7 +224,7 @@ public SlotContext(ToolKitBuilder<T> builder)
 | pushGC(IGC gc) | 监听Destroy生命周期 |  |
 
 ### 详细使用方式  
-详细使用方式->[Wiki](https://github.com/DrownCoder/EMvp.wiki.git)  
+详细使用方式->[Wiki](https://github.com/DrownCoder/EMvp/wiki)  
 
 **特殊问题：**  
 1.组件化时注解R文件不是常量的解决方案  
