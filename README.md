@@ -17,6 +17,22 @@ RecyclerView作为Google替代ListView的一个组件，其强大的拓展性和
 * 丰富的API，支持多方面拓展。
 * 提供组件化工程使用方案
 
+### USE
+
+```
+defaultConfig {
+        defaultConfig {
+            //添加如下配置就OK了
+            javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+        }
+    }
+
+dependencies {
+	api 'com.xuan.EMvp:slots:1.0.2'
+        annotationProcessor 'com.xuan.EMvp:compiler:1.0.2'
+}
+```
+
 ### 使用方式
 这里就介绍一下基于自己对于RecyclerView的理解，开发的一款基于AOP的，适用于多楼层模式的RecyclerView的开发框架。
 #### 一.单样式列表
@@ -206,8 +222,9 @@ public SlotContext(ToolKitBuilder<T> builder)
 | RecyclerView.Adapter getAdapter() | 获取Adapter |  |
 | pushLife(ILifeCycle lifeCycle) | 注册任何对象监听生命周期 | 实现ILifeCycler接口 |
 | pushGC(IGC gc) | 监听Destroy生命周期 |  |
+
 ### 详细使用方式  
-详细使用方式->[Wiki]()  
+详细使用方式->[Wiki](https://github.com/DrownCoder/EMvp.wiki.git)  
 
 **特殊问题：**  
 1.组件化时注解R文件不是常量的解决方案  
