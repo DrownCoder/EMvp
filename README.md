@@ -24,7 +24,7 @@ RecyclerView作为Google替代ListView的一个组件，其强大的拓展性和
 * 提供组件化工程使用方案
 * 不用每次再写Adapter了～
 
-### USE
+### USEAGE
 
 ```
 defaultConfig {
@@ -35,8 +35,8 @@ defaultConfig {
     }
 
 dependencies {
-	api 'com.xuan.EMvp:slots:1.0.2'
-        annotationProcessor 'com.xuan.EMvp:compiler:1.0.2'
+	api 'com.xuan.EMvp:slots:1.0.3'
+        annotationProcessor 'com.xuan.EMvp:compiler:1.0.3'
 }
 ```
 
