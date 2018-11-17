@@ -194,9 +194,9 @@ public class TypeProcessor extends BaseProcessor {
             writer.write("    }\n\n");
             writer.write("    @Override\n");
             writer.write("    public ViewInfo obtainAttachViewInfo(Class<?> clazz, int id) {\n");
-            writer.write("        if (ATTACH_TYPE.get(clazz) == null) {");
-            writer.write("            return null;");
-            writer.write("        }");
+            writer.write("        if (ATTACH_TYPE.get(clazz) == null) {\n");
+            writer.write("            return null;\n");
+            writer.write("        }\n");
             writer.write("        return ATTACH_TYPE.get(clazz).get(id);\n");
             writer.write("    }\n\n");
             if (splitMethods != null) {
@@ -305,7 +305,6 @@ public class TypeProcessor extends BaseProcessor {
                 } else {
                     end = (int) ((i + 1) * LINE_LIMIT);
                 }
-                //System.out.println("start:" + start + "---" + "end:" + end);
                 splitMethods.add(String.format(FileCreator.ATTACH_METHOD_T, i, attachComponent
                         (start,
                         end)));
@@ -314,7 +313,7 @@ public class TypeProcessor extends BaseProcessor {
         }
     }
 
-    private String attachComponent(int start, int end) throws IOException {
+    private String attachComponent(int start, int end) {
         ComponentTypeClassInfo info;
         strBuilder.setLength(0);
         for (; start < end; start++) {

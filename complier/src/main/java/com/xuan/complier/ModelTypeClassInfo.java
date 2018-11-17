@@ -26,10 +26,6 @@ public class ModelTypeClassInfo {
                     String.format("value() in @%s for class %s is empty! that's not allowed",
                             BindType.class.getSimpleName(), classElement.getQualifiedName().toString()));
         }
-        System.out.println("getQualifiedName = " + classElement.getQualifiedName());
-        System.out.println("getSimpleName = " + classElement.getSimpleName());
-        System.out.println("getSuperClass = " + classElement.getSuperclass());
-        System.out.println("getClass = " + classElement.getClass());
 
         className = classElement.getQualifiedName().toString();
     }

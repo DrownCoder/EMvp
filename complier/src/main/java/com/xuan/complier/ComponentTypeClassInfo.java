@@ -55,11 +55,6 @@ public class ComponentTypeClassInfo {
             TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
             attachClassName = classTypeElement.getQualifiedName().toString();
         }
-        System.out.println("getQualifiedName = " + classElement.getQualifiedName());
-        System.out.println("getSimpleName = " + classElement.getSimpleName());
-        System.out.println("getSuperClass = " + classElement.getSuperclass());
-        System.out.println("getClass = " + classElement.getClass());
-        System.out.println("xxxxxxxxxx" + attachClassName);
 
         className = classElement.getQualifiedName().toString();
         if (typeElement.getAnnotation(ILogic.class) != null) {
@@ -73,7 +68,6 @@ public class ComponentTypeClassInfo {
                 TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
                 presenterName = classTypeElement.getQualifiedName().toString();
             }
-            //System.out.println("xxxxx:"+presenterClass.getSimpleName());
         }
     }
 

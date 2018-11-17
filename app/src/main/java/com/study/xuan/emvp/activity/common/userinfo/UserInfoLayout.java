@@ -24,9 +24,9 @@ import com.xuan.eapi.viewmodel.IPresenterBind;
  * Description :the description of this file
  */
 @ComponentType(value = ComponentId.USER_INFO_LAYOUT)
-@ILogic(IUserInfoPresenter.class)
+@ILogic(CommunityLogic.class)
 public class UserInfoLayout extends FrameLayout implements IComponentBind<CommonModel>,
-        IPresenterBind<IUserInfoPresenter<CommonModel>> {
+        IPresenterBind<CommunityLogic> {
     private ImageView ivImg;
     private TextView tvText;
     private View root;
@@ -76,7 +76,7 @@ public class UserInfoLayout extends FrameLayout implements IComponentBind<Common
     }
 
     @Override
-    public void injectPresenter(IUserInfoPresenter<CommonModel> userInfoIUserInfoPresenter) {
+    public void injectPresenter(CommunityLogic userInfoIUserInfoPresenter) {
         presenter = userInfoIUserInfoPresenter;
     }
 }
