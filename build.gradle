@@ -37,7 +37,7 @@ ext {
     userOrg = 'drowncoder'
     groupId = 'com.xuan.EMvp'
     uploadName = 'Emvp'
-    publishVersion = '1.0.2'
+    publishVersion = '1.0.3'
     desc = 'a annotation helper for RecyclerView\'s ViewHolder '
     website = 'https://github.com/DrownCoder/EMvp'
     licences = ['Apache-2.0']
