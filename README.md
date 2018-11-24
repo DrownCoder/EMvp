@@ -1,8 +1,6 @@
 
 ### 前言
 基于AOP的适用于RecyclerView多楼层开发的开源框架，使用方便，拓展性强，代码侵入性低，楼层耦合度低。  
-
-![continuousphp](https://img.shields.io/continuousphp/git-hub/doctrine/dbal/master.svg)
 ![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)
 ### 项目介绍
 RecyclerView作为Google替代ListView的一个组件，其强大的拓展性和性能，现在已经成为无数App核心页面的主体框架。RecyclerView的开发模式一般来说都是多Type类型的ViewHolder——后面就称为楼层(感觉很形象)。但是使用多了，许多问题就暴露出来了，经常考虑有这么几个问题：  
