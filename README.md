@@ -1,6 +1,7 @@
 
 ### 前言
-基于AOP的适用于RecyclerView多楼层开发的开源框架，使用方便，拓展性强，代码侵入性低，楼层耦合度低。  
+基于AOP的适用于RecyclerView多楼层开发的开源框架，使用方便，拓展性强，代码侵入性低，楼层耦合度低。
+
 ![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)
 ### 项目介绍
 RecyclerView作为Google替代ListView的一个组件，其强大的拓展性和性能，现在已经成为无数App核心页面的主体框架。RecyclerView的开发模式一般来说都是多Type类型的ViewHolder——后面就称为楼层(感觉很形象)。但是使用多了，许多问题就暴露出来了，经常考虑有这么几个问题：  
@@ -40,6 +41,30 @@ dependencies {
 
 ### 使用方式
 这里就介绍一下基于自己对于RecyclerView的理解，开发的一款基于AOP的，适用于多楼层模式的RecyclerView的开发框架。
+#### 核心注解
+```
+@Documented()
+// 表示是基于编译时注解的
+@Retention(RetentionPolicy.CLASS)
+// 表示可以作用于成员变量，类、接口
+@Target(ElementType.TYPE)
+public @interface ComponentType {
+    //ComponentId
+    int value() default -1;
+
+    //LayoutId，当为ViewHolder类型需要
+    int layout() default -1;
+    //组件化项目时，注解父View，通过LayoutInflater创建布局
+    Class view() default Object.class;
+
+    //是否利用反射创建，默认打开的(复杂的，性能相关的，数量大的当然建议关闭咯)
+    boolean autoCreate() default true;
+
+    //楼层绑定的类，通过类来寻找楼层的可用范围
+    Class attach() default Object.class;
+}
+
+```
 #### 一.单样式列表
 ##### 1.定义楼层（支持三种模式）
 * 继承Component类型
@@ -111,8 +136,22 @@ public class CustomView extends LinearLayout implements IComponentBind<PersonMod
 **注意：**
 * 1.value:楼层的唯一标示，int型  
 * 2.layout:楼层的布局文件
-* 3.继承ViewHolder和自定义View类型需要实现`IComponentBind`接口即可
-* 4.对于R文件不是常量在组件化时遇到的问题的[解决方案](https://github.com/DrownCoder/EMvp/wiki/%E7%BB%84%E4%BB%B6%E5%8C%96%E9%A1%B9%E7%9B%AE%E4%B8%ADR%E6%96%87%E4%BB%B6%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8)
+* 3.继承ViewHolder和自定义View类型需要实现`IComponentBind`接口即可  
+
+**对于R文件不是常量在组件化时遇到的问题的解决方案** [Wiki](https://github.com/DrownCoder/EMvp/wiki/%E7%BB%84%E4%BB%B6%E5%8C%96%E9%A1%B9%E7%9B%AE%E4%B8%ADR%E6%96%87%E4%BB%B6%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8)  
+这里没有选用butterknife将R文件复制一份成R2的方式，我个人感觉不是特别优雅，最终我选择的是在注解中增加一种View类型的注解，可以在注解中注解父View的Class，然后在构造函数通过LayoutInflater加入布局文件。
+```
+@ComponentType(
+        value = ComponetId.BANNER,
+        view = FrameLayout.class
+)
+public BannerVH(Context context, View itemView) {
+        super(context, itemView);
+        fgContainer = (FrameLayout) itemView;
+        //再利用LayoutInflater
+        LayoutInflater.from(context).inflate()
+    }
+```
 
 ##### 2.定义Model
 ```
