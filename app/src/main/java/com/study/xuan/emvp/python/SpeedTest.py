@@ -39,5 +39,5 @@ contentCode = "package com.study.xuan.emvp.python;\n" \
 fileName = 'PyThonVH%s'
 
 
-for i in range(1,2000):
+for i in range(1,10000):
 	createViewHolder(contentCode%((100+i),i,i),fileName%i)

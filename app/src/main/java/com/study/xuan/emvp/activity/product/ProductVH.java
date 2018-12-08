@@ -15,10 +15,11 @@ import com.xuan.eapi.component.Component;
  * Description :the description of this file
  */
 @ComponentType(value = Product.PRODUCT,
-layout = R.layout.single_product,
-attach = Product.class)
+        layout = R.layout.single_product,
+        attach = Product.class)
 public class ProductVH extends Component<Product> {
     private TextView tvName, tvPrice;
+
     public ProductVH(Context context, View root) {
         super(context, root);
         tvName = root.findViewById(R.id.tv_p_name);
@@ -26,8 +27,14 @@ public class ProductVH extends Component<Product> {
     }
 
     @Override
-    public void onBind(int pos, Product item) {
+    public void onBind(int pos, final Product item) {
         tvName.setText(item.pName);
         tvPrice.setText(item.price);
+        tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                item.onDoEvent(0, item);
+            }
+        });
     }
 }

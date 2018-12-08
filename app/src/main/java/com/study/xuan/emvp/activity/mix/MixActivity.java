@@ -15,11 +15,11 @@ import com.study.xuan.emvp.activity.person.PersonModel;
 import com.study.xuan.emvp.activity.person.PersonModelActivity;
 import com.study.xuan.emvp.activity.common.userinfo.CommunityLogic;
 import com.study.xuan.emvp.activity.product.Product;
+import com.study.xuan.emvp.activity.product.ProductEventDriver;
 import com.xuan.eapi.component.IComponentBind;
 import com.xuan.eapi.context.SlotContext;
 import com.xuan.eapi.context.ToolKitBuilder;
 import com.xuan.eapi.factory.custom.CustomFactory;
-import com.xuan.eapi.helper.map.IMapAttach;
 import com.xuan.eapi.helper.binder.ModelBinder;
 import com.xuan.eapi.helper.strategy.IMixStrategy;
 
@@ -37,12 +37,14 @@ public class MixActivity extends AppCompatActivity {
         mRcy = findViewById(R.id.rcy);
         mRcy.setLayoutManager(new LinearLayoutManager(this));
         mData = new ArrayList<>();
+        ProductEventDriver productEventDriver = new ProductEventDriver(this, null);
         for (int i = 1; i < 100; i++) {
             PersonModel model = new PersonModel();
             if (i < 5) {
                 model.type = i;
             } else if (i <= 8) {
                 Product product = new Product();
+                product.injectDriver(productEventDriver);
                 product.pName = "第" + i + "个" + "商品";
                 product.price = "¥" + i * 100;
                 model.product = product;
